@@ -1,2 +1,6 @@
 .DS_Store
 documents/
+tmp/
+frontend/node_modules/
+backend/node_modules/
+

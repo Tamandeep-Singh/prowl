@@ -1,0 +1,17 @@
+{
+  "name": "prowl-backend",
+  "version": "1.0.0",
+  "description": "QMUL ECS635U Final Year Project (Prowl) Backend using ExpressJS.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tamandeep Singh",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
