@@ -1,1 +1,0 @@
-Write-Host "[windows-collector]: initial commit (18/11/2024)"
