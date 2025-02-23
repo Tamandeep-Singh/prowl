@@ -4,7 +4,8 @@
   "description": "QMUL ECS635U Final Year Project (Prowl) Backend using ExpressJS.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "author": "Tamandeep Singh",
   "license": "MIT",
@@ -12,6 +13,10 @@
     "nodemon": "^3.1.7"
   },
   "dependencies": {
-    "express": "^4.21.1"
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.10.1"
   }
 }
