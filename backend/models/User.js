@@ -4,10 +4,26 @@ const bcrypt = require("bcrypt");
 const UserSchema = mongoose.Schema({
     username: {
         type: String,
-        unique: true
+        unique: true,
+        required: [true, "Usernam must be provided"],
+        minlength: [3, "Username must be atleast 3 characters"],
+        maxlength: [20, "Username can only contain a maximum of 20 characters"]
     },
-    password: String,
-    email: String
+    password: {
+        type: String,
+        required: [true, "Password must be provided"],
+        minlength: [8, "Password must be atleast 8 characters"]
+    },
+    email: {
+        type: String,
+        required: [true, "Email must be provided"],
+        unique: true,
+    },
+    role: {
+        type: String,
+        enum: ["adminstrator", "user", "analyst"],
+        default: "user"
+    }
 }, { timestamps: true });
 
 
@@ -22,8 +38,8 @@ UserSchema.pre("save", async function(next) {
 });
 
 UserSchema.methods.doesPasswordMatch = async function (givenPassword) {
-    const result = await bcrypt.compare(givenPassword, this.password);
-    return result;
+    const isMatch = await bcrypt.compare(givenPassword, this.password);
+    return isMatch;
 };
 
 module.exports = mongoose.model("User", UserSchema);

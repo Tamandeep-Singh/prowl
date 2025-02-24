@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express(); 
-const connectToMongoDB = require("./config/mongo.config");
 const authMiddleware = require("./middleware/auth");
+const connectToMongoDB = require("./config/mongo.config");
 require("dotenv").config();
 
 const PORT = process.env.PROWL_BACKEND_PORT || 9728;
@@ -9,8 +9,7 @@ const PORT = process.env.PROWL_BACKEND_PORT || 9728;
 app.use(express.json());
 
 app.use("/api/v1/users", require("./routes/user.route"));
-
-app.use(authMiddleware.checkSessionToken);
+app.use("/api/v1/endpoints", authMiddleware.checkAccessToken, require("./routes/endpoint.route"));
 
 
 app.get("/", (req, res) => {
@@ -18,11 +17,11 @@ res.status(200).json({success: true});
 });
 
 
-const setupEndpoint = async () => {
+const setupServer = async () => {
     await connectToMongoDB();
-    app.listen(PORT, () => console.log(`[Prowl-API]: started on port ${PORT}`));
+    app.listen(PORT, () => console.log(`[Prowl-API]: Started on port ${PORT}`));
 };
 
-setupEndpoint();
+setupServer();
 
 

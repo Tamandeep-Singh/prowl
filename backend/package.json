@@ -4,8 +4,9 @@
   "description": "QMUL ECS635U Final Year Project (Prowl) Backend using ExpressJS.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start:dev": "NODE_ENV=development nodemon app.js",
+    "start:proto": "NODE_ENV=prototype nodemon app.js",
+    "start:prod": "NODE_ENV=production node app.js"
   },
   "author": "Tamandeep Singh",
   "license": "MIT",
