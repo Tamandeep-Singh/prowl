@@ -3,7 +3,7 @@ const userRouter = express.Router();
 const userController = require("../controllers/user_controller");
 
 userRouter.post("/register", async (req, res) => {
-    const result = await userController.createUser(req);
+    const result = await userController.createUser(req.body.user);
     if (result.operationFailed) {
         return res.status(400).json(result.error);
     };

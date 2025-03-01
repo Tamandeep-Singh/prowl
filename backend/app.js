@@ -6,11 +6,11 @@ require("dotenv").config();
 
 const PORT = process.env.PROWL_BACKEND_PORT || 9728;
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 app.use("/api/v1/users", require("./routes/user.route"));
-app.use("/api/v1/endpoints", authMiddleware.checkAccessToken, require("./routes/endpoint.route"));
-
+app.use("/api/v1/endpoints", require("./routes/endpoint.route"));
+app.use("/api/v1/processes", require("./routes/process.route"));
 
 app.get("/", (req, res) => {
 res.status(200).json({success: true});

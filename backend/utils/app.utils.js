@@ -36,4 +36,5 @@ const verifyRefreshToken = async (refreshToken) => {
     catch(error) { return false; };
 };
 
+
 module.exports = { generateAccessToken, decodeToken, verifyAccessToken, generateRefreshToken, verifyRefreshToken };

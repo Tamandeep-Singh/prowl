@@ -7,12 +7,12 @@ const authMiddleware = {
             const token = authorization.substring(7);
             const isValidToken = await verifyAccessToken(token);
             if (!isValidToken) {
-                return res.status(400).json({error: "invalid session token (jwt)"});
+                return res.status(401).json({error: "Invalid access token (JWT) provided"});
             }
             req.userPayload = await decodeToken(token);
             return next();
         }
-        res.status(400).json({error: "missing session token (jwt)"});
+        res.status(401).json({error: "Missing access token (JWT)"});
         return next();
     }
 }

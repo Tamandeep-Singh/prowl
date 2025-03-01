@@ -1,38 +1,25 @@
 const User = require("../models/User");
+const MongoUtilities = require("../utils/mongo.utils");
 const { generateAccessToken, generateRefreshToken, decodeToken, verifyRefreshToken } = require("../utils/app.utils");
 
 class UserController {
     static findUser = async (email) => {
-        try {
-            const exists = await User.exists({ email });
-            return !(exists === null);
-        }
-        catch (error) { return false; };
+        const exists = await MongoUtilities.doesDocumentExist(User, { email });
+        return exists;
     };
 
     static getUser = async (email) => {
-        try {
-            const user = await User.findOne({ email });
-            return user;
-        }
-        catch (error) { return null; };
+        const user = await MongoUtilities.getDocumentByField(User, { email });
+        return user;
     };
 
-    static createUser = async (request) => {
-        const user = {
-            username: request.body.username,
-            password: request.body.password,
-            email: request.body.email,
-            role: request.body.role || "user",
-        };
-        try {
-            const result = await User.create(user);
-            const payload = {username: result.username, email: result.email, role: result.role, uid: result._id};
-            const accessToken = await generateAccessToken(payload);
-            const refreshToken = await generateRefreshToken(payload);
-            return { success: true, accessToken, refreshToken };
-        }
-        catch(error) { return { success: false,  error }; };
+    static createUser = async (user) => {
+        const result = await MongoUtilities.insertDocument(User, user);
+        if (result.error) { return result; };
+        const payload = {username: result.username, email: result.email, role: result.role, uid: result._id};
+        const accessToken = await generateAccessToken(payload);
+        const refreshToken = await generateRefreshToken(payload);
+        return { success: true, accessToken, refreshToken };
     };
 
     static consumeRefreshToken = async (refreshToken) => {
