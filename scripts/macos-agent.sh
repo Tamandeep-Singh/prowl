@@ -36,13 +36,34 @@ function get_process_data() {
         args = args (args == "" ? "" : " ") $i;
     }
 
-    {print "{\"ppid\": \""$1"\",\"pid\": \""$2"\",\"user\": \""$3"\",\"state\": \""$4"\",\"start_time\": \""$5,$6,$7,$8,$9"\",\"elapsed_time\": \""$10"\",\"command\": \""args"\"}"  } }' | jq -s '.') 
+    {print "{\"ppid\": "$1",\"pid\": "$2",\"user\": \""$3"\",\"state\": \""$4"\",\"start_time\": \""$5,$6,$7,$8,$9"\",\"elapsed_time\": \""$10"\",\"command\": \""args"\"}"  } }' | jq -s '.') 
 
     process_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"ingest_type\":\"processes\", \"processes\":"$process_json_array"}"
     ingest_request_handler "$process_json_body"
 }
 
-function get_filesystem_data() { }
+function get_filesystem_data() { 
+    tmp_dir="/var/tmp"
+    desktop_dir="$HOME/Desktop"
+    documents_dir="$HOME/Documents"
+    downloads_dir="$HOME/Downloads"
+
+    files_json_array=""
+    find "$tmp_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" -type f | while read file; do 
+        sha1_hash=$(sha1sum "$file" | awk '{print $1}')
+        creation_timestamp=$(stat -f "%B" "$file")
+        last_mod_timestamp=$(stat -f "%m" "$file")
+        file_size=$(stat -f "%z" "$file")
+        file_name=$(basename "$file")
+        file_description=$(file "$file" | awk -F ":" '{print $2}' | xargs) 
+
+        files_json_array+="{\"file_path\":\""$file"\",\"creation_ts\":"$creation_timestamp",\"last_mod_ts\":"$last_mod_timestamp",\"file_size\":"$file_size",\"sha1_hash\":\""$sha1_hash"\",\"file_name\":\""$file_name"\",\"file_description\":\""$file_description"\"} "
+    done
+
+    files_json_array=$(echo "$files_json_array" | jq -s '.')
+    files_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"ingest_type\":\"files\", \"files\":"$files_json_array"}"
+    ingest_request_handler "$files_json_body"
+}
 
 function get_network_data() { }
 
@@ -55,7 +76,7 @@ function get_endpoint_data() {
 }
 
 function main() {
-    get_process_data
+    get_filesystem_data
 }
 
 main

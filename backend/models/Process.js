@@ -7,11 +7,11 @@ const ProcessSchema = mongoose.Schema({
         required: [true, "Endpoint Object ID for the process must be provided for referencing"]
     },
     ppid: {
-        type: String,
+        type: Number,
         required: [true, "Parent Process ID (PPID) for the process must be provided"]
     },
     pid: {
-        type: String,
+        type: Number,
         required: [true, "Process ID (PID) for the process must be provided"]
     },
     user: {
@@ -23,7 +23,7 @@ const ProcessSchema = mongoose.Schema({
         required: [true, "Command for the process must be provided"],
     },
     start_time: {
-        type: String,
+        type: mongoose.Schema.Types.Date,
         required: [true, "Start time for the process must be provided"]
     },
     elapsed_time : {
