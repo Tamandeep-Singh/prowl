@@ -65,7 +65,13 @@ function get_filesystem_data() {
     ingest_request_handler "$files_json_body"
 }
 
-function get_network_data() { }
+function get_network_data() {
+    source ~/pyenv/bin/activate
+    network_json_array=$(sudo python3 macos-network.py)
+    network_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"ingest_type\":\"network\", \"network_connections\":"$network_json_array"}"
+    ingest_request_handler "$network_json_body"
+    deactivate
+}
 
 function get_endpoint_data() { 
     device_name=$(scutil --get ComputerName)
@@ -76,7 +82,7 @@ function get_endpoint_data() {
 }
 
 function main() {
-    get_filesystem_data
+    get_network_data
 }
 
 main

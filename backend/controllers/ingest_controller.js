@@ -1,6 +1,7 @@
 const processController = require("./process_controller");
 const endpointController = require("./endpoint_controller");
 const fileController = require("./file_controller");
+const networkConnectionController = require("./network_connection_controller");
 
 class IngestController {
     static fetchEndpointID = async (host_uuid) => {
@@ -22,6 +23,13 @@ class IngestController {
         return result;
     };
 
+    static handleNetworkIngest = async (connections, host_uuid) => {
+        const endpoint_id = await this.fetchEndpointID(host_uuid);
+        if (endpoint_id === null) { return { success: false, error: "Invalid or unlinked endpoint provided"}};
+        const result = await networkConnectionController.insertNetworkConnections(connections, endpoint_id);
+        return result;
+    };
+
     static handleIngestType = async (request) => {
         let ingestResult = {};
         const host_uuid = request.body.host_uuid;
@@ -31,6 +39,9 @@ class IngestController {
                 break;
             case "files":
                 ingestResult = await this.handleFileIngest(request.body.files, host_uuid);
+                break;
+            case "network":
+                ingestResult = await this.handleNetworkIngest(request.body.network_connections, host_uuid);
                 break;
             default:
                ingestResult =  { success: false, error: "invalid ingest type provided" }
