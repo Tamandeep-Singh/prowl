@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Electrolize&display=swap');
+
+header {
+    padding: 10px;
+    background-color: #282C34;
+}
+
+.navbar__nav {
+    position: relative;
+    display:flex;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.navbar__nav div {
+    display:flex;
+    align-items: center;
+}
+
+.navbar__nav div span {
+    font-size: 24px;
+    color: #E0E0E0;
+    font-family: "Electrolize";
+    padding-top: 15px;
+    letter-spacing: 2px;
+    text-transform:uppercase;
+    
+}
+
+#prowl-logo {
+    width: 60px;
+    height: 60px;
+    padding-right: 10px;
+    padding-left: 10px;
+    filter: invert(100%) brightness(100%);
+}
+
+.navbar__nav ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style-type: none;
+}
+
+.navbar__nav ul li {
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 30px;
+}
+
+.navbar__nav ul li a {
+    font-size: 22px;
+    text-decoration: none;
+    color: white;
+    font-family:"Cairo";
+}
