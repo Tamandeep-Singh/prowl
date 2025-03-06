@@ -5,15 +5,20 @@ import ProwlLogo from "../assets/logo.png";
 import WarningIcon from "../assets/warning.png";
 import LoginService from "../services/login_service";
 import AppUtils from "../utils";
+import { useLocation } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({}) => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const [loginRequired, setLoginRequired] = useState(location.state?.loginRequired);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginError, setLoginError] = useState("");
 
+
     const onUserLogin = async (event) => {
         event.preventDefault();
+        setLoginRequired(null);
         const response = await LoginService.performUserLogin(email, password);
         if (response.result.error) {
             setLoginError(JSON.stringify(response.result.error));
@@ -39,6 +44,11 @@ const LoginPage = () => {
         {loginError && <div className="login__error">
             <img id="warning-icon" src={WarningIcon} alt="Warning Icon"/>
             <span>Error: {loginError}</span>
+        </div>
+        }
+        {loginRequired && <div className="login__error">
+            <img id="warning-icon" src={WarningIcon} alt="Warning Icon"/>
+            <span>Error: Please login to continue</span>
         </div>
         }
     </div>

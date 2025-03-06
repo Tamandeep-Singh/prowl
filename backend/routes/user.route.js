@@ -13,7 +13,10 @@ userRouter.post("/login", async (req, res) => {
 });
 
 userRouter.post("/refresh/token", async (req, res) => {
-    if (!req.body.refreshToken) { return res.status(400).json({ error: "No refresh token provided"}); };
+    if (!req.body.refreshToken) { 
+        return res.status(400).json({ result: { success: false, error: "No refresh token provided"}} ); 
+    };
+    
     const refreshToken = req.body.refreshToken;
     const result = await userController.consumeRefreshToken(refreshToken);
     return res.status(200).json({result});
