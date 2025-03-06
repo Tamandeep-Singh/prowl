@@ -3,7 +3,7 @@
 echo "[Prowl-MacOS-Agent]: Starting Endpoint Telemetry Collection \n"
 
 INGEST_API_KEY="t9b5niKoPP91XzNjAAlbV7"
-PROWL_API_ENDPOINT="http://localhost:4500/api/v1/endpoints/ingest?agent_api_key=$INGEST_API_KEY"
+PROWL_API_ENDPOINT="http://localhost:4500/api/endpoints/ingest?agent_api_key=$INGEST_API_KEY"
 DEVICE_UUID=$(ioreg -rd1 -c IOPlatformExpertDevice | awk -F'"' '/IOPlatformUUID/{print $4}')
 
 function ingest_request_handler() {
@@ -13,9 +13,9 @@ function ingest_request_handler() {
         echo "[Prowl-MacOS-Agent]: Unable to connect to the Prowl API, exiting telemetry script!"
         exit 1
     fi
-    api_error=$(echo "$response" | jq -r '.error')
+    api_error=$(echo "$response" | jq 'if .result | type == "object" then .result.error // null else null end')
      if [ "$api_error" != "null" ]; then
-        echo "[Prowl-MacOS-Agent]: Encountered API Error :: \"$api_error\". Exiting telemetry script!"
+        echo "[Prowl-MacOS-Agent]: Encountered API Error: $api_error. Exiting telemetry script!"
         exit 1
     else
         echo "$response"
@@ -82,7 +82,7 @@ function get_endpoint_data() {
 }
 
 function main() {
-    get_network_data
+    get_process_data
 }
 
 main

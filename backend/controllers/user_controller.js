@@ -15,34 +15,50 @@ class UserController {
 
     static createUser = async (user) => {
         const result = await MongoUtilities.insertDocument(User, user);
-        if (result.error) { return result; };
-        const payload = {username: result.username, email: result.email, role: result.role, uid: result._id};
+        if (result.error) { 
+            return result;
+        };
+        
+        const payload = { username: result.username, email: result.email, role: result.role, uid: result._id };
         const accessToken = await generateAccessToken(payload);
         const refreshToken = await generateRefreshToken(payload);
+
         return { success: true, accessToken, refreshToken };
     };
 
     static consumeRefreshToken = async (refreshToken) => {
         const isValid = await verifyRefreshToken(refreshToken);
-        if (!isValid) { return { success: false, result: "Invalid refresh token" }; };
+        if (!isValid) { 
+            return { success: false, error: "Invalid refresh token" };
+        };
+
         const payload = await decodeToken(refreshToken);
         delete payload.iat;
         delete payload.exp;
+
         const accessToken = await generateAccessToken(payload);
         const newRefreshToken = await generateRefreshToken(payload);
+
         return { success: true, accessToken, refreshToken: newRefreshToken };
     };
 
     static authenticateUser = async (request) => {
         const { email, password } = request.body;
         const doesUserExist = await this.findUser(email);
-        if (!doesUserExist) { return { error: `User with ${email} does not exist` } };
+        if (!doesUserExist) { 
+            return { success: false, error: `User with email: ${email} does not exist` }; 
+        };
+
         const user = await this.getUser(email);
         const successfulAuth = await user.doesPasswordMatch(password);
-        if (!successfulAuth) { return { error: "Password doesn't match" } };
+        if (!successfulAuth) { 
+            return { success: false, error: "Incorrect Password" };
+        };
+
         const payload = {username: user.username, email: user.email, role: user.role, uid: user._id};
         const accessToken = await generateAccessToken(payload);
         const refreshToken = await generateRefreshToken(payload);
+
         return { success: true, accessToken, refreshToken };
     };
 

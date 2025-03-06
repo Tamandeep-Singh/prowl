@@ -44,7 +44,7 @@ class MongoUtilities  {
             const document = await model.create(documentObject);
             return document;
         }
-        catch (error) { return { success: false, error }};
+        catch (error) { return { success: false, error } };
     };
 
     static getAllDocuments = async (model) => {
@@ -52,7 +52,7 @@ class MongoUtilities  {
             const documents = await model.find();
             return documents;
         }
-        catch (error) { return { success: false, error }};
+        catch (error) { return { success: false, error } };
     };
 }
 

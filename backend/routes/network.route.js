@@ -4,7 +4,7 @@ const networkConnectionController = require("../controllers/network_connection_c
 
 networkConnectionRouter.get("/list", async (req, res) => {
     const connections = await networkConnectionController.getNetworkConnectionsList();
-    return res.status(200).json(connections);
+    return res.status(200).json({result: connections});
 });
 
 

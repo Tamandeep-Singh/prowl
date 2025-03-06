@@ -6,12 +6,12 @@ const ingestController = require("../controllers/ingest_controller");
 
 endpointRouter.post("/link", async (req, res) => {
     const result = await endpointController.createEndpoint(req.body.endpoint);
-    return res.status(200).json(result);
+    return res.status(200).json({result});
 });
 
 endpointRouter.get("/list", async (req, res) => {
     const endpoints = await endpointController.getEndpointList();
-    return res.status(200).json(endpoints);
+    return res.status(200).json({result: endpoints});
 });
 
 endpointRouter.post("/ingest", async (req, res) => {
@@ -19,7 +19,7 @@ endpointRouter.post("/ingest", async (req, res) => {
         const result = await ingestController.handleIngestType(req);
         return res.status(200).json({result});
     };
-    return res.status(400).json({successs: false, error: "Invalid Agent API Key provided"});
+    return res.status(400).json({ result: { success: false, error: "Invalid Agent API Key provided"}});
 });
 
 module.exports = endpointRouter;
