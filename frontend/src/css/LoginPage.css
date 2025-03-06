@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Electrolize&display=swap');
+
+body {
+    background-color: rgb(226 232 240) / 1;
+    font-family: 'Cairo';
+}
+
+.login {
+    border:10px solid #F0F0F0;
+    border-radius: 20px;
+    margin-top:20px;
+    width:600px;
+    height: 600px;
+    padding:20px;
+    display:flex;
+    flex-direction: column;
+    justify-self: center;
+    background-color: #F0F0F0;
+}
+
+.login p {
+    text-align: center;
+    font-size: 22px;
+}
+
+.login__logo {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#inner-logo {
+    width: 140px;
+    height: 140px; 
+    padding-right:20px;
+}
+
+.login__logo span {
+    font-size: 24px;
+    font-family: "Electrolize";
+    padding-top: 15px;
+    letter-spacing: 2px;
+    text-transform:uppercase;
+}
+
+.login form {
+    display:flex;
+    flex-direction: column;
+    gap:5px;
+}
+
+.login form input {
+    height:50px;
+    font-size: 18px;
+    margin-top:10px;
+}
+
+#login-btn {
+    font-family: 'Cairo';
+    font-size: 20px;
+    margin-top:20px;
+    background-color: #428bca;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding:5px;
+    color:white;
+}
+
+#warning-icon {
+    width:25px;
+    height:25px; 
+    padding-right:10px;
+    margin-top:7px;
+}
+
+.login__error {
+    display:flex;
+    justify-content: center;
+    margin-top:40px;
+}
+
+.login__error span {
+    color:red;
+    font-size: 22px;
+}
+

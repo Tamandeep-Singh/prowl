@@ -20,6 +20,7 @@ function App() {
       <Router>
         <Navbar/>
         <Routes>
+          <Route exact path="/" element={<AuthenticatedRoute><Dashboard/></AuthenticatedRoute>}></Route>
           <Route exact path="/login" element={<LoginPage/>}></Route>
           <Route exact path="/dashboard" element={<AuthenticatedRoute><Dashboard/></AuthenticatedRoute>}></Route>
           <Route path="*" element={<NotFound/>}></Route>

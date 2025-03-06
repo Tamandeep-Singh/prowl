@@ -1,9 +1,9 @@
 import axios from "axios";
-const endpoint = "http://localhost:3000/api/v1/users/login"
+import ApiService from "./api_service";
 
-const performUserLogin = async (email, password) => {
-    const response = await axios.post(endpoint, { email, password });
-    return response.data;
-}
-
-export default performUserLogin;
+export default class LoginService {
+    static performUserLogin = async (email, password) => {
+        const response = await ApiService.post("/api/users/login", { email, password });
+        return response;
+    };
+};

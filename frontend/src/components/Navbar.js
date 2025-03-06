@@ -1,7 +1,33 @@
 import "../css/Navbar.css";
 import ProwlLogo from "../assets/logo.png";
+import AppUtils from "../utils";
+import { useNavigate  } from "react-router-dom";
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
+    const handleLoginRoute = async (event) => {
+        event.preventDefault();
+        navigate("/login");
+    };
+
+    const handleLogoutRoute = async (event) => {
+        event.preventDefault();
+        window.localStorage.clear();
+        navigate("/login");
+    };
+
+    const handleDashboardRoute = async (event) => {
+        event.preventDefault();
+        navigate("/dashboard");
+    };
+
+    const handleToolsRoute = async (event) => {
+        event.preventDefault();
+        navigate("/tools");
+    };
+
+    
     return <header>
         <nav className="navbar__nav">
             <div>
@@ -9,9 +35,9 @@ const Navbar = () => {
                 <span>Prowl</span>
             </div>
             <ul>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/tools">Tools</a></li>
+                {AppUtils.isUserLoggedIn() === true ? <li><button onClick={handleLogoutRoute}>Logout</button></li> : <li><button onClick={handleLoginRoute}>Login</button></li>}
+                <li><button onClick={handleDashboardRoute}>Dashboard</button></li>
+                <li><button onClick={handleToolsRoute}>Tools</button></li>
             </ul>
         </nav>
     </header>
