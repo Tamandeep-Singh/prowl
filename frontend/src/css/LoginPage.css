@@ -1,18 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Electrolize&display=swap');
 
-body {
-    background-color: rgb(226 232 240) / 1;
+#login-wrapper {
+    position:fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #282C34;
     font-family: 'Cairo';
 }
 
 .login {
     border:10px solid #F0F0F0;
     border-radius: 20px;
-    margin-top:20px;
     width:600px;
     height: 600px;
     padding:20px;
+    margin-top:75px;
     display:flex;
     flex-direction: column;
     justify-self: center;
@@ -52,8 +55,17 @@ body {
 
 .login form input {
     height:50px;
-    font-size: 18px;
+    font-size: 16px;
     margin-top:10px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 8px;
+    padding-left: 20px;
+}
+
+.login form input:focus {
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
 }
 
 #login-btn {
@@ -71,7 +83,7 @@ body {
     width:25px;
     height:25px; 
     padding-right:10px;
-    margin-top:7px;
+    margin-top:4px;
 }
 
 .login__error {
@@ -82,6 +94,6 @@ body {
 
 .login__error span {
     color:red;
-    font-size: 22px;
+    font-size: 19px;
 }
 
