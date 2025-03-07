@@ -19,16 +19,21 @@ const LoginPage = ({}) => {
     }, [navigate]);
 
     const onUserLogin = async (event) => {
-        event.preventDefault();
-        const response = await LoginService.performUserLogin(email, password);
-        if (response.result.error) {
-            setLoginError(JSON.stringify(response.result.error));
-        }
-        else {
-            AppUtils.setAuthToken(JSON.stringify(response.result.accessToken));
-            AppUtils.setRefreshToken(JSON.stringify(response.result.refreshToken));
-            navigate("/dashboard");
-        };
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        
+        if (emailInput.checkValidity() && passwordInput.checkValidity()) {
+            event.preventDefault();
+            const response = await LoginService.performUserLogin(email, password); 
+            if (response.result.error) {
+                setLoginError(JSON.stringify(response.result.error));
+            }
+            else {
+                AppUtils.setAuthToken(JSON.stringify(response.result.accessToken));
+                AppUtils.setRefreshToken(JSON.stringify(response.result.refreshToken));
+                navigate("/dashboard");
+            };
+        }; 
     };
 
     return <div id="login-wrapper">
@@ -39,8 +44,8 @@ const LoginPage = ({}) => {
                         <img id="inner-logo" src={ProwlLogo} alt="Prowl Logo"/>
                         <span>Prowl</span>
                     </div>
-                    <input type="email" required placeholder="Email" value={email} onChange={({ target }) => setEmail(target.value)}/>
-                    <input type="password" required placeholder="Password" value={password} onChange={({ target }) => setPassword(target.value)}/>
+                    <input type="email" id="email" required placeholder="Email" value={email} onChange={({ target }) => setEmail(target.value)}/>
+                    <input type="password" id="password" required placeholder="Password" value={password} onChange={({ target }) => setPassword(target.value)}/>
                     <input id="login-btn" type="submit" value="Login" onClick={onUserLogin}></input>
                 </form>
                 {loginError && <div className="login__error">
