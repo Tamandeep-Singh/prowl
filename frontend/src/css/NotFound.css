@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Electrolize&display=swap');
+
+#notfound-wrapper {
+    position:fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #282C34;
+    font-family: 'Cairo';
+}
+
+.notfound {
+    border:10px solid #F0F0F0;
+    border-radius: 20px;
+    width:600px;
+    height:450px;
+    padding:20px;
+    margin-top:75px;
+    display:flex;
+    flex-direction: column;
+    justify-self: center;
+    background-color: #F0F0F0;
+}
+
+.notfound p {
+    text-align: center;
+    font-size: 22px;
+}
+
+.prowl__logo {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#inner-logo {
+    width: 140px;
+    height: 140px; 
+    padding-right:20px;
+}
+
+.prowl__logo span {
+    font-size: 24px;
+    font-family: "Electrolize";
+    padding-top: 15px;
+    letter-spacing: 2px;
+    text-transform:uppercase;
+}
+
+#dashboard-btn {
+    font-family: 'Cairo';
+    font-size: 20px;
+    margin-top:20px;
+    background-color: #428bca;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding:5px;
+    color:white;
+}
+
+#warning-icon {
+    width:25px;
+    height:25px; 
+    padding-right:10px;
+    margin-top:4px;
+}
+
+.notfound__error {
+    display:flex;
+    justify-content: center;
+    margin-top:40px;
+}
+
+.notfound__error span {
+    color:red;
+    font-size: 19px;
+}
+
