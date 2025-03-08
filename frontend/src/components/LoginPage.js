@@ -26,11 +26,11 @@ const LoginPage = ({}) => {
             event.preventDefault();
             const response = await LoginService.performUserLogin(email, password); 
             if (response.result.error) {
-                setLoginError(JSON.stringify(response.result.error));
+                setLoginError(response.result.error);
             }
             else {
-                AppUtils.setAuthToken(JSON.stringify(response.result.accessToken));
-                AppUtils.setRefreshToken(JSON.stringify(response.result.refreshToken));
+                AppUtils.setAuthToken(response.result.accessToken);
+                AppUtils.setRefreshToken(response.result.refreshToken);
                 navigate("/dashboard");
             };
         }; 

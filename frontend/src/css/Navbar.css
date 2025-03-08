@@ -49,12 +49,10 @@ header {
     padding-right: 30px;
 }
 
-.navbar__nav ul li button {
-    all: unset; 
-    background: none; 
-    border: none;
+.navbar__nav ul li a {
     font-size: 22px;
-    color: white;
-    font-family:"Cairo";
+    text-decoration: none;
+    color:white;
+    font-family: "Cairo";
 }
 
