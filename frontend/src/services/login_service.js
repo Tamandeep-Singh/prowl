@@ -1,4 +1,3 @@
-import axios from "axios";
 import ApiService from "./api_service";
 
 export default class LoginService {

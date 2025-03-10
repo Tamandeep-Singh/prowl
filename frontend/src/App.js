@@ -4,6 +4,7 @@ import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Dashboard from "./components/Dashboard";
 import NotFound from "./components/NotFound";
 import LoginPage from "./components/LoginPage";
+import EndpointRTC from "./components/EndpointRTC";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route exact path="/" element={<AuthenticatedRoute><Dashboard/></AuthenticatedRoute>}></Route>
           <Route exact path="/login" element={<LoginPage/>}></Route>
           <Route exact path="/dashboard" element={<AuthenticatedRoute><Dashboard/></AuthenticatedRoute>}></Route>
+          <Route exact path="/endpoint-rtc" element={<AuthenticatedRoute><EndpointRTC/></AuthenticatedRoute>}></Route>
           <Route path="*" element={<NotFound/>}></Route>
         </Routes>
       </Router>

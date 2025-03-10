@@ -1,0 +1,45 @@
+#rtc-wrapper {
+   position:fixed;
+   width: 100vw;
+   height: 100vh;
+   background-color: #3A3F4B;
+}
+
+.select__div {
+   display:flex;
+   justify-content: center;
+   align-items: center;
+}
+
+#select {
+   width: fit-content;
+   padding: 20px;
+}
+
+#terminal {
+   display:flex;
+   justify-self: center;
+   width: 80vw;
+   height: 50vh;
+   padding: 15px;
+   background-color: black;
+   color: white;
+   border-radius: 16px;
+   font-size: 16px;
+   overflow-x: auto;
+   margin-bottom: 20px;
+   font-family: 'Cairo';
+}
+
+#command-input {
+   display:flex;
+   justify-self: center;
+   width: 80vw;
+   padding: 15px;
+   background-color: #333;
+   color: white;
+   border-radius: 16px;
+   font-size: 20px;
+   resize: none;
+   font-family: 'Cairo';
+}

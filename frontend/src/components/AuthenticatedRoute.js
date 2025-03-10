@@ -12,6 +12,7 @@ const AuthenticatedRoute = (props) => {
     const checkAuthToken = () => {
         if (AppUtils.getAuthToken() === null) {
             setIsAuthenticated(false);
+            
             //redirect back to login if there is no JWT token (hence no login)
             return navigate("/login");
         }

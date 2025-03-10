@@ -18,9 +18,10 @@ const Navbar = () => {
                 <span>Prowl</span>
             </div>
             <ul>
-                <li><a href="/logout" onClick={handleLogoutRoute}>Logout</a></li>
                 <li><a href="/dashboard">Dashboard</a></li>
-                <li><a href="/tools">Tools</a></li>
+                <li><a href="/alerts">Alerts</a></li>
+                <li><a href="/endpoint-rtc">Endpoint RTC</a></li>
+                <li><a href="/logout" onClick={handleLogoutRoute}>Logout</a></li>
             </ul>
         </nav>
     </header>

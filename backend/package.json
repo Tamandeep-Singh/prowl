@@ -19,6 +19,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.10.1"
+    "mongoose": "^8.10.1",
+    "node-ssh": "^13.2.0",
+    "ssh2": "^1.16.0"
   }
 }
