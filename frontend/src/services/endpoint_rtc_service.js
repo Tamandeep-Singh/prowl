@@ -16,4 +16,9 @@ export default class EndpointRTCService {
         return response;
     };
 
+    static disconnectEndpoint = async (host_id) => {
+        const response = await ApiService.post("/api/console/disconnect", { host_id });
+        return response;
+    };
+
 };

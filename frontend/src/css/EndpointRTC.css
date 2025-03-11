@@ -11,6 +11,27 @@
    align-items: center;
 }
 
+.ssh-login__form input {
+   width: 200px;
+   font-size: 16px;
+   margin-right:20px;
+   border: 1px solid #ccc;
+   outline: none;
+   border-radius: 8px;
+   padding-left: 20px;
+   font-family: "Cairo";
+}
+
+#connect-btn {
+   font-family: 'Cairo';
+   font-size: 16px;
+   background-color: #428bca;
+   border: 1px solid transparent;
+   border-radius: 6px;
+   width: 200px;
+   color:white;
+}
+
 #select {
    width: fit-content;
    padding: 20px;

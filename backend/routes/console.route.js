@@ -12,4 +12,9 @@ consoleRouter.post("/command", async (req, res) => {
    return res.status(200).json({result})
 });
 
+consoleRouter.post("/disconnect", async (req, res) => {
+    const result = await ConsoleController.disconnectEndpoint(req);
+    return res.status(200).json({result})
+});
+
 module.exports = consoleRouter;

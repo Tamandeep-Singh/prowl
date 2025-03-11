@@ -19,8 +19,18 @@ class ConsoleController {
             return { success: true, message: "successfully connected to endpoint via ssh"};
         }
         catch(error) {
-            return { success: true, message: "could not connect to endpoint via ssh"};
+            return { success: true, error: "could not connect to endpoint via ssh"};
         };
+    };
+
+    static disconnectEndpoint = async (request) => {
+        const { host_id } = request.body;
+        if (this.connections[host_id]) {
+            const connection = this.connections[host_id];
+            connection.dispose();
+            delete this.connections[host_id];
+        };
+        return { success: true, message: "successfully disconnected endpoint"};
     };
     
     static executeCommand = async (request) => {
