@@ -16,6 +16,7 @@ app.use("/api/processes", require("./routes/process.route"));
 app.use("/api/files", require("./routes/file.route"));
 app.use("/api/network_connections", require("./routes/network.route"));
 app.use("/api/console", require("./routes/console.route"));
+app.use("/api/email", require("./routes/email.route"));
 
 app.get("/", (req, res) => {
 res.status(200).json({success: true});

@@ -1,5 +1,4 @@
 const express = require("express");
-require("dotenv").config();
 const endpointRouter = express.Router();
 const endpointController = require("../controllers/endpoint_controller");
 const ingestController = require("../controllers/ingest_controller");
@@ -15,11 +14,8 @@ endpointRouter.get("/list", async (req, res) => {
 });
 
 endpointRouter.post("/ingest", async (req, res) => {
-    if (req.query.agent_api_key === process.env.AGENT_API_KEY) {
-        const result = await ingestController.handleIngestType(req);
-        return res.status(200).json({result});
-    };
-    return res.status(400).json({ result: { success: false, error: "Invalid Agent API Key provided"}});
+    const result = await ingestController.handleIngestType(req);
+    return res.status(200).json({result});
 });
 
 module.exports = endpointRouter;

@@ -2,8 +2,7 @@
 
 echo "[Prowl-MacOS-Agent]: Starting Endpoint Telemetry Collection \n"
 
-INGEST_API_KEY="t9b5niKoPP91XzNjAAlbV7"
-PROWL_API_ENDPOINT="http://localhost:4500/api/endpoints/ingest?agent_api_key=$INGEST_API_KEY"
+PROWL_API_ENDPOINT="http://localhost:4500/api/endpoints/ingest"
 DEVICE_UUID=$(ioreg -rd1 -c IOPlatformExpertDevice | awk -F'"' '/IOPlatformUUID/{print $4}')
 
 function ingest_request_handler() {
@@ -21,6 +20,7 @@ function ingest_request_handler() {
         echo "$response"
     fi
 }
+
 
 function get_process_data() {
     process_output=$(ps -axo ppid,pid,user,state,lstart,etime,args)
