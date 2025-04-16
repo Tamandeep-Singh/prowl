@@ -5,24 +5,29 @@ import Dashboard from "./components/Dashboard";
 import NotFound from "./components/NotFound";
 import LoginPage from "./components/LoginPage";
 import EndpointRTC from "./components/EndpointRTC";
+import Account from "./components/Account";
+import Alerts from "./components/Alerts";
 
 function App() {
   return (
     /* 
-    
     Routes: 
-
+    ----------
     /login
     /dashboard
-
+    /alerts
+    /endpoint-rtc
+    /account
+    ----------
     */
-    
       <Router>
         <Routes>
           <Route exact path="/" element={<AuthenticatedRoute><Dashboard/></AuthenticatedRoute>}></Route>
           <Route exact path="/login" element={<LoginPage/>}></Route>
           <Route exact path="/dashboard" element={<AuthenticatedRoute><Dashboard/></AuthenticatedRoute>}></Route>
+          <Route exact path="/alerts" element={<AuthenticatedRoute><Alerts/></AuthenticatedRoute>}></Route>
           <Route exact path="/endpoint-rtc" element={<AuthenticatedRoute><EndpointRTC/></AuthenticatedRoute>}></Route>
+          <Route exact path="/account" element={<AuthenticatedRoute><Account/></AuthenticatedRoute>}></Route>
           <Route path="*" element={<NotFound/>}></Route>
         </Routes>
       </Router>

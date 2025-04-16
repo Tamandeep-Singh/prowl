@@ -8,7 +8,7 @@ export default class ApiService {
             return response.data;
         }
         catch (error) {
-            return { result: { success: false, error: "Unable to connect to the API" } };
+            return { result: { success: false, error: "Unable to connect to the API", debug: error} };
         };
     };
 
@@ -18,7 +18,7 @@ export default class ApiService {
             return response.data;
         }
         catch (error) {
-            return { result: { success: false,  error: "Unable to connect to the API"} };
+            return { result: { success: false,  error: "Unable to connect to the API", debug: error} };
         };
     };
 };

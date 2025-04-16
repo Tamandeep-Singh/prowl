@@ -18,4 +18,5 @@ export default class AppUtils {
     static isUserLoggedIn = () => {
         return this.getAuthToken() !== null;
     };
+
 };

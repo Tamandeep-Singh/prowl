@@ -21,6 +21,9 @@ const Navbar = () => {
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/alerts">Alerts</a></li>
                 <li><a href="/endpoint-rtc">Endpoint RTC</a></li>
+                <li><a href="/integrations">Integrations</a></li>
+                <li><a href="/reports">Reports</a></li>
+                <li><a href="/profile">Profile</a></li>
                 <li><a href="/logout" onClick={handleLogoutRoute}>Logout</a></li>
             </ul>
         </nav>

@@ -9,13 +9,12 @@ class IngestController {
         return endpoint_id;
     };
 
-    static handleProcessIngest = async (processes, host_uuid) => {
+    static handleProcessIngest = async (processes, host_uuid, agent_pid) => {
         const endpoint_id = await this.fetchEndpointID(host_uuid);
         if (endpoint_id === null) { 
             return { success: false, error: "Invalid or unlinked endpoint provided" }; 
         };
-
-        const result = await processController.insertProcesses(processes, endpoint_id);
+        const result = await processController.insertProcesses(processes, endpoint_id, agent_pid);
         return result;
     };
 
@@ -44,7 +43,7 @@ class IngestController {
         const host_uuid = request.body.host_uuid;
         switch (request.body.ingest_type) {
             case "processes":
-                ingestResult = await this.handleProcessIngest(request.body.processes, host_uuid);
+                ingestResult = await this.handleProcessIngest(request.body.processes, host_uuid, request.body.agent_pid);
                 break;
             case "files":
                 ingestResult = await this.handleFileIngest(request.body.files, host_uuid);

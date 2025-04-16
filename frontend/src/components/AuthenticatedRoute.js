@@ -13,7 +13,7 @@ const AuthenticatedRoute = (props) => {
         if (AppUtils.getAuthToken() === null) {
             setIsAuthenticated(false);
             
-            //redirect back to login if there is no JWT token (hence no login)
+            // redirect back to login if there is no JWT token (hence no login)
             return navigate("/login");
         }
         setIsAuthenticated(true);
@@ -23,7 +23,7 @@ const AuthenticatedRoute = (props) => {
         checkAuthToken();
     }, [isAuthenticated])
 
-    // if the user is logged in, then render the component passed in via props
+    // If the user is logged in, then render the component passed in via props
     return <React.Fragment>
         {isAuthenticated ? props.children : null}
     </React.Fragment>

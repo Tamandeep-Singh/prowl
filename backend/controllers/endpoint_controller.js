@@ -19,6 +19,14 @@ class EndpointController {
 
     static createEndpoint = async (endpoint) => {
         const result = await MongoUtilities.insertDocument(Endpoint, endpoint);
+        if (result.error?.errorResponse?.code === 11000) {
+            result.error = "This Endpoint is already linked. Restart the script for telemetry collection!";
+            return result;
+        };
+        if (result.error) {
+            result.debug = result.error;
+            result.error = "Unable to link the Endpoint.";
+        };
         return result;
     };
 };
