@@ -2,7 +2,6 @@
 
 echo "[Prowl-MacOS-Agent]: Script started... \n"
 
-
 PROWL_API_ENDPOINT="http://localhost:4500/api/endpoints/"
 DEVICE_UUID=$(ioreg -rd1 -c IOPlatformExpertDevice | awk -F'"' '/IOPlatformUUID/{print $4}')
 
@@ -64,9 +63,10 @@ function get_filesystem_data() {
     desktop_dir="$HOME/Desktop"
     documents_dir="$HOME/Documents"
     downloads_dir="$HOME/Downloads"
-
+    recycle_bin_dir="$HOME/.Trash"
+    
     files_json_array=""
-    find "$tmp_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" -type f | while read file; do 
+    find "$tmp_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" "$recycle_bin_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.tar.gz" -o -perm +111 \)| while read file; do 
         sha1_hash=$(sha1sum "$file" | awk '{print $1}')
         creation_timestamp=$(stat -f "%B" "$file")
         last_mod_timestamp=$(stat -f "%m" "$file")
@@ -83,11 +83,9 @@ function get_filesystem_data() {
 }
 
 function get_network_data() {
-    source ~/pyenv/bin/activate
-    network_json_array=$(sudo python3 macos-network.py)
+    network_json_array=$(sudo python3 /Users/tam/qmul/prowl/scripts/macos-network.py)
     network_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"ingest_type\":\"network\", \"network_connections\":"$network_json_array"}"
     ingest_request_handler "$network_json_body"
-    deactivate
 }
 
 function link_endpoint() { 
@@ -101,7 +99,7 @@ function link_endpoint() {
 
 function main() {
     echo "[Prowl-MacOS-Agent]: Starting Endpoint Telemetry Collection \n"
-    get_process_data
+    get_network_data
 }
 
 case "$1" in

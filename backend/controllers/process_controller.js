@@ -28,7 +28,7 @@ class ProcessController {
         processes.map(process => {
             const hash = this.createProcessHash(process);
             if (!buffer.has(hash)) {
-                buffer.set(hash, Date.now());
+                buffer.set(hash, null);
                 if (process.pid !== agent_pid && process.ppid !== agent_pid) {
                     filteredProcesses.push(process);
                 };
