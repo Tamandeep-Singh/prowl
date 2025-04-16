@@ -17,7 +17,10 @@ function ingest_request_handler() {
         echo "[Prowl-MacOS-Agent]: An API Error occurred: $api_error. The script will now exit!"
         exit 1
     else
-        echo "$response"
+        echo "$response" >> log.txt
+        echo "\n" >> log.txt
+        echo "Ingest Done"
+
     fi
 }
 
@@ -99,7 +102,35 @@ function link_endpoint() {
 
 function main() {
     echo "[Prowl-MacOS-Agent]: Starting Endpoint Telemetry Collection \n"
-    get_network_data
+
+    TUNING_PROCESS_DATA_DELAY=5
+    TUNING_FILESYSTEM_DATA_DELAY=60
+    TUNING_NETWORK_DATA_DELAY=40
+
+    LAST_PROCESS_COLLECTION=0
+    LAST_FILESYSTEM_COLLECTION=0
+    LAST_NETWORK_COLLECTION=0
+
+    while true; do 
+       current_epoch_time=$(date +%s)
+
+       if (( current_epoch_time - LAST_PROCESS_COLLECTION > TUNING_PROCESS_DATA_DELAY  )); then
+            get_process_data
+            LAST_PROCESS_COLLECTION=$current_epoch_time
+       fi
+
+       if (( current_epoch_time - LAST_FILESYSTEM_COLLECTION > TUNING_FILESYSTEM_DATA_DELAY  )); then
+            get_filesystem_data
+            LAST_FILESYSTEM_COLLECTION=$current_epoch_time
+       fi
+
+       if (( current_epoch_time - LAST_NETWORK_COLLECTION > TUNING_NETWORK_DATA_DELAY  )); then
+            get_network_data
+            LAST_NETWORK_COLLECTION=$current_epoch_time
+       fi
+
+       sleep 3
+    done
 }
 
 case "$1" in
