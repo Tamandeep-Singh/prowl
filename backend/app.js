@@ -10,6 +10,11 @@ const PORT = process.env.PROWL_BACKEND_PORT || 9728;
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
+// To simply test if the API is active and operational
+app.get("/ping", async (req, res) => {
+    return res.status(200).json({result: { success: true, message: "pong!"}});
+});
+
 app.use("/api/users", require("./routes/user.route"));
 app.use("/api/endpoints", require("./routes/endpoint.route"));
 app.use("/api/processes", require("./routes/process.route"));
@@ -18,11 +23,6 @@ app.use("/api/network_connections", require("./routes/network.route"));
 app.use("/api/console", require("./routes/console.route"));
 app.use("/api/email", require("./routes/email.route"));
 app.use("/api/discord", require("./routes/discord.route"));
-
-app.get("/", (req, res) => {
-res.status(200).json({success: true});
-});
-
 
 const setupServer = async () => {
     await connectToMongoDB();

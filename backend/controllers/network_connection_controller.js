@@ -2,6 +2,7 @@ const NetworkConnection = require("../models/Network_Connection");
 const MongoUtilities = require("../utils/mongo.utils");
 const crypto = require("crypto");
 const { LRUCache } = require("lru-cache");
+const SecurityController = require("../controllers/security_controller");
 
 const buffer = new LRUCache({
     max: 10000,
@@ -34,6 +35,7 @@ class NetworkConnectionController {
         if (filteredConnections.length === 0) {
             return { success: true, message: "No new network connections were inserted, all duplicates were found." };
         };
+        await SecurityController.analyseNetworkConnections(filteredConnections);
         const result = await MongoUtilities.insertManyDocuments(NetworkConnection, connections);
         return result;
     };

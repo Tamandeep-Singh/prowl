@@ -10,8 +10,7 @@ const service = nodemailer.createTransport({
 });
 
 class EmailServiceController {
-
-    static sendEmail = async (emailRecipient, emailSubject, emailBody) => {
+    static sendEmailAlert = async (emailRecipient, emailSubject, emailBody) => {
         try {
             const emailDetails = await service.sendMail({
                 from: "Prowl Alerts <prowl.alerts@gmail.com>",

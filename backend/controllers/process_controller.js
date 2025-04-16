@@ -2,6 +2,7 @@ const Process = require("../models/Process");
 const MongoUtilities = require("../utils/mongo.utils");
 const crypto = require("crypto");
 const { LRUCache } = require("lru-cache");
+const SecurityController = require("../controllers/security_controller");
 
 const buffer = new LRUCache({
     max: 10000,
@@ -37,6 +38,7 @@ class ProcessController {
         if (filteredProcesses.length === 0) {
             return { success: true, message: "No new processes were inserted, all duplicates were found."};
         };
+        await SecurityController.analyseProcesses(filteredProcesses);
         const result = await MongoUtilities.insertManyDocuments(Process, processes);
         return result;
     };
