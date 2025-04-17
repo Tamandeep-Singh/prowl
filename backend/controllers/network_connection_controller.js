@@ -19,10 +19,11 @@ class NetworkConnectionController {
         return hash;
     };
 
-    static insertNetworkConnections = async (connectionsArray, endpoint_id) => {
+    static insertNetworkConnections = async (connectionsArray, endpoint_id, host_name) => {
         const connections = connectionsArray.map(connection => ({
             ...connection,
-            endpoint_id
+            endpoint_id,
+            host_name
         }));
         const filteredConnections = [];
         connections.map(connection => {
@@ -35,7 +36,7 @@ class NetworkConnectionController {
         if (filteredConnections.length === 0) {
             return { success: true, message: "No new network connections were inserted, all duplicates were found." };
         };
-        await SecurityController.analyseNetworkConnections(filteredConnections);
+        //await SecurityController.analyseNetworkConnections(filteredConnections);
         const result = await MongoUtilities.insertManyDocuments(NetworkConnection, connections);
         return result;
     };

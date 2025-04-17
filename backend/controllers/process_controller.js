@@ -19,11 +19,12 @@ class ProcessController {
         return hash;
     };
 
-    static insertProcesses = async (processArray, endpoint_id, agent_pid) => {
+    static insertProcesses = async (processArray, endpoint_id, host_name, agent_pid) => {
         const processes = processArray.map(process => ({
             ...process,
             start_time: new Date(process.start_time),
-            endpoint_id
+            endpoint_id,
+            host_name
         }));
         const filteredProcesses = [];
         processes.map(process => {
@@ -38,7 +39,7 @@ class ProcessController {
         if (filteredProcesses.length === 0) {
             return { success: true, message: "No new processes were inserted, all duplicates were found."};
         };
-        await SecurityController.analyseProcesses(filteredProcesses);
+        // await SecurityController.analyseProcesses(filteredProcesses);
         const result = await MongoUtilities.insertManyDocuments(Process, processes);
         return result;
     };

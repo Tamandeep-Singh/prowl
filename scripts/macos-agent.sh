@@ -4,6 +4,7 @@ echo "[Prowl-MacOS-Agent]: Script started... \n"
 
 PROWL_API_ENDPOINT="http://localhost:4500/api/endpoints/"
 DEVICE_UUID=$(ioreg -rd1 -c IOPlatformExpertDevice | awk -F'"' '/IOPlatformUUID/{print $4}')
+DEVICE_NAME=$(scutil --get ComputerName)
 
 function ingest_request_handler() {
     local POST_BODY="$1"
@@ -17,10 +18,7 @@ function ingest_request_handler() {
         echo "[Prowl-MacOS-Agent]: An API Error occurred: $api_error. The script will now exit!"
         exit 1
     else
-        echo "$response" >> log.txt
-        echo "\n" >> log.txt
-        echo "Ingest Done"
-
+        echo "$response"
     fi
 }
 
@@ -57,7 +55,7 @@ function get_process_data() {
 
     {print "{\"ppid\": "$1",\"pid\": "$2",\"user\": \""$3"\",\"state\": \""$4"\",\"start_time\": \""$5,$6,$7,$8,$9"\",\"elapsed_time\": \""$10"\",\"command\": \""args"\"}"  } }' | jq -s '.') 
 
-    process_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"agent_pid\":"$$",\"ingest_type\":\"processes\", \"processes\":"$process_json_array"}"
+    process_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"host_name\":\""$DEVICE_NAME"\",\"agent_pid\":"$$",\"ingest_type\":\"processes\", \"processes\":"$process_json_array"}"
     ingest_request_handler "$process_json_body"
 }
 
@@ -81,21 +79,20 @@ function get_filesystem_data() {
     done
 
     files_json_array=$(echo "$files_json_array" | jq -s '.')
-    files_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"ingest_type\":\"files\", \"files\":"$files_json_array"}"
+    files_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"host_name\":\""$DEVICE_NAME"\",\"ingest_type\":\"files\", \"files\":"$files_json_array"}"
     ingest_request_handler "$files_json_body"
 }
 
 function get_network_data() {
     network_json_array=$(sudo python3 /Users/tam/qmul/prowl/scripts/macos-network.py)
-    network_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"ingest_type\":\"network\", \"network_connections\":"$network_json_array"}"
+    network_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"host_name\":\""$DEVICE_NAME"\",\"ingest_type\":\"network\", \"network_connections\":"$network_json_array"}"
     ingest_request_handler "$network_json_body"
 }
 
 function link_endpoint() { 
-    device_name=$(scutil --get ComputerName)
     device_ip=$(networksetup -getinfo "Wi-Fi" | grep "^IP address: " | awk '{print $3}')
     device_os_version="$(sw_vers -ProductName) $(sw_vers -ProductVersion) ($(sw_vers -BuildVersion))"
-    endpoint_telemetry="{\"endpoint\":{\"host_uuid\":\""$DEVICE_UUID"\",\"host_name\":\""$device_name"\",\"host_os\":\"MacOS\",\"host_ip\":\""$device_ip"\",\"host_os_version\":\""$device_os_version"\"}}"
+    endpoint_telemetry="{\"endpoint\":{\"host_uuid\":\""$DEVICE_UUID"\",\"host_name\":\""$DEVICE_NAME"\",\"host_os\":\"MacOS\",\"host_ip\":\""$device_ip"\",\"host_os_version\":\""$device_os_version"\"}}"
     link_endpoint_request_handler "$endpoint_telemetry"
 }
 
@@ -114,7 +111,7 @@ function main() {
     while true; do 
        current_epoch_time=$(date +%s)
 
-       if (( current_epoch_time - LAST_PROCESS_COLLECTION > TUNING_PROCESS_DATA_DELAY  )); then
+       if (( current_epoch_time - LAST_PROCESS_COLLECTION > TUNING_PROCESS_DATA_DELAY)); then
             get_process_data
             LAST_PROCESS_COLLECTION=$current_epoch_time
        fi

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import "./css/Endpoints.css"
 
 const Endpoints = () => {
-    const [endpoints, setEndpoints] = useState([]);
     const [rows, setRows] = useState([]);
     const columns = [
         {field: "host_id", headerName: "Host ID", width: 220},
@@ -17,13 +16,13 @@ const Endpoints = () => {
 
     useEffect(() => {
         const fetchEndpoints = async () => {
-          const endpointRows = [];
+          const endpoints= [];
           const response = await EndpointService.fetchEndpoints();
           if (response.result.error) {
             return;
           };
           response.result.map(endpoint => {
-            endpointRows.push({
+            endpoints.push({
                 id: endpoint.host_uuid,
                 host_id: endpoint._id,
                 host_name: endpoint.host_name,
@@ -33,8 +32,7 @@ const Endpoints = () => {
                 host_link_date: new Date(endpoint.createdAt).toLocaleDateString("en-GB")
             });
           });
-          setEndpoints(response.result);
-          setRows(endpointRows);
+          setRows(endpoints);
         };
         fetchEndpoints();
       }, []);

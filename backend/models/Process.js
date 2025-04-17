@@ -6,6 +6,10 @@ const ProcessSchema = mongoose.Schema({
         ref: "Endpoint",
         required: [true, "Endpoint Object ID for the process must be provided for referencing"]
     },
+    host_name: {
+        type: String,
+        required: [true, "must be provided"]
+    },
     ppid: {
         type: Number,
         required: [true, "Parent Process ID (PPID) for the process must be provided"]

@@ -6,6 +6,10 @@ const FileSchema = mongoose.Schema({
         ref: "Endpoint",
         required: [true, "Endpoint Object ID for the file must be provided for referencing"]
     },
+    host_name: {
+        type: String,
+        required: [true, "must be provided"]
+    },
     file_name: {
         type: String,
         required: [true, ""]

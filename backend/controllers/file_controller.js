@@ -19,12 +19,13 @@ class FileController {
         return hash;
     };
 
-    static insertFiles = async (filesArray, endpoint_id) => {
+    static insertFiles = async (filesArray, endpoint_id, host_name) => {
         const files = filesArray.map(file => ({
             ...file,
             creation_ts: new Date(file.creation_ts * 1000),
             last_mod_ts: new Date(file.last_mod_ts * 1000),
-            endpoint_id
+            endpoint_id,
+            host_name
         }));
         const filteredFiles = [];
         files.map(file => {
@@ -37,7 +38,7 @@ class FileController {
         if (filteredFiles.length === 0) {
             return { success: true, message: "No new files were inserted, all duplicates were found."};
         };
-        await SecurityController.analyseFiles(filteredFiles);
+        //await SecurityController.analyseFiles(filteredFiles);
         const result = await MongoUtilities.insertManyDocuments(File, files);
         return result;
     };

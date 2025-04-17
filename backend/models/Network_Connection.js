@@ -6,6 +6,10 @@ const NetworkConnectionSchema = mongoose.Schema({
         ref: "Endpoint",
         required: [true, "Endpoint Object ID for the network connection must be provided for referencing"]
     },
+    host_name: {
+        type: String,
+        required: [true, "must be provided"]
+    },
     command: {
         type: String,
         required: [true, "Command for the network connection must be provided"]

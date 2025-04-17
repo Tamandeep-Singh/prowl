@@ -31,6 +31,14 @@ class MongoUtilities  {
         catch (error) { return null; };
     };
 
+    static getDocumentFields = async (model, identifier, fields) => {
+        try {
+            const document = await model.findOne(identifier).select(fields);
+            return document;
+        }
+        catch (error) { return null; };
+    };
+
     static getDocumentObjectID = async (model, field) => {
         try {
             const document = await model.findOne(field).select("_id");
