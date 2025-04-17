@@ -21,6 +21,11 @@ export default class ApiService {
             return { result: { success: false,  error: "Unable to connect to the API", debug: error} };
         };
     };
+
+    static ping = async () => {
+        const response = await ApiService.get("/ping");
+        return response;
+    };
 };
 
 

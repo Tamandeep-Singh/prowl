@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import EndpointRTCService from "../services/endpoint_rtc_service";
+import EndpointService from "../services/endpoint_service";
 import Navbar from "./Navbar";
 import Select from 'react-select';
 import "../css/EndpointRTC.css";
@@ -26,7 +26,7 @@ const EndpointRTC = () => {
     if(usernameInput.checkValidity() && passwordInput.checkValidity()) {
       event.preventDefault();
       setCommandHistory((history) => [...history, "> Attempting to establish the SSH session, please wait... \n"]);
-      const response = await EndpointRTCService.connectToEndpoint(endpoint.host_id, endpoint.host_ip, username, password);
+      const response = await EndpointService.connectToEndpoint(endpoint.host_id, endpoint.host_ip, username, password);
       if (response.result.error) {
         setCommandHistory((history) => [...history, "> Error connecting to the endpoint! \n"]);
         return;
@@ -59,7 +59,7 @@ const EndpointRTC = () => {
 
         if (command === "exit" || command == "logout") {
           setCommandHistory((history) => [...history, "> Exiting session and disconnecting endpoint! \n"]);
-          await EndpointRTCService.disconnectEndpoint(endpoint.host_id);
+          await EndpointService.disconnectEndpoint(endpoint.host_id);
           setUsername("");
           setPassword("")
           setCommand("");
@@ -75,7 +75,7 @@ const EndpointRTC = () => {
         setCommand("");
 
        
-        const response = await EndpointRTCService.sendCommand(endpoint.host_id, command);
+        const response = await EndpointService.sendCommand(endpoint.host_id, command);
         setCommandHistory((history) => [...history, `${response.result.execution_result}`]);
         setCommandHistory((history) => [...history, "> \n"]);
     };
@@ -88,7 +88,7 @@ const EndpointRTC = () => {
   useEffect(() => {
     const fetchEndpoints = async () => {
       let endpointData = [];
-      const response = await EndpointRTCService.fetchEndpoints();
+      const response = await EndpointService.fetchEndpoints();
       if (response.result.error) {
         return;
       };
@@ -109,7 +109,6 @@ const EndpointRTC = () => {
         <input id="password" placeholder="Enter Password" required type="password" value={password} onChange={({ target }) => setPassword(target.value)}/>
         <input id="connect-btn" type="submit" value="Connect to Endpoint" onClick={onConnectToEndpoint}/>
       </form>
-      
     </div>
     <div id="terminal">
       <pre>{commandHistory.join("\n")}</pre>
