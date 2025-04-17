@@ -1,10 +1,14 @@
 import { DataGrid } from "@mui/x-data-grid";
 import EndpointService from "../../services/endpoint_service";
 import { useEffect, useState } from "react";
-import "./css/Endpoints.css"
+import "./css/base.css"
 
 const Endpoints = () => {
     const [rows, setRows] = useState([]);
+    const [paginationModel, setPaginationModel] = useState({
+        pageSize: 5,
+        page: 0,
+    });
     const columns = [
         {field: "host_id", headerName: "Host ID", width: 220},
         {field: "host_name", headerName: "Host Name", width: 180},
@@ -39,7 +43,9 @@ const Endpoints = () => {
 
     return <div>
        <p id="title" >Linked Endpoints</p>
-       <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight />
+       <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
+  onPaginationModelChange={setPaginationModel}
+  pageSizeOptions={[5, 10]} />
     </div>
 };
 

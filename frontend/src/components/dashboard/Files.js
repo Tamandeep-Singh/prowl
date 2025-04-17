@@ -1,21 +1,20 @@
 import { DataGrid } from "@mui/x-data-grid";
-import ProcessService from "../../services/process_service";
+import FileService from "../../services/file_service";
 import { useEffect, useState } from "react";
 import Tooltip from '@mui/material/Tooltip';
 import "./css/base.css"
 
-const Processes = () => {
+const Files = () => {
     const [rows, setRows] = useState([]);
     const [paginationModel, setPaginationModel] = useState({
-        pageSize: 10,
+        pageSize: 5,
         page: 0,
     });
 
     const columns = [
-        {field: "host_name", headerName: "Host Name", width: 160},
-        {field: "pid", headerName: "Process ID", width: 100},
-        {field: "ppid", headerName: "Parent Process ID", width: 140},
-        {field: "user", headerName: "User", width: 100, renderCell: (params) => (
+        {field: "host_name", headerName: "Host Name", width: 130},
+        {field: "file_name", headerName: "File Name", width: 150},
+        {field: "file_path", headerName: "File Path", renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
                 overflow: 'hidden',
@@ -28,7 +27,7 @@ const Processes = () => {
               </span>
             </Tooltip>
         )},
-        {field: "command", headerName: "Command", width: 550, renderCell: (params) => (
+        {field: "hash", headerName: "File Hash (SHA-1)", renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
                 overflow: 'hidden',
@@ -40,38 +39,44 @@ const Processes = () => {
              </span>
             </Tooltip>
           )},
-        {field: "start_time", headerName: "Start Time", width: 300}
+        {field: "file_creation", headerName: "Created At"},
+        {field: "file_modified", headerName: "Modified At"},
+        {field: "file_size", headerName: "File Size (Bits)"},
+        {field: "file_description", headerName: "File Summary"},
+
     ];
 
      useEffect(() => {
-            const fetchProcesses = async () => {
-              const processes = [];
-              const response = await ProcessService.fetchProcesses();
+            const fetchFiles = async () => {
+              const files = [];
+              const response = await FileService.fetchFiles();
               if (response.result.error) {
                 return;
               };
-              response.result.map(process => {
-                processes.push({
-                    id: process._id,
-                    host_name: process.host_name,
-                    pid: process.pid,
-                    ppid: process.ppid,
-                    user: process.user,
-                    command: process.command,
-                    start_time: process.start_time
+              response.result.map(file => {
+                files.push({
+                    id: file._id,
+                    host_name: file.host_name || "null",
+                    file_name: file.file_name,
+                    file_path: file.file_path,
+                    hash: file.sha1_hash,
+                    file_creation: file.creation_ts,
+                    file_modified: file.last_mod_ts,
+                    file_size: file.file_size,
+                    file_description: file.file_description
                 });
               });
-              setRows(processes);
+              setRows(files);
             };
-            fetchProcesses();
+            fetchFiles();
           }, []);
 
     return <div>
-       <p id="title">Endpoint Processes</p>
+       <p id="title">Endpoint Files</p>
        <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[10]} />
     </div>
 };
 
-export default Processes;
+export default Files;

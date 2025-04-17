@@ -1,0 +1,13 @@
+#title {
+    margin:0px;
+    font-family: "Cairo";
+    font-size: 28px;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 3px;
+}
+
+.MuiDataGrid-root {
+   margin-bottom: 150px;
+   margin-left:20px;
+}
