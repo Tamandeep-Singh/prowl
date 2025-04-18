@@ -15,11 +15,15 @@ import Endpoints from "./dashboard/Endpoints";
 import Processes from "./dashboard/Processes";
 import Files from "./dashboard/Files";
 import NetworkConnections from "./dashboard/NetworkConnections";
+import CentralDashboard from "./dashboard/CentralDashboard";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import CloseIcon from '@mui/icons-material/Close';
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
 const Dashboard = () => {
-    const [screen, setScreen] = useState("main");
+    const [screen, setScreen] = useState("central_dashboard");
+    const [collapsed, setCollapsed] = useState(false);
     const { collapseSidebar } = useProSidebar();
 
     return <div id="dashboard-wrapper">
@@ -41,9 +45,11 @@ const Dashboard = () => {
                   },
                 },
               }}>
-            <MenuItem icon={<MenuOutlinedIcon/>} onClick={() => {
+            <MenuItem icon={collapsed === true ? <MenuOutlinedIcon/> : <CloseIcon/>} onClick={() => {
+                setCollapsed(!collapsed)
                 collapseSidebar();
-            }}>Dashboard</MenuItem>
+            }}>Collapse</MenuItem>
+            <MenuItem onClick={() => setScreen("central_dashboard")} icon={<DashboardIcon/>}>Central Dashboard</MenuItem>
             <SubMenu label="Hosts" icon={<DevicesIcon/>}>
                 <MenuItem onClick={() => setScreen("endpoints")} icon={<LaptopIcon/>}>Endpoints</MenuItem>
                 <MenuItem onClick={() => setScreen("processes")} icon={<MemoryIcon/>}>Processes</MenuItem>
@@ -55,6 +61,7 @@ const Dashboard = () => {
             <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
         </Menu>
         </Sidebar>
+        {screen === "central_dashboard" && <CentralDashboard/>}
         {screen === "endpoints" && <Endpoints/>}
         {screen === "processes" && <Processes/>}
         {screen === "network_connections" && <NetworkConnections/>}

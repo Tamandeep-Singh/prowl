@@ -1,0 +1,24 @@
+#title {
+    margin:0px;
+    font-family: "Cairo";
+    font-size: 26px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.card {
+    border: 1px solid #2E333E;
+    border-radius: 16px;
+    background-color: #2E333E;
+    color: white;
+}
+
+.status__card {
+    margin-left: 20px;
+    padding: 10px;
+}
+
+.status__card p {
+    font-size: 14px;
+    color: #B3B6BD;
+}
