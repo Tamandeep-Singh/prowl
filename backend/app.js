@@ -12,7 +12,7 @@ app.use(express.json({ limit: '10mb' }));
 
 // To simply test if the API is active and operational
 app.get("/ping", async (req, res) => {
-    return res.status(200).json({result: { success: true, message: "pong!"}});
+    return res.status(200).json({result: { success: true, message: "pong!" }});
 });
 
 app.use("/api/users", require("./routes/user.route"));

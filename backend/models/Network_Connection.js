@@ -8,7 +8,7 @@ const NetworkConnectionSchema = mongoose.Schema({
     },
     host_name: {
         type: String,
-        required: [true, "must be provided"]
+        required: [true, "Host Name for the network connection must be provided"]
     },
     command: {
         type: String,

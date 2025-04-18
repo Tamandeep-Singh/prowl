@@ -7,6 +7,7 @@ const EndpointSchema = mongoose.Schema({
         required: [true, "Endpoint UUID must be provided"]
     },
     host_name: {
+        unique: true,
         type: String,
         required: [true, "Endpoint name must be provided"]
     },

@@ -8,36 +8,36 @@ const FileSchema = mongoose.Schema({
     },
     host_name: {
         type: String,
-        required: [true, "must be provided"]
+        required: [true, "Host Name for the file must be provided"]
     },
     file_name: {
         type: String,
-        required: [true, ""]
+        required: [true, "File Name for the file must be provided"]
     },
     file_path: {
         type: String,
-        required: [true, "must be provided"]
+        required: [true, "File Path for the file must be provided"]
     },
     sha1_hash: {
         type: String,
-        required: [true, " must be provided"]
+        required: [true, "SHA-1 Hash for the file must be provided"]
     },
     creation_ts: {
         type: mongoose.Schema.Types.Date,
-        required: [true, "must be provided"],
+        required: [true, "Creation Timestamp of the file must be provided"],
     },
     last_mod_ts: {
         type: mongoose.Schema.Types.Date,
-        required: [true, " must be provided"],
+        required: [true, "Last Modified Timestamp of the file must be provided"],
     },
     file_size: {
         type: Number,
-        required: [true, " must be provided"]
+        required: [true, "File Size of the file must be provided"]
     },
     file_description: {
         type: String,
         required: false,
-        default: ""
+        default: "No Description provided"
     }
 }, { timestamps: true });
 

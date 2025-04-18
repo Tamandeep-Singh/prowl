@@ -8,7 +8,7 @@ const ProcessSchema = mongoose.Schema({
     },
     host_name: {
         type: String,
-        required: [true, "must be provided"]
+        required: [true, "Host Name for the process must be provided"]
     },
     ppid: {
         type: Number,

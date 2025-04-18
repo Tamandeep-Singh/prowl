@@ -5,7 +5,6 @@ const ingestController = require("../controllers/ingest_controller");
 
 endpointRouter.post("/link", async (req, res) => {
     const result = await endpointController.createEndpoint(req.body.endpoint);
-    console.log(result);
     return res.status(200).json({result});
 });
 
