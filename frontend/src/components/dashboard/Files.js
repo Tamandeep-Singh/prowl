@@ -13,8 +13,20 @@ const Files = () => {
 
     const columns = [
         {field: "host_name", headerName: "Host Name", width: 130},
-        {field: "file_name", headerName: "File Name", width: 150},
-        {field: "file_path", headerName: "File Path", renderCell: (params) => (
+        {field: "file_name", headerName: "File Name", width: 150, renderCell: (params) => (
+          <Tooltip title={params.value}>
+            <span style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              display: 'block',
+              width: '100%',
+            }}>
+              {params.value}
+            </span>
+          </Tooltip>
+      )},
+        {field: "file_path", headerName: "File Path", width: 180, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
                 overflow: 'hidden',
@@ -27,7 +39,7 @@ const Files = () => {
               </span>
             </Tooltip>
         )},
-        {field: "hash", headerName: "File Hash (SHA-1)", renderCell: (params) => (
+        {field: "hash", headerName: "File Hash (SHA-1)", width: 200, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
                 overflow: 'hidden',
@@ -38,11 +50,22 @@ const Files = () => {
               }}> {params.value}
              </span>
             </Tooltip>
-          )},
-        {field: "file_creation", headerName: "Created At"},
-        {field: "file_modified", headerName: "Modified At"},
-        {field: "file_size", headerName: "File Size (Bits)"},
-        {field: "file_description", headerName: "File Summary"},
+        )},
+        {field: "file_size", headerName: "File Size (Bits)", width: 140},
+        {field: "file_creation", headerName: "Created At", width: 160},
+        {field: "file_modified", headerName: "Modified At", width: 160},
+        {field: "file_description", headerName: "File Summary", width: 220, renderCell: (params) => (
+          <Tooltip title={params.value}>
+            <span style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              display: 'block',
+              width: '100%',
+            }}> {params.value}
+           </span>
+          </Tooltip>
+      )},
 
     ];
 
@@ -60,8 +83,8 @@ const Files = () => {
                     file_name: file.file_name,
                     file_path: file.file_path,
                     hash: file.sha1_hash,
-                    file_creation: file.creation_ts,
-                    file_modified: file.last_mod_ts,
+                    file_creation: new Date(file.creation_ts).toLocaleString('en-GB'),
+                    file_modified: new Date(file.last_mod_ts).toLocaleString('en-GB'),
                     file_size: file.file_size,
                     file_description: file.file_description
                 });
@@ -75,7 +98,7 @@ const Files = () => {
        <p id="title">Endpoint Files</p>
        <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
-  pageSizeOptions={[10]} />
+  pageSizeOptions={[5, 10]} />
     </div>
 };
 

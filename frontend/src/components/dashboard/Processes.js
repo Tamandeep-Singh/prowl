@@ -7,7 +7,7 @@ import "./css/base.css"
 const Processes = () => {
     const [rows, setRows] = useState([]);
     const [paginationModel, setPaginationModel] = useState({
-        pageSize: 10,
+        pageSize: 5,
         page: 0,
     });
 
@@ -58,7 +58,7 @@ const Processes = () => {
                     ppid: process.ppid,
                     user: process.user,
                     command: process.command,
-                    start_time: process.start_time
+                    start_time: new Date(process.start_time).toLocaleString("en-GB")
                 });
               });
               setRows(processes);
@@ -70,7 +70,7 @@ const Processes = () => {
        <p id="title">Endpoint Processes</p>
        <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
-  pageSizeOptions={[10]} />
+  pageSizeOptions={[5, 10]} />
     </div>
 };
 

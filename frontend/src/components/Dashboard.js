@@ -14,6 +14,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import Endpoints from "./dashboard/Endpoints";
 import Processes from "./dashboard/Processes";
 import Files from "./dashboard/Files";
+import NetworkConnections from "./dashboard/NetworkConnections";
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
@@ -46,8 +47,8 @@ const Dashboard = () => {
             <SubMenu label="Hosts" icon={<DevicesIcon/>}>
                 <MenuItem onClick={() => setScreen("endpoints")} icon={<LaptopIcon/>}>Endpoints</MenuItem>
                 <MenuItem onClick={() => setScreen("processes")} icon={<MemoryIcon/>}>Processes</MenuItem>
-                <MenuItem onClick={() => setScreen("files")} icon={<NetworkWifiIcon/>}>Network Connections</MenuItem>
-                <MenuItem icon={<DescriptionIcon/>}>Files</MenuItem>
+                <MenuItem onClick={() => setScreen("network_connections")} icon={<NetworkWifiIcon/>}>Network Connections</MenuItem>
+                <MenuItem onClick={() => setScreen("files")} icon={<DescriptionIcon/>}>Files</MenuItem>
             </SubMenu>
             <MenuItem onClick={() => setScreen("reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
             <MenuItem icon={<SchoolIcon/>}>Learn</MenuItem>
@@ -56,6 +57,7 @@ const Dashboard = () => {
         </Sidebar>
         {screen === "endpoints" && <Endpoints/>}
         {screen === "processes" && <Processes/>}
+        {screen === "network_connections" && <NetworkConnections/>}
         {screen === "files" && <Files/>}
         </div>
     </div>
