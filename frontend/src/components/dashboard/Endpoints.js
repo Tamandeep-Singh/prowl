@@ -2,9 +2,13 @@ import { DataGrid } from "@mui/x-data-grid";
 import EndpointService from "../../services/endpoint_service";
 import { useEffect, useState } from "react";
 import "./css/base.css"
+import { useNavigate } from "react-router-dom";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Endpoints = () => {
     const [rows, setRows] = useState([]);
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
     const [paginationModel, setPaginationModel] = useState({
         pageSize: 5,
         page: 0,
@@ -23,6 +27,15 @@ const Endpoints = () => {
           const endpoints= [];
           const response = await EndpointService.fetchEndpoints();
           if (response.result.error) {
+            if (response.result.invalid) {
+                window.localStorage.clear();
+                return navigate("/login", {
+                  state: {
+                    externalError: "Invalid authentication details provided, please relogin."
+                  }
+                });
+            };
+            setError("Could not retrieve Endpoints from the API");
             return;
           };
           response.result.map(endpoint => {
@@ -42,7 +55,7 @@ const Endpoints = () => {
       }, []);
 
     return <div>
-       <p id="title" >Linked Endpoints</p>
+       <p id="title">Linked Endpoints {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>
        <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]} />

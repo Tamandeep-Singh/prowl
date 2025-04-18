@@ -7,13 +7,12 @@ const authMiddleware = {
             const token = authorization.substring(7);
             const isValidToken = await verifyAccessToken(token);
             if (!isValidToken) {
-                return res.status(401).json({result: {error: "Invalid access token (JWT) provided"}});
+                return res.status(200).json({result: {success: false, error: "Invalid access token (JWT) provided", invalid: true}});
             }
             req.userPayload = await decodeToken(token);
             return next();
         }
-        res.status(401).json({result: {error: "Missing access token (JWT)"}});
-        return next();
+        return res.status(200).json({result: {success: false, error: "Missing access token (JWT)"}});
     }
 }
 

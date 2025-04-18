@@ -11,3 +11,9 @@
    margin-bottom: 150px;
    margin-left:20px;
 }
+
+#api-error {
+    display:flex;
+    align-items: center;
+    font-size: 18px;
+}

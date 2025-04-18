@@ -3,9 +3,14 @@ import ProcessService from "../../services/process_service";
 import { useEffect, useState } from "react";
 import Tooltip from '@mui/material/Tooltip';
 import "./css/base.css"
+import { useNavigate } from "react-router-dom";
+import ErrorIcon from '@mui/icons-material/Error';
+
 
 const Processes = () => {
     const [rows, setRows] = useState([]);
+    const navigate = useNavigate();
+    const [error, setError] = useState("");
     const [paginationModel, setPaginationModel] = useState({
         pageSize: 5,
         page: 0,
@@ -48,6 +53,15 @@ const Processes = () => {
               const processes = [];
               const response = await ProcessService.fetchProcesses();
               if (response.result.error) {
+                if (response.result.invalid) {
+                    window.localStorage.clear();
+                    return navigate("/login", {
+                      state: {
+                        externalError: "Invalid authentication details provided, please relogin."
+                      }
+                    });
+                };
+                setError("Could not retrieve Processes from the API");
                 return;
               };
               response.result.map(process => {
@@ -67,7 +81,7 @@ const Processes = () => {
           }, []);
 
     return <div>
-       <p id="title">Endpoint Processes</p>
+       <p id="title">Endpoint Processes {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>
        <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]} />
