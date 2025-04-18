@@ -38,7 +38,7 @@ const Endpoints = () => {
             setError("Could not retrieve Endpoints from the API");
             return;
           };
-          response.result.map(endpoint => {
+          response.result.forEach(endpoint => {
             endpoints.push({
                 id: endpoint.host_uuid,
                 host_id: endpoint._id,
@@ -52,13 +52,13 @@ const Endpoints = () => {
           setRows(endpoints);
         };
         fetchEndpoints();
-      }, []);
+      }, [navigate]);
 
     return <div>
        <p id="title">Linked Endpoints {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>
        <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
-  pageSizeOptions={[5, 10]} />
+  pageSizeOptions={[5, 10]}/>
     </div>
 };
 

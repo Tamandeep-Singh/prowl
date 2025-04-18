@@ -89,7 +89,7 @@ const Files = () => {
                 setError("Could not retrieve Files from the API");
                 return;
               };
-              response.result.map(file => {
+              response.result.forEach(file => {
                 files.push({
                     id: file._id,
                     host_name: file.host_name || "null",
@@ -105,7 +105,7 @@ const Files = () => {
               setRows(files);
             };
             fetchFiles();
-          }, []);
+          }, [navigate]);
 
     return <div>
        <p id="title">Endpoint Files {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>

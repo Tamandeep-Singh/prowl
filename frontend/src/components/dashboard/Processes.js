@@ -64,7 +64,7 @@ const Processes = () => {
                 setError("Could not retrieve Processes from the API");
                 return;
               };
-              response.result.map(process => {
+              response.result.forEach(process => {
                 processes.push({
                     id: process._id,
                     host_name: process.host_name,
@@ -78,7 +78,7 @@ const Processes = () => {
               setRows(processes);
             };
             fetchProcesses();
-          }, []);
+          }, [navigate]);
 
     return <div>
        <p id="title">Endpoint Processes {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>

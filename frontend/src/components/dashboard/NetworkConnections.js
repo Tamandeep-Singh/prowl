@@ -56,7 +56,7 @@ const NetworkConnections = () => {
                 setError("Could not retrieve Network Connections from the API");
                 return;
               };
-              response.result.map(connection => {
+              response.result.forEach(connection => {
                 connections.push({
                   id: connection._id,
                   host_name: connection.host_name || "null",
@@ -73,7 +73,7 @@ const NetworkConnections = () => {
               setRows(connections);
             };
             fetchNetworkConnections();
-          }, []);
+          }, [navigate]);
 
     return <div>
        <p id="title">Endpoint Network Connections {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>

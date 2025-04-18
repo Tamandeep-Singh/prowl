@@ -7,7 +7,7 @@ import LoginService from "../services/login_service";
 import AppUtils from "../utils";
 import { useLocation } from "react-router-dom";
 
-const LoginPage = ({}) => {
+const LoginPage = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
