@@ -18,6 +18,8 @@ import NetworkConnections from "./dashboard/NetworkConnections";
 import CentralDashboard from "./dashboard/CentralDashboard";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CloseIcon from '@mui/icons-material/Close';
+import Alerts from "./dashboard/Alerts";
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
@@ -56,6 +58,7 @@ const Dashboard = () => {
                 <MenuItem onClick={() => setScreen("network_connections")} icon={<NetworkWifiIcon/>}>Network Connections</MenuItem>
                 <MenuItem onClick={() => setScreen("files")} icon={<DescriptionIcon/>}>Files</MenuItem>
             </SubMenu>
+            <MenuItem onClick={() => setScreen("alerts")} icon={<CircleNotificationsIcon/>}>Alerts</MenuItem>
             <MenuItem onClick={() => setScreen("reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
             <MenuItem icon={<SchoolIcon/>}>Learn</MenuItem>
             <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
@@ -66,6 +69,7 @@ const Dashboard = () => {
         {screen === "processes" && <Processes/>}
         {screen === "network_connections" && <NetworkConnections/>}
         {screen === "files" && <Files/>}
+        {screen === "alerts" && <Alerts/>}
         </div>
     </div>
     
