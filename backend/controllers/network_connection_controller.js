@@ -45,6 +45,11 @@ class NetworkConnectionController {
         const result = await MongoUtilities.getDocumentsByField(NetworkConnection, fields);
         return result;
     };
+
+    static getNetworkConnectionsCount = async () => {
+        const result = await MongoUtilities.countDocumentsInCollection(NetworkConnection);
+        return result;
+    };
 };
 
 module.exports = NetworkConnectionController;

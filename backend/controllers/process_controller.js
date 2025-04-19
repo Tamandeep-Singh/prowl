@@ -39,13 +39,18 @@ class ProcessController {
         if (filteredProcesses.length === 0) {
             return { success: true, message: "No new processes were inserted, all duplicates were found."};
         };
-        // await SecurityController.analyseProcesses(filteredProcesses);
         const result = await MongoUtilities.insertManyDocuments(Process, processes);
+        await SecurityController.analyseProcesses(result);
         return result;
     };
 
     static getProcessList = async (fields) => {
         const result = await MongoUtilities.getDocumentsByField(Process, fields);
+        return result;
+    };
+
+    static getProcessesCount = async () => {
+        const result = await MongoUtilities.countDocumentsInCollection(Process);
         return result;
     };
 };

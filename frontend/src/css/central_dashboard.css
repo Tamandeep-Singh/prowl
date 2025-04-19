@@ -2,8 +2,12 @@
     margin:0px;
     font-family: "Cairo";
     font-size: 26px;
-    margin-left: 20px;
+    margin-left: 28px;
     margin-top: 10px;
+}
+
+#card-wrapper {
+    
 }
 
 .card {
@@ -11,14 +15,17 @@
     border-radius: 16px;
     background-color: #2E333E;
     color: white;
+    width:fit-content;
 }
 
 .status__card {
     margin-left: 20px;
-    padding: 10px;
+    padding: 15px;
 }
 
 .status__card p {
     font-size: 14px;
     color: #B3B6BD;
+    margin-top:12px;
 }
+

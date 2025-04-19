@@ -15,6 +15,14 @@ class MongoUtilities  {
         catch (error) { return null; };
     };
 
+    static countDocumentsInCollection = async (model) => {
+        try {
+            const count = await model.countDocuments({});
+            return { success: true, count, model};
+        }
+        catch (error) { return { success: false, error }; };
+    };
+
     static insertManyDocuments = async (model, documents) => {
         try {
             const result = await model.insertMany(documents);
@@ -26,14 +34,6 @@ class MongoUtilities  {
     static getDocumentsByField = async (model, field) => {
         try {
             const document = await model.find(field);
-            return document;
-        }
-        catch (error) { return null; };
-    };
-
-    static getDocumentFields = async (model, identifier, fields) => {
-        try {
-            const document = await model.findOne(identifier).select(fields);
             return document;
         }
         catch (error) { return null; };

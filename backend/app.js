@@ -17,12 +17,11 @@ app.get("/ping", async (req, res) => {
 
 app.use("/api/users", require("./routes/user.route"));
 app.use("/api/endpoints", require("./routes/endpoint.route"));
-app.use("/api/processes", authMiddleware.checkAccessToken, require("./routes/process.route"));
-app.use("/api/files", authMiddleware.checkAccessToken, require("./routes/file.route"));
-app.use("/api/network_connections", authMiddleware.checkAccessToken, require("./routes/network.route"));
+app.use("/api/processes", require("./routes/process.route"));
+app.use("/api/files", require("./routes/file.route"));
+app.use("/api/network_connections", require("./routes/network.route"));
+app.use("/api/alerts", require("./routes/alert.route"));
 app.use("/api/console", authMiddleware.checkAccessToken, require("./routes/console.route"));
-app.use("/api/email", require("./routes/email.route"));
-app.use("/api/discord", require("./routes/discord.route"));
 
 const setupServer = async () => {
     await connectToMongoDB();

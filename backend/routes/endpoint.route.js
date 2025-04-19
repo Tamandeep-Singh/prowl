@@ -19,4 +19,9 @@ endpointRouter.post("/ingest", async (req, res) => {
     return res.status(200).json({result});
 });
 
+endpointRouter.get("/count", async (req, res) => {
+    const result = await endpointController.getEndpointsCount();
+    return res.status(200).json({result});
+});
+
 module.exports = endpointRouter;
