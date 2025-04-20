@@ -1,6 +1,23 @@
 const express = require("express");
 const userRouter = express.Router();
 const userController = require("../controllers/user_controller");
+const authMiddleware = require("../middleware/auth");
+
+userRouter.get("/list", authMiddleware.checkAccessToken, async (req, res) => {
+    if (req.userPayload.role !== "administrator") {
+        return res.status(200).json({ result: { success: false, error: "You do not have the required permissions to access this route."}});
+    }
+    const result = await userController.getUsersList();
+    return res.status(200).json({result});
+});
+
+userRouter.post("/update/:id", authMiddleware.checkAccessToken, async (req, res) => {
+    if (req.userPayload.role !== "administrator") {
+        return res.status(200).json({ result: { success: false, error: "You do not have the required permissions to access this route."}});
+    };
+    const result = await userController.updateUser(req.params.id, req.body.user);
+    return res.status(200).json({result});
+});
 
 userRouter.post("/register", async (req, res) => {
     const result = await userController.createUser(req.body.user);

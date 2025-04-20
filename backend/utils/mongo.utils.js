@@ -1,3 +1,5 @@
+const { model } = require("mongoose");
+
 class MongoUtilities  {
     static doesDocumentExist = async (model, field) => {
         try {
@@ -37,6 +39,14 @@ class MongoUtilities  {
             return document;
         }
         catch (error) { return null; };
+    };
+
+    static updateDocumentById = async (model, id, fields) => {
+        try {
+            const result = await model.updateOne({ _id: id }, { $set: fields});
+            return result;
+        }
+        catch (error) { return { success: false, error }};
     };
 
     static getDocumentObjectID = async (model, field) => {

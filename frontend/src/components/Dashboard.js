@@ -20,6 +20,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CloseIcon from '@mui/icons-material/Close';
 import Alerts from "./dashboard/Alerts";
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import GroupIcon from '@mui/icons-material/Group';
+import AppUtils from "../utils";
+import ProwlUsers from "./dashboard/ProwlUsers";
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
@@ -62,6 +66,9 @@ const Dashboard = () => {
             <MenuItem onClick={() => setScreen("reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
             <MenuItem icon={<SchoolIcon/>}>Learn</MenuItem>
             <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
+            {AppUtils.isUserAdmin() && <SubMenu label="Admin" icon={<AdminPanelSettingsIcon/>}>
+                <MenuItem onClick={() => setScreen("prowl_users")} icon={<GroupIcon/>}>Prowl Users</MenuItem>
+            </SubMenu>}
         </Menu>
         </Sidebar>
         {screen === "central_dashboard" && <CentralDashboard/>}
@@ -70,6 +77,7 @@ const Dashboard = () => {
         {screen === "network_connections" && <NetworkConnections/>}
         {screen === "files" && <Files/>}
         {screen === "alerts" && <Alerts/>}
+        {screen === "prowl_users" && <ProwlUsers/>}
         </div>
     </div>
     

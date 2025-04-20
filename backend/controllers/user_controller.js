@@ -13,6 +13,16 @@ class UserController {
         return user;
     };
 
+    static getUsersList = async (fields) => {
+        const result = await MongoUtilities.getAllDocuments(User, fields);
+        return result;
+    };
+    
+    static updateUser = async (userId, fields) => {
+        const result = await MongoUtilities.updateDocumentById(User, userId, fields);
+        return result;
+    };
+
     static createUser = async (user) => {
         const result = await MongoUtilities.insertDocument(User, user);
         if (result.error) { 

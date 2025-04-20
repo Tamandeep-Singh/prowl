@@ -1,7 +1,7 @@
+import "../../css/base.css";
 import { DataGrid } from "@mui/x-data-grid";
 import EndpointService from "../../services/endpoint_service";
 import { useEffect, useState } from "react";
-import "../../css/base.css";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
 

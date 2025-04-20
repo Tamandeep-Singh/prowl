@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 export default class AppUtils {
     static getAuthToken = () => {
         return window.localStorage.getItem("authToken");
@@ -17,6 +19,21 @@ export default class AppUtils {
 
     static isUserLoggedIn = () => {
         return this.getAuthToken() !== null;
+    };
+
+    static isUserAdmin = () => {
+        try {
+            const authToken = this.getAuthToken();
+            if (authToken !== null) {
+                const payload = jwtDecode(authToken);
+                return payload.role === "administrator";
+            }
+            return false;
+        }
+        catch (error) {
+            console.log("An error occurred when decoding the JWT Token:", error);
+            return false;
+        }
     };
 
 };
