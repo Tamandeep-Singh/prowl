@@ -9,11 +9,11 @@ export default class ApiService {
             const response = await axios.post(`${this.endpoint}/api/users/refresh/token`, {
                 refreshToken: AppUtils.getRefreshToken()
             });
-            if (response.data.error) {
+            if (response.data?.error) {
                 return false;
             };
-            AppUtils.setAuthToken(response.data.result.accessToken);
-            AppUtils.setRefreshToken(response.data.result.refreshToken);
+            AppUtils.setAuthToken(response.data.result?.accessToken);
+            AppUtils.setRefreshToken(response.data.result?.refreshToken);
             return true;
         }
         catch (error) {
@@ -28,8 +28,8 @@ export default class ApiService {
                     "Authorization": `Bearer ${AppUtils.getAuthToken()}`
                 }
             });
-            if (response.data.result.error) {
-                if (response.data.result.invalid) {
+            if (response.data.result?.error) {
+                if (response.data.result?.invalid) {
                     const didTokenRefresh = await this.refreshToken();
                     if (!didTokenRefresh) {
                         return { result: { success: false, error: "Unable to consume refresh token", invalid: true}}
@@ -57,8 +57,8 @@ export default class ApiService {
                     "Authorization": `Bearer ${AppUtils.getAuthToken()}`
                 }
             });
-            if (response.data.result.error) {
-                if (response.data.result.invalid) {
+            if (response.data.result?.error) {
+                if (response.data.result?.invalid) {
                     const didTokenRefresh = await this.refreshToken();
                     if (!didTokenRefresh) {
                         return { result: { success: false, error: "Unable to consume refresh token", invalid: true}}

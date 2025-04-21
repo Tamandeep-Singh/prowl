@@ -2,9 +2,9 @@ import "../../css/base.css";
 import { DataGrid } from "@mui/x-data-grid";
 import ProcessService from "../../services/process_service";
 import { useEffect, useState } from "react";
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
-import ErrorIcon from '@mui/icons-material/Error';
+import ErrorIcon from "@mui/icons-material/Error";
 
 
 const Processes = () => {
@@ -23,11 +23,11 @@ const Processes = () => {
         {field: "user", headerName: "User", width: 100, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                display: 'block',
-                width: '100%',
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "block",
+                width: "100%",
               }}>
                 {params.value}
               </span>
@@ -36,11 +36,11 @@ const Processes = () => {
         {field: "command", headerName: "Command", width: 550, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                display: 'block',
-                width: '100%',
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "block",
+                width: "100%",
               }}> {params.value}
              </span>
             </Tooltip>

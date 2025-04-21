@@ -13,6 +13,11 @@ reportRouter.get("/list", async (req, res) => {
     return res.status(200).json({result: reports});
 });
 
+reportRouter.get("/:id", async (req, res) => {
+    const result = await reportController.getReportByAlertID(req.params.id);
+    return res.status(200).json({result});
+});
+
 reportRouter.get("/count", async (req, res) => {
     const result = await reportController.getReportsCount();
     return res.status(200).json({result});

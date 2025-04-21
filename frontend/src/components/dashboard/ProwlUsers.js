@@ -4,7 +4,7 @@ import ProwlUsersService from "../../services/prowl_users_service";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Snackbar, Alert} from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Snackbar, Alert} from "@mui/material";
 
 const ProwlUsers = () => {
     const [rows, setRows] = useState([]);
@@ -56,7 +56,7 @@ const ProwlUsers = () => {
         {field: "role", headerName: "User Role", width: 120},
         {field: "date_added", headerName: "Added On", width: 180},
         {field: "date_updated", headerName: "Modified On", width: 180},
-        {field: 'edit_user', headerName: 'Edit User', width: 190, sortable: false, filterable: false, renderCell: (params) => (
+        {field: "edit_user", headerName: "Edit User", width: 190, sortable: false, filterable: false, renderCell: (params) => (
             <Button variant="contained" size="small" onClick={() => onUserEditPopupClick(params.row)}>Edit User</Button>),
         }
     ];

@@ -41,6 +41,14 @@ class MongoUtilities  {
         catch (error) { return null; };
     };
 
+    static getDocumentByField = async (model, field) => {
+        try {
+            const document = await model.findOne(field);
+            return document;
+        }
+        catch (error) { return null; };
+    };
+
     static updateDocumentById = async (model, id, fields) => {
         try {
             const result = await model.updateOne({ _id: id }, { $set: fields});

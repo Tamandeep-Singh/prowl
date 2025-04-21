@@ -2,7 +2,7 @@ import "../../css/base.css";
 import { DataGrid } from "@mui/x-data-grid";
 import NetworkConnectionService from "../../services/network_connection_service";
 import { useEffect, useState } from "react";
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
 
@@ -20,11 +20,11 @@ const NetworkConnections = () => {
         {field: "command", headerName: "Command", width: 180, renderCell: (params) => (
                   <Tooltip title={params.value}>
                     <span style={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      display: 'block',
-                      width: '100%',
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      display: "block",
+                      width: "100%",
                     }}>
                       {params.value}
                     </span>
@@ -36,7 +36,7 @@ const NetworkConnections = () => {
         {field: "remote_ip", headerName: "Remote Address IP", width: 140},
         {field: "remote_port", headerName: "Remote Port", width: 110},
         {field: "status", headerName: "Connection Status", width: 160},
-        {field: "date_added", headerName: "Date Added", width: 220},
+        {field: "date_added", headerName: "Added On", width: 220},
         
     ];
 

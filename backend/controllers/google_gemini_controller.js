@@ -9,7 +9,7 @@ class GoogleGeminiController {
         try {
             const config = {
                 model: "gemini-2.0-flash",
-                contents: `Analyse this alert and provide a detailed summary on any potential Indicators of Compromise (IOCs) or Indicators of Attacks (IOAs) and if the designated severity is accurate. Also provide potential remediation strategies or actions to mitigate this threat on the associated endpoint via SSH. Alert: ${JSON.stringify(alert)}`
+                contents: `Analyse this alert and provide a detailed summary on any potential Indicators of Compromise (IOCs) or Indicators of Attacks (IOAs) and if the designated severity is accurate. Also provide potential remediation strategies or actions to mitigate this threat on the associated endpoint via SSH. Be concise (so that the summary fits an applicable User Interface) and do not use any markdown elements, the output will be rendered in paragraph tags for HTML, so be considerate. Alert: ${JSON.stringify(alert)}`
             };
             const response = await googleAI.models.generateContent(config);
             const report = await ReportController.insertReport({

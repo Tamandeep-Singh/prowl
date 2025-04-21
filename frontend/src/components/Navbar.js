@@ -20,7 +20,6 @@ const Navbar = () => {
             <ul>
                 <li><a href="/dashboard">Dashboard</a></li>
                 <li><a href="/endpoint-rtc">Endpoint RTC</a></li>
-                <li><a href="/integrations">Integrations</a></li>
                 <li><a href="/account">Account</a></li>
                 <li><a href="/logout" onClick={handleLogoutRoute}>Logout</a></li>
             </ul>

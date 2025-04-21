@@ -24,6 +24,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import GroupIcon from '@mui/icons-material/Group';
 import AppUtils from "../utils";
 import ProwlUsers from "./dashboard/ProwlUsers";
+import Reports from "./dashboard/Reports";
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
@@ -78,6 +79,7 @@ const Dashboard = () => {
         {screen === "files" && <Files/>}
         {screen === "alerts" && <Alerts/>}
         {screen === "prowl_users" && <ProwlUsers/>}
+        {screen === "reports" && <Reports/>}
         </div>
     </div>
     

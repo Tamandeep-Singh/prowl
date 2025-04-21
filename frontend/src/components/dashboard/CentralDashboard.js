@@ -1,8 +1,8 @@
 import "../../css/central_dashboard.css";
 import { useState, useEffect } from "react";
 import ApiService from "../../services/api_service";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const CentralDashboard = () => {
     const [status, setStatus] = useState(false);

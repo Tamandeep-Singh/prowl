@@ -2,7 +2,7 @@ import "../../css/base.css";
 import { DataGrid } from "@mui/x-data-grid";
 import FileService from "../../services/file_service";
 import { useEffect, useState } from "react";
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from "@mui/material/Tooltip";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
 
@@ -20,11 +20,11 @@ const Files = () => {
         {field: "file_name", headerName: "File Name", width: 150, renderCell: (params) => (
           <Tooltip title={params.value}>
             <span style={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              display: 'block',
-              width: '100%',
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              display: "block",
+              width: "100%",
             }}>
               {params.value}
             </span>
@@ -33,11 +33,11 @@ const Files = () => {
         {field: "file_path", headerName: "File Path", width: 180, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                display: 'block',
-                width: '100%',
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "block",
+                width: "100%",
               }}>
                 {params.value}
               </span>
@@ -46,11 +46,11 @@ const Files = () => {
         {field: "hash", headerName: "File Hash (SHA-1)", width: 200, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                display: 'block',
-                width: '100%',
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "block",
+                width: "100%",
               }}> {params.value}
              </span>
             </Tooltip>
@@ -61,11 +61,11 @@ const Files = () => {
         {field: "file_description", headerName: "File Summary", width: 220, renderCell: (params) => (
           <Tooltip title={params.value}>
             <span style={{
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              display: 'block',
-              width: '100%',
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              display: "block",
+              width: "100%",
             }}> {params.value}
            </span>
           </Tooltip>
@@ -96,8 +96,8 @@ const Files = () => {
                     file_name: file.file_name,
                     file_path: file.file_path,
                     hash: file.sha1_hash,
-                    file_creation: new Date(file.creation_ts).toLocaleString('en-GB'),
-                    file_modified: new Date(file.last_mod_ts).toLocaleString('en-GB'),
+                    file_creation: new Date(file.creation_ts).toLocaleString("en-GB"),
+                    file_modified: new Date(file.last_mod_ts).toLocaleString("en-GB"),
                     file_size: file.file_size,
                     file_description: file.file_description
                 });
