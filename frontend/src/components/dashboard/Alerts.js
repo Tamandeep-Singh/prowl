@@ -6,6 +6,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
 import Button from "@mui/material/Button";
+import ReportsService from "../../services/report_service";
 
 const Alerts = () => {
     const [rows, setRows] = useState([]);
@@ -15,6 +16,18 @@ const Alerts = () => {
         pageSize: 5,
         page: 0,
     });
+
+    const generateReport = async (row) => {
+      const response = await ReportsService.generateReport({
+        alert_id: row.id,
+        host_name: row.host_name,
+        trigger: row.trigger,
+        message: row.message,
+        severity: row.severity,
+        score: row.score,
+      });
+      console.log(response)
+    };
 
     const columns = [
         {field: "host_name", headerName: "Host Name", width: 130},
@@ -50,8 +63,8 @@ const Alerts = () => {
         {field: "score", headerName: "Score", width: 80},
         {field: "date_added", headerName: "Added On", width: 180},
         {field: 'generate_report', headerName: 'Dynamic Analysis', width: 240, sortable: false, filterable: false, renderCell: (params) => (
-            <Button variant="contained" size="small" onClick={() => alert(JSON.stringify(params.row))}>Generate Report</Button>),
-        } // Handler Function for Reports not currently defined.
+            <Button variant="contained" size="small" onClick={() => generateReport(params.row)}>Generate Report</Button>),
+        } 
     ];
 
      useEffect(() => {

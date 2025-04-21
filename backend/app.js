@@ -21,6 +21,7 @@ app.use("/api/processes", require("./routes/process.route"));
 app.use("/api/files", require("./routes/file.route"));
 app.use("/api/network_connections", require("./routes/network.route"));
 app.use("/api/alerts", require("./routes/alert.route"));
+app.use("/api/reports", require("./routes/report.route"));
 app.use("/api/console", authMiddleware.checkAccessToken, require("./routes/console.route"));
 
 const setupServer = async () => {
