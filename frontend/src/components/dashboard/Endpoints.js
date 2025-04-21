@@ -4,10 +4,14 @@ import EndpointService from "../../services/endpoint_service";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
+import { IconButton } from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
+import { Dialog, DialogTitle, DialogContent, Button, DialogActions } from "@mui/material";
 
 const Endpoints = () => {
     const [rows, setRows] = useState([]);
     const [error, setError] = useState("");
+    const [showInformationPopup, setShowInformationPopup] = useState(false);
     const navigate = useNavigate();
     const [paginationModel, setPaginationModel] = useState({
         pageSize: 5,
@@ -21,6 +25,14 @@ const Endpoints = () => {
         {field: "host_os_version", headerName: "OS Version", width: 200},
         {field: "host_link_date", headerName: "Added On", width: 240},
     ];
+
+    const onShowInformationPopup = () => {
+      setShowInformationPopup(true);
+    };
+
+    const onCloseShowInformationPopup = () => {
+      setShowInformationPopup(false);
+    };
 
     useEffect(() => {
         const fetchEndpoints = async () => {
@@ -55,10 +67,20 @@ const Endpoints = () => {
       }, [navigate]);
 
     return <div>
-       <p id="title">Linked Endpoints {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>
-       <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
+      <p id="title">Linked Endpoints <IconButton onClick={onShowInformationPopup} sx={{ marginBottom: 0.1}}><InfoIcon sx={{ color: "white"}}/></IconButton></p>
+      {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}
+      <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]}/>
+   <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
+      <DialogTitle>Linked Endpoints Page Guide</DialogTitle>
+      <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
+         <p sx={{ marginBottom: 2 }}>Hello World</p>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>
+      </DialogActions>
+    </Dialog>
     </div>
 };
 

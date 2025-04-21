@@ -3,6 +3,8 @@ import EndpointService from "../services/endpoint_service";
 import Navbar from "./Navbar";
 import Select from 'react-select';
 import "../css/EndpointRTC.css";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress, Typography, IconButton} from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 
 const EndpointRTC = () => {
   const [endpoints, setEndpoints] = useState([]);
@@ -12,6 +14,15 @@ const EndpointRTC = () => {
   const [command, setCommand] = useState("");
   const [commandHistory, setCommandHistory] = useState([]);
   const [sessionTime, setSessionTime] = useState("");
+  const [showInformationPopup, setShowInformationPopup] = useState(false);
+
+  const onShowInformationPopup = () => {
+    setShowInformationPopup(true);
+  };
+
+  const onCloseShowInformationPopup = () => {
+    setShowInformationPopup(false);
+  };
   
 
   const onConnectToEndpoint = async (event) => {
@@ -103,6 +114,7 @@ const EndpointRTC = () => {
   return <div id="rtc-wrapper">
     <Navbar/>
     <div className="select__div">
+      <IconButton onClick={onShowInformationPopup} sx={{ marginBottom: 0.1}}><InfoIcon sx={{ color: "white"}}/></IconButton>
       <Select id="select" placeholder="Select Endpoint for SSH Connection" value={endpoint} options={endpoints} onChange={handleEndpointChange}/>
       <form className="ssh-login__form">
         <input id="username"  placeholder="Enter Username" required type="text" value={username} onChange={({ target }) => setUsername(target.value)}/>
@@ -114,6 +126,15 @@ const EndpointRTC = () => {
       <pre>{commandHistory.join("\n")}</pre>
     </div>
     <textarea id="command-input" value={command} placeholder="Enter your command here" onChange={handleCommandInputChange} onKeyDown={handleCommandKeyEvent}></textarea>
+  <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
+    <DialogTitle>Endpoint Real Time Console (RTC) Page Guide</DialogTitle>
+    <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
+       <p sx={{ marginBottom: 2 }}>Hello World</p>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>
+    </DialogActions>
+  </Dialog>
   </div>
 }
 

@@ -4,18 +4,28 @@ import ReportsService from "../../services/report_service";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Tooltip} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Tooltip, IconButton} from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 
 const Reports = () => {
     const [rows, setRows] = useState([]);
     const [error, setError] = useState("");
     const [showReportPopup, setShowReportPopup] = useState(false);
+    const [showInformationPopup, setShowInformationPopup] = useState(false);
     const [reportData, setReportData] = useState(null);
     const navigate = useNavigate();
     const [paginationModel, setPaginationModel] = useState({
         pageSize: 5,
         page: 0,
     });
+
+    const onShowInformationPopup = () => {
+      setShowInformationPopup(true);
+    };
+
+    const onCloseShowInformationPopup = () => {
+      setShowInformationPopup(false);
+    };
 
     const onCloseReportPopup = () => {
         setShowReportPopup(false);
@@ -95,8 +105,9 @@ const Reports = () => {
       }, [navigate]);
 
     return <div>
-       <p id="title">AI Reports {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>
-       <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
+      <p id="title">AI Reports <IconButton onClick={onShowInformationPopup} sx={{ marginBottom: 0.1}}><InfoIcon sx={{ color: "white"}}/></IconButton></p>
+      {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}
+      <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]}/>
   <Dialog open={showReportPopup} onClose={onCloseReportPopup} fullWidth maxWidth="sm">
@@ -111,6 +122,15 @@ const Reports = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseReportPopup}color="primary">Close</Button>
+      </DialogActions>
+    </Dialog>
+    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
+      <DialogTitle>AI Reports Page Guide</DialogTitle>
+      <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
+         <p sx={{ marginBottom: 2 }}>Hello World</p>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>
       </DialogActions>
     </Dialog>
     </div>

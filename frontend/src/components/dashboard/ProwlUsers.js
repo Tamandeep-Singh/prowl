@@ -4,7 +4,8 @@ import ProwlUsersService from "../../services/prowl_users_service";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorIcon from "@mui/icons-material/Error";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Snackbar, Alert} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Snackbar, Alert, IconButton} from "@mui/material";
+import InfoIcon from "@mui/icons-material/Info";
 
 const ProwlUsers = () => {
     const [rows, setRows] = useState([]);
@@ -12,6 +13,7 @@ const ProwlUsers = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [updateUser, setUpdateUser] = useState({});
     const [showSnackbar, setShowSnackbar] = useState(false);
+    const [showInformationPopup, setShowInformationPopup] = useState(false);
     const [editError, setEditError] = useState(false);
     const [refetch, setRefetch] = useState(false);
     const navigate = useNavigate();
@@ -19,6 +21,16 @@ const ProwlUsers = () => {
         pageSize: 5,
         page: 0,
     });
+
+
+    const onShowInformationPopup = () => {
+      setShowInformationPopup(true);
+    };
+
+    const onCloseShowInformationPopup = () => {
+      setShowInformationPopup(false);
+    };
+
 
     const onUserEditPopupClick = (user) => {
         setShowPopup(true);
@@ -95,8 +107,9 @@ const ProwlUsers = () => {
       }, [navigate, refetch]);
 
     return <div>
-       <p id="title">Admin Panel: Prowl Users {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}</p>
-       <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
+      <p id="title">Admin Panel: Prowl Users <IconButton onClick={onShowInformationPopup} sx={{ marginBottom: 0.1}}><InfoIcon sx={{ color: "white"}}/></IconButton></p>
+      {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}
+      <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]}/>
    <Dialog open={showPopup} onClose={() => setShowPopup(false)}>
@@ -113,6 +126,15 @@ const ProwlUsers = () => {
     <Snackbar open={showSnackbar} autoHideDuration={1500} onClose={onCloseSnackbarClick} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
         {editError === false ?  <Alert severity="success" sx={{ width: "100%" }}>Changes were successfully made!</Alert> : <Alert severity="error" sx={{ width: "100%" }}>An error occured, changes were not made!</Alert>}
       </Snackbar>
+    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
+      <DialogTitle>Prowl Users Page Guide</DialogTitle>
+      <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
+         <p sx={{ marginBottom: 2 }}>Hello World</p>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>
+      </DialogActions>
+    </Dialog>
     </div>
 };
 
