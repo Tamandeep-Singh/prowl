@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import "../css/Dashboard.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar} from 'react-pro-sidebar';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import DevicesIcon from '@mui/icons-material/Devices';
@@ -25,12 +26,13 @@ import GroupIcon from '@mui/icons-material/Group';
 import AppUtils from "../utils";
 import ProwlUsers from "./dashboard/ProwlUsers";
 import Reports from "./dashboard/Reports";
+import EducationHub from "./dashboard/EducationHub";
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
-const Dashboard = () => {
-    const [screen, setScreen] = useState("central_dashboard");
+const Dashboard = ({screen}) => {
     const [collapsed, setCollapsed] = useState(false);
+    const navigate = useNavigate();
     const { collapseSidebar } = useProSidebar();
 
     return <div id="dashboard-wrapper">
@@ -42,7 +44,7 @@ const Dashboard = () => {
         <Menu
             rootStyles={({
                 height: "100vh",
-                backgroundColor: "#343944"
+                backgroundColor: "#343944",
             })}
             menuItemStyles={{
                 button: {
@@ -56,19 +58,19 @@ const Dashboard = () => {
                 setCollapsed(!collapsed)
                 collapseSidebar();
             }}>Collapse</MenuItem>
-            <MenuItem onClick={() => setScreen("central_dashboard")} icon={<DashboardIcon/>}>Central Dashboard</MenuItem>
+            <MenuItem onClick={() => navigate("/dashboard")} icon={<DashboardIcon/>}>Central Dashboard</MenuItem>
             <SubMenu label="Hosts" icon={<DevicesIcon/>}>
-                <MenuItem onClick={() => setScreen("endpoints")} icon={<LaptopIcon/>}>Endpoints</MenuItem>
-                <MenuItem onClick={() => setScreen("processes")} icon={<MemoryIcon/>}>Processes</MenuItem>
-                <MenuItem onClick={() => setScreen("network_connections")} icon={<NetworkWifiIcon/>}>Network Connections</MenuItem>
-                <MenuItem onClick={() => setScreen("files")} icon={<DescriptionIcon/>}>Files</MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard/endpoints")} icon={<LaptopIcon/>}>Endpoints</MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard/endpoints/processes")} icon={<MemoryIcon/>}>Processes</MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard/endpoints/network-connections")} icon={<NetworkWifiIcon/>}>Network Connections</MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard/endpoints/files")} icon={<DescriptionIcon/>}>Files</MenuItem>
             </SubMenu>
-            <MenuItem onClick={() => setScreen("alerts")} icon={<CircleNotificationsIcon/>}>Alerts</MenuItem>
-            <MenuItem onClick={() => setScreen("reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
-            <MenuItem icon={<SchoolIcon/>}>Learn</MenuItem>
+            <MenuItem onClick={() => navigate("/dashboard/alerts")} icon={<CircleNotificationsIcon/>}>Alerts</MenuItem>
+            <MenuItem onClick={() => navigate("/dashboard/ai-reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
+            <MenuItem onClick={() => navigate("/dashboard/education-hub")} icon={<SchoolIcon/>}>Education Hub</MenuItem>
             <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
             {AppUtils.isUserAdmin() && <SubMenu label="Admin" icon={<AdminPanelSettingsIcon/>}>
-                <MenuItem onClick={() => setScreen("prowl_users")} icon={<GroupIcon/>}>Prowl Users</MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard/admin/prowl-users")} icon={<GroupIcon/>}>Prowl Users</MenuItem>
             </SubMenu>}
         </Menu>
         </Sidebar>
@@ -80,6 +82,7 @@ const Dashboard = () => {
         {screen === "alerts" && <Alerts/>}
         {screen === "prowl_users" && <ProwlUsers/>}
         {screen === "reports" && <Reports/>}
+        {screen === "education_hub" && <EducationHub/>}
         </div>
     </div>
     
