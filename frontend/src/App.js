@@ -21,7 +21,8 @@ function App() {
     /dashboard/alerts
     /dashboard/ai-reports
     /dashboard/admin/prowl-users
-    /dashboard/education-hub
+    /dashboard/education/articles
+    /dashboard/education/articles/:slug
     /endpoint-rtc
     /account
     ----------
@@ -38,7 +39,8 @@ function App() {
           <Route exact path="/dashboard/alerts" element={<AuthenticatedRoute><Dashboard screen="alerts"/></AuthenticatedRoute>}></Route>
           <Route exact path="/dashboard/ai-reports" element={<AuthenticatedRoute><Dashboard screen="reports"/></AuthenticatedRoute>}></Route>
           <Route exact path="/dashboard/admin/prowl-users" element={<AuthenticatedRoute><Dashboard screen="prowl_users"/></AuthenticatedRoute>}></Route>
-          <Route exact path="/dashboard/education-hub" element={<AuthenticatedRoute><Dashboard screen="education_hub"/></AuthenticatedRoute>}></Route>
+          <Route exact path="/dashboard/education/articles" element={<AuthenticatedRoute><Dashboard screen="education_hub"/></AuthenticatedRoute>}></Route>
+          <Route path="/dashboard/education/articles/:slug" element={<AuthenticatedRoute><Dashboard screen="render_article_slug"/></AuthenticatedRoute>}></Route>
           <Route exact path="/endpoint-rtc" element={<AuthenticatedRoute><EndpointRTC/></AuthenticatedRoute>}></Route>
           <Route exact path="/account" element={<AuthenticatedRoute><Account/></AuthenticatedRoute>}></Route>
           <Route path="*" element={<NotFound/>}></Route>

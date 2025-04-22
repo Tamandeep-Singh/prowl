@@ -17,7 +17,7 @@ import Processes from "./dashboard/Processes";
 import Files from "./dashboard/Files";
 import NetworkConnections from "./dashboard/NetworkConnections";
 import CentralDashboard from "./dashboard/CentralDashboard";
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import CloseIcon from '@mui/icons-material/Close';
 import Alerts from "./dashboard/Alerts";
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -27,13 +27,15 @@ import AppUtils from "../utils";
 import ProwlUsers from "./dashboard/ProwlUsers";
 import Reports from "./dashboard/Reports";
 import EducationHub from "./dashboard/EducationHub";
+import { useParams } from "react-router-dom";
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
-const Dashboard = ({screen}) => {
+const Dashboard = ({ screen }) => {
     const [collapsed, setCollapsed] = useState(false);
     const navigate = useNavigate();
     const { collapseSidebar } = useProSidebar();
+    const { slug } = useParams();
 
     return <div id="dashboard-wrapper">
         <Navbar/>
@@ -58,7 +60,7 @@ const Dashboard = ({screen}) => {
                 setCollapsed(!collapsed)
                 collapseSidebar();
             }}>Collapse</MenuItem>
-            <MenuItem onClick={() => navigate("/dashboard")} icon={<DashboardIcon/>}>Central Dashboard</MenuItem>
+            <MenuItem onClick={() => navigate("/dashboard")} icon={<SpaceDashboardIcon/>}>Central Dashboard</MenuItem>
             <SubMenu label="Hosts" icon={<DevicesIcon/>}>
                 <MenuItem onClick={() => navigate("/dashboard/endpoints")} icon={<LaptopIcon/>}>Endpoints</MenuItem>
                 <MenuItem onClick={() => navigate("/dashboard/endpoints/processes")} icon={<MemoryIcon/>}>Processes</MenuItem>
@@ -67,7 +69,7 @@ const Dashboard = ({screen}) => {
             </SubMenu>
             <MenuItem onClick={() => navigate("/dashboard/alerts")} icon={<CircleNotificationsIcon/>}>Alerts</MenuItem>
             <MenuItem onClick={() => navigate("/dashboard/ai-reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
-            <MenuItem onClick={() => navigate("/dashboard/education-hub")} icon={<SchoolIcon/>}>Education Hub</MenuItem>
+            <MenuItem onClick={() => navigate("/dashboard/education/articles")} icon={<SchoolIcon/>}>Education Hub</MenuItem>
             <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
             {AppUtils.isUserAdmin() && <SubMenu label="Admin" icon={<AdminPanelSettingsIcon/>}>
                 <MenuItem onClick={() => navigate("/dashboard/admin/prowl-users")} icon={<GroupIcon/>}>Prowl Users</MenuItem>
@@ -83,6 +85,7 @@ const Dashboard = ({screen}) => {
         {screen === "prowl_users" && <ProwlUsers/>}
         {screen === "reports" && <Reports/>}
         {screen === "education_hub" && <EducationHub/>}
+        {screen === "render_article_slug" && <EducationHub slug={slug}/>}
         </div>
     </div>
     
