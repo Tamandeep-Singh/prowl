@@ -29,7 +29,7 @@ function App() {
     */
       <Router>
         <Routes>
-          <Route exact path="/" element={<AuthenticatedRoute><Dashboard/></AuthenticatedRoute>}></Route>
+          <Route exact path="/" element={<AuthenticatedRoute><Dashboard screen="central_dashboard"/></AuthenticatedRoute>}></Route>
           <Route exact path="/login" element={<LoginPage/>}></Route>
           <Route exact path="/dashboard" element={<AuthenticatedRoute><Dashboard screen="central_dashboard"/></AuthenticatedRoute>}></Route>
           <Route exact path="/dashboard/endpoints" element={<AuthenticatedRoute><Dashboard screen="endpoints"/></AuthenticatedRoute>}></Route>

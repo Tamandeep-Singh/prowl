@@ -10,6 +10,7 @@ import Article from "./Article";
 const EducationHub = ({ slug  }) => {
     const [showInformationPopup, setShowInformationPopup] = useState(false);
     const [selectedTag, setSelectedTag] = useState(null);
+    const [query, setQuery] = useState("");
    
 
     const onShowInformationPopup = () => {
@@ -32,7 +33,7 @@ const EducationHub = ({ slug  }) => {
               <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>
           </DialogActions>
       </Dialog>
-      <InputBase sx={{ padding: 0.5, border: 1, borderRadius: 2, backgroundColor: "white", marginLeft: 2.4, width: 370, height: 45, fontSize: 17}} placeholder="Search Articles" startAdornment={<SearchIcon sx={{ marginRight: 1.3, paddingLeft: 1}} />}>
+      <InputBase onChange={({ target } ) => setQuery(target.value)} sx={{ padding: 0.5, border: 1, borderRadius: 2, backgroundColor: "white", marginLeft: 2.4, width: 370, height: 45, fontSize: 17}} placeholder="Search Articles" startAdornment={<SearchIcon sx={{ marginRight: 1.3, paddingLeft: 1}}/>}>
       </InputBase>
       <div style={{ marginLeft: 20, marginTop: 12}}>
         {ArticleData.filterTags.map(tag => (
@@ -50,12 +51,16 @@ const EducationHub = ({ slug  }) => {
       ))}
       </div>
       <Container sx={{ py: 4 }}>
-          <Grid container spacing={4}>
-          {selectedTag ? ArticleData.articles.filter(article => article.tags.includes(selectedTag)).map(article => (
-            <Grid item xs={12} sm={6} md={4} key={article.slug}>
+          <Grid sx={{ width: "80vw"}} container spacing={3}>
+          {query ? ArticleData.articles.filter(article => article.title.toLowerCase().includes(query.toLowerCase())).map(article => (
+            <Grid item key={article.slug}>
+              <Article article={article} slug={article.slug}/>
+            </Grid>)) :
+          selectedTag ? ArticleData.articles.filter(article => article.tags.includes(selectedTag)).map(article => (
+            <Grid item key={article.slug}>
               <Article article={article} slug={article.slug}/>
             </Grid>)) : ArticleData.articles.map(article => (
-              <Grid item xs={12} sm={6} md={4} key={article.slug}>
+              <Grid item key={article.slug}>
                 <Article article={article} slug={article.slug}/>
               </Grid>
             ))}
@@ -65,7 +70,7 @@ const EducationHub = ({ slug  }) => {
     };
 
     const renderArticleBySlug = () => {
-      return <Article article={ArticleData.articles.find(article => article.slug === slug)} slug={slug}/>
+      return <Article article={ArticleData.articles.find(article => article.slug === slug)} slug={slug} renderEntirePage={true}/>
     };
 
     return <div>
