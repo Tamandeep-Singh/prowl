@@ -4,6 +4,6 @@
         { "slug": "xss-explained", "title": "Cross Site Scripting (XSS) Attacks", "tags":["XSS", "Website Vulnerabilities"], "date_created":"22-04-2025", "content":"XSS content page", "image":"https://www.imperva.com/learn/wp-content/uploads/sites/13/2019/01/sorted-XSS.png"},
         { "slug": "idor-explained", "title": "Insecure Direct Object References (IDOR)", "tags":["IDOR", "Website Vulnerabilities"], "date_created":"18-04-2025", "content":"IDOR content page", "image":"https://cdn.prod.website-files.com/5ff66329429d880392f6cba2/624e8af1e855687073a29302_IDOR%20vulnerability%20Preview.jpg"},
         { "slug": "reverse-shells", "title": "Reverse Shell", "tags":["Reverse Shell"], "date_created":"23-04-2025", "content":"Reverse Shell content page", "image":"https://sysdig.com/wp-content/uploads/image2-54.png"},
-        { "slug": "sql-injection", "title": "SQL Injection", "tags":["SQL Injection", "Website Vulnerabilities"], "date_created":"19-04-2025", "content":"SQL Injection content page", "image":"https://www.indusface.com/wp-content/uploads/2024/04/sub-internal-How-does-SQL-Injection-Work-1.png"}
+        { "slug": "sql-injection", "title": "SQL Injection", "tags":["SQL Injection", "Website Vulnerabilities"], "date_created":"19-04-2025", "content":"<strong>SQL (Structured Query Language)</strong> is used for... ", "image":"https://www.indusface.com/wp-content/uploads/2024/04/sub-internal-How-does-SQL-Injection-Work-1.png"}
     ]
 }

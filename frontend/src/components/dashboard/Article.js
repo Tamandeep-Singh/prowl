@@ -1,5 +1,6 @@
-import { Card, CardContent, Typography, CardMedia, Divider} from "@mui/material";
+import { Card, CardContent, Typography, CardMedia, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import DOMPurify from 'dompurify';
 
 const Article = ({ article, slug, renderEntirePage = false}) => {
     const navigate = useNavigate();
@@ -16,13 +17,13 @@ const Article = ({ article, slug, renderEntirePage = false}) => {
     };
 
     const renderEntireArticle = () => {
-       return <div>
-        <p id="title">{article.title}</p>
-        <Card sx = {{ marginLeft: 3, height: 600, width: 600}} onClick={() => navigate(`/dashboard/education/articles/${slug}`)}>
+       return <div style={{ width: "80vw", display: "flex", justifyContent: "center"}}>
+        <Card sx = {{ marginTop: 3, height: 600, width: 600, paddingLeft: 2, paddingRight: 2}} onClick={() => navigate(`/dashboard/education/articles/${slug}`)}>
             <CardContent>
-                <Typography sx={{ fontSize: 16, marginTop: 0.5}} color="text.secondary">Date Published: {article.date_created}</Typography>
+                <Typography variant="h5" sx= {{ marginBottom: 1 }}>{article.title}</Typography>
+                <Typography sx={{ fontSize: 16, marginTop: 0.5}} color="text.secondary">Published on {article.date_created}</Typography>
                 <Divider sx= {{ marginTop: 1, marginBottom: 2}} />
-                <Typography sx={{ fontSize: 16, marginTop: 0.5}} color="text.secondary">{article.content}</Typography>
+                <Typography sx={{ fontSize: 16, marginTop: 0.5}} color="text.secondary" dangerouslySetInnerHTML = {{ __html: DOMPurify.sanitize(article.content)}}></Typography>
                 <Divider sx= {{ marginTop: 2, marginBottom: 1}} />
                 <Typography sx={{ fontSize: 12, marginTop: 1.5}} color="text.secondary">Tags: {article.tags.join(", ")}</Typography>
             </CardContent>
