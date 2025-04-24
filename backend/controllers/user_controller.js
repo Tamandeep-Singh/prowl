@@ -13,6 +13,22 @@ class UserController {
         return user;
     };
 
+    static changeUserPassword = async (userId, newPassword) => {
+        const user = await MongoUtilities.getDocumentByField(User, { _id: userId});
+        if (user === null) {
+            return { success: false, error: "Unable to find user!"};
+        };
+        try {
+            user.password = newPassword;
+            const result = await user.save();
+            return { success: true, message: result};
+        }
+        catch (error) {
+            return { success: false, error };
+        };
+       
+    };
+
     static getUsersList = async (fields) => {
         const result = await MongoUtilities.getAllDocuments(User, fields);
         return result;

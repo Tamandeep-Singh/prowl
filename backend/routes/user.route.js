@@ -19,6 +19,15 @@ userRouter.post("/update/:id", authMiddleware.checkAccessToken, async (req, res)
     return res.status(200).json({result});
 });
 
+userRouter.post("/password/change", authMiddleware.checkAccessToken, async (req, res) => {
+    const { userId, newPassword } = req.body.user;
+    if (userId !== req.userPayload.uid) {
+        return res.status(200).json({ result: { success: false, error: "Invalid User ID provided!"}});
+    };
+    const result = await userController.changeUserPassword(userId, newPassword);
+    return res.status(200).json({result});
+});
+
 userRouter.post("/register", async (req, res) => {
     const result = await userController.createUser(req.body.user);
     return res.status(200).json({result});

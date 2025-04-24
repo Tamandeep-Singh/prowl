@@ -97,7 +97,7 @@ const Alerts = () => {
         {field: "severity", headerName: "Severity", width: 90},
         {field: "score", headerName: "Score", width: 80},
         {field: "date_added", headerName: "Added On", width: 180},
-        {field: "generate_report", headerName: "Dynamic Analysis", width: 240, sortable: false, filterable: false, renderCell: (params) => (
+        {field: "generate_report", headerName: "Actions", width: 240, sortable: false, filterable: false, renderCell: (params) => (
             <Button variant="contained" size="small" onClick={() => generateReport(params.row)}>Generate Report</Button>),
         } 
     ];

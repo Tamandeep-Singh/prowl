@@ -5,7 +5,6 @@ import Dashboard from "./components/Dashboard";
 import NotFound from "./components/NotFound";
 import LoginPage from "./components/LoginPage";
 import EndpointRTC from "./components/EndpointRTC";
-import Account from "./components/Account";
 
 function App() {
   return (
@@ -42,7 +41,7 @@ function App() {
           <Route exact path="/dashboard/education/articles" element={<AuthenticatedRoute><Dashboard screen="education_hub"/></AuthenticatedRoute>}></Route>
           <Route path="/dashboard/education/articles/:slug" element={<AuthenticatedRoute><Dashboard screen="render_article_slug"/></AuthenticatedRoute>}></Route>
           <Route exact path="/endpoint-rtc" element={<AuthenticatedRoute><EndpointRTC/></AuthenticatedRoute>}></Route>
-          <Route exact path="/account" element={<AuthenticatedRoute><Account/></AuthenticatedRoute>}></Route>
+          <Route exact path="/account" element={<AuthenticatedRoute><Dashboard screen="account"/></AuthenticatedRoute>}></Route>
           <Route path="*" element={<NotFound/>}></Route>
         </Routes>
       </Router>

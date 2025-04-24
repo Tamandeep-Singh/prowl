@@ -3,7 +3,7 @@ import EndpointService from "../services/endpoint_service";
 import Navbar from "./Navbar";
 import Select from 'react-select';
 import "../css/EndpointRTC.css";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, CircularProgress, Typography, IconButton} from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton} from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 
 const EndpointRTC = () => {
@@ -68,7 +68,7 @@ const EndpointRTC = () => {
           return;
         };
 
-        if (command === "exit" || command == "logout") {
+        if (command === "exit" || command === "logout") {
           setCommandHistory((history) => [...history, "> Exiting session and disconnecting endpoint! \n"]);
           await EndpointService.disconnectEndpoint(endpoint.host_id);
           setUsername("");

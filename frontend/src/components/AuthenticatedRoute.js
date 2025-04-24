@@ -9,7 +9,7 @@ const AuthenticatedRoute = (props) => {
     const navigate = useNavigate();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const checkAuthToken = () => {
+    useEffect(() => {
         if (AppUtils.getAuthToken() === null) {
             setIsAuthenticated(false);
             
@@ -17,11 +17,7 @@ const AuthenticatedRoute = (props) => {
             return navigate("/login");
         }
         setIsAuthenticated(true);
-
-    };
-    useEffect(() => {
-        checkAuthToken();
-    }, [isAuthenticated])
+    }, [isAuthenticated, navigate])
 
     // If the user is logged in, then render the component passed in via props
     return <React.Fragment>

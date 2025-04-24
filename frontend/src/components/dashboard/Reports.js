@@ -68,7 +68,7 @@ const Reports = () => {
         )},
         {field: "summary", headerName: "Report Summary", width: 160},
         {field: "date_added", headerName: "Added On", width: 200},
-        {field: "view_report", headerName: "Expanded Popup", width: 240, sortable: false, filterable: false, renderCell: (params) => (
+        {field: "view_report", headerName: "Actions", width: 240, sortable: false, filterable: false, renderCell: (params) => (
             <Button variant="contained" onClick={() => onShowReportPopup(params.row)} size="small">View Report</Button>),
         } 
     ];
@@ -130,7 +130,7 @@ const Reports = () => {
          <p sx={{ marginBottom: 2 }}>Hello World</p>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>
+        <Button onClick={onCloseShowInformationPopup} color="primary">Close</Button>
       </DialogActions>
     </Dialog>
     </div>

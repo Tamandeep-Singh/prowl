@@ -36,4 +36,19 @@ export default class AppUtils {
         }
     };
 
+    static getTokenPayload = () => {
+        try {
+            const authToken = this.getAuthToken();
+            if (authToken !== null) {
+                const payload = jwtDecode(authToken);
+                return payload;
+            }
+            return null;
+        }
+        catch (error) {
+            console.log("An error occurred when decoding the JWT Token:", error);
+            return null;
+        }
+    };
+
 };

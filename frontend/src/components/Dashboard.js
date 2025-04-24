@@ -28,6 +28,10 @@ import ProwlUsers from "./dashboard/ProwlUsers";
 import Reports from "./dashboard/Reports";
 import EducationHub from "./dashboard/EducationHub";
 import { useParams } from "react-router-dom";
+import Account from "./dashboard/Account";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DeviceHubIcon from '@mui/icons-material/DeviceHub';
+
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
 
@@ -70,7 +74,10 @@ const Dashboard = ({ screen }) => {
             <MenuItem onClick={() => navigate("/dashboard/alerts")} icon={<CircleNotificationsIcon/>}>Alerts</MenuItem>
             <MenuItem onClick={() => navigate("/dashboard/ai-reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
             <MenuItem onClick={() => navigate("/dashboard/education/articles")} icon={<SchoolIcon/>}>Education Hub</MenuItem>
-            <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
+            <SubMenu label="Integrations" icon={<DeviceHubIcon/>}>
+                <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
+            </SubMenu>
+            <MenuItem onClick={() => navigate("/account")} icon={<AccountCircleIcon/>}>Account</MenuItem>
             {AppUtils.isUserAdmin() && <SubMenu label="Admin" icon={<AdminPanelSettingsIcon/>}>
                 <MenuItem onClick={() => navigate("/dashboard/admin/prowl-users")} icon={<GroupIcon/>}>Prowl Users</MenuItem>
             </SubMenu>}
@@ -85,6 +92,7 @@ const Dashboard = ({ screen }) => {
         {screen === "prowl_users" && <ProwlUsers/>}
         {screen === "reports" && <Reports/>}
         {screen === "education_hub" && <EducationHub/>}
+        {screen === "account" && <Account/>}
         {screen === "render_article_slug" && <EducationHub slug={slug}/>}
         </div>
     </div>

@@ -68,7 +68,7 @@ const ProwlUsers = () => {
         {field: "role", headerName: "User Role", width: 120},
         {field: "date_added", headerName: "Added On", width: 180},
         {field: "date_updated", headerName: "Modified On", width: 180},
-        {field: "edit_user", headerName: "Edit User", width: 190, sortable: false, filterable: false, renderCell: (params) => (
+        {field: "edit_user", headerName: "Actions", width: 190, sortable: false, filterable: false, renderCell: (params) => (
             <Button variant="contained" size="small" onClick={() => onUserEditPopupClick(params.row)}>Edit User</Button>),
         }
     ];
@@ -125,7 +125,7 @@ const ProwlUsers = () => {
     </Dialog>
     <Snackbar open={showSnackbar} autoHideDuration={1500} onClose={onCloseSnackbarClick} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
         {editError === false ?  <Alert severity="success" sx={{ width: "100%" }}>Changes were successfully made!</Alert> : <Alert severity="error" sx={{ width: "100%" }}>An error occured, changes were not made!</Alert>}
-      </Snackbar>
+    </Snackbar>
     <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
       <DialogTitle>Prowl Users Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
