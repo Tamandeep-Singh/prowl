@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Divider, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Snackbar, Alert} from "@mui/material";
+import { Card, CardContent, Typography, Divider, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Snackbar, Alert } from "@mui/material";
 import AppUtils from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -25,6 +25,7 @@ const Account = () => {
                 userId: payload.uid,
                 newPassword: updateUser.new_password
             });
+            console.log(JSON.stringify(response.result));
             if (!response.result.success) {
                 setEditError(true);
             };
@@ -70,7 +71,7 @@ const Account = () => {
                 </DialogActions>
             </Dialog>
             <Snackbar open={showSnackbar} autoHideDuration={2000} onClose={onCloseSnackbarClick} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
-                    {editError === false ?  <Alert severity="success" sx={{ width: "100%" }}>Your password was successfully changed!</Alert> : <Alert severity="error" sx={{ width: "100%" }}>An error occured, please ensure your password contains a minimum of 8 characters!</Alert>}
+                    {editError === false ? <Alert severity="success" sx={{ width: "100%" }}>Your password was successfully changed!</Alert> : <Alert severity="error" sx={{ width: "100%" }}>An error occured, please ensure your password contains a minimum of 8 characters!</Alert>}
             </Snackbar>
             <Snackbar open={showMatchSnackbar} autoHideDuration={2000} onClose={onCloseSnackbarClick} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
                 <Alert severity="error" sx={{ width: "100%" }}>Both entered passwords should not be empty and must match!</Alert>
