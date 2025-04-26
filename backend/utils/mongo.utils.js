@@ -1,5 +1,3 @@
-const { model } = require("mongoose");
-
 class MongoUtilities  {
     static doesDocumentExist = async (model, field) => {
         try {

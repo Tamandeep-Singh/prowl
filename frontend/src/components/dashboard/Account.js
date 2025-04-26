@@ -1,10 +1,13 @@
 import { Card, CardContent, Typography, Divider, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Snackbar, Alert } from "@mui/material";
 import AppUtils from "../../utils";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProwlUsersService from "../../services/prowl_users_service";
+import ApiService from "../../services/api_service";
+import ErrorIcon from "@mui/icons-material/Error";
 
 const Account = () => {
+    const [status, setStatus] = useState(false);
     const [showChangePasswordPopup, setShowChangePasswordPopup] = useState(false);
     const [updateUser, setUpdateUser] = useState({});
     const [showSnackbar, setShowSnackbar] = useState(false);
@@ -44,19 +47,28 @@ const Account = () => {
         setUpdateUser({...updateUser, [name]: value});
     };
 
+    useEffect(() => {
+        const pingAPI = async () => {
+            const response = await ApiService.ping();
+            setStatus(response.result.success);
+        };
+        pingAPI();
+    }, []);
+
     const renderAccountMenu = () => {
         return <div style={{ width: "80vw", display:"flex", justifyContent: "center"}}>
             <Card sx = {{ marginTop: 5, height: 400, width: 600, paddingLeft: 2, paddingRight: 2}}>
-            <CardContent>
-                <Typography variant="h5" sx= {{ marginBottom: 1 }}>Account Management</Typography>
-                <Divider sx= {{ marginTop: 1, marginBottom: 2}}/>
-                <Typography sx={{ marginBottom: 2 }}><strong>User ID:</strong> {payload.uid}</Typography>
-                <Typography sx={{ marginBottom: 2 }}><strong>Username:</strong> {payload.username}</Typography>
-                <Typography sx={{ marginBottom: 2 }}><strong>Email:</strong> {payload.email}</Typography>
-                <Typography sx={{ marginBottom: 2 }}><strong>Role:</strong> {payload.role}</Typography>
-                <Divider sx= {{ marginTop: 1, marginBottom: 2}}/>
-                <Typography sx={{ marginBottom: 2, textAlign: "center", fontSize: 20}}>Actions</Typography>
-                <Button sx = {{display: "block", marginX: "auto" }} onClick={() => setShowChangePasswordPopup(true)} variant="contained" color="primary">Change Password</Button>
+                <CardContent>
+                    <Typography variant="h5" sx= {{ marginBottom: 1 }}>Account Management</Typography>
+                    <Divider sx= {{ marginTop: 1, marginBottom: 2}}/>
+                    <Typography sx={{ marginBottom: 2 }}><strong>User ID:</strong> {payload.uid}</Typography>
+                    <Typography sx={{ marginBottom: 2 }}><strong>Username:</strong> {payload.username}</Typography>
+                    <Typography sx={{ marginBottom: 2 }}><strong>Email:</strong> {payload.email}</Typography>
+                    <Typography sx={{ marginBottom: 2 }}><strong>Role:</strong> {payload.role}</Typography>
+                    <Divider sx= {{ marginTop: 1, marginBottom: 2}}/>
+                    <Typography sx={{ marginBottom: 2, textAlign: "center", fontSize: 20}}>Actions</Typography>
+                    {status === true ? 
+                    <Button sx = {{display: "block", marginX: "auto" }} onClick={() => setShowChangePasswordPopup(true)} variant="contained" color="primary">Change Password</Button> :  <span style={{ display: "flex", justifyContent: "center", marginTop: -8}} id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Unable to connect to the API to change Account Details</span>}
                 </CardContent>
              </Card>
              <Dialog open={showChangePasswordPopup} onClose={() => setShowChangePasswordPopup(false)}>

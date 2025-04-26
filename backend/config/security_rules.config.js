@@ -3,9 +3,9 @@ const rules = {
        { detection: "Base64", filter: "base64", score: 1, message:"Base64.", category: "command"},
        { detection: "Curl", filter: "curl", score: 1, message:"Curl.", category: "command"},
        { detection: "Wget", filter: "wget", score: 1, message:"Wget.", category: "command"},
-       { detection: "Netcat", filter: "nc|ncat", score: 1, message:"Netcat.", category: "command"},
-       { detection: "Nmap", filter: "nmap", score: 3, message:"Nmap.", category: "command"},
-       { detection: "Bash (Reverse Shell)", filter: "bash", score: 13, message:"Bash.", category: "command"}
+       { detection: "Netcat", filter: "^(nc|ncat|netcat)", score: 13, message:"Netcat was used!", category: "command"},
+       { detection: "Nmap", filter: "nmap", score: 1, message:"Nmap.", category: "command"},
+       { detection: "Bash (Reverse Shell)", filter: "bash", score: 1, message:"Bash.", category: "command"}
     ],
     files: [
         { detection: "Tmp file", filter: "/tmp/.*", score: 1, message:"Stored in TMP for potential staging.", category: "file_path"},

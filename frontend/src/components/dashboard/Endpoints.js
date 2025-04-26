@@ -75,7 +75,7 @@ const Endpoints = () => {
    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
       <DialogTitle>Linked Endpoints Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p sx={{ marginBottom: 2 }}>Hello World</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>This page details all Endpoints that are linked to Prowl. In particular, the Host ID, Host Name and Host IP are the most crucial identifiers that are repeatedly linked to other artifact collections uch as Endpoint processes, files and network connections. You are able to filter each applicable column for specific properties such as all Endpoints that run on "MacOS" or all Endpoints that share a common prefix or suffix in their Host Name.</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

@@ -129,7 +129,7 @@ const ProwlUsers = () => {
     <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
       <DialogTitle>Prowl Users Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p sx={{ marginBottom: 2 }}>Hello World</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>Hello World</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

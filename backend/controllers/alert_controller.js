@@ -46,7 +46,7 @@ class AlertController {
     };
     
     static sendAlert = async (alert, emailConfig) => {
-        const discordResponse = await this.sendDiscordAlert(alert);
+        const discordResponse = await this.sendDiscordAlert(`Automated Alert [${alert.host_name}] on ${new Date(Date.now()).toLocaleString("en-GB")}: Severity: ${alert.severity}, Score: ${alert.score}, Category: ${alert.artifact_collection}, Trigger: ${alert.trigger}, Detection Message: ${alert.message}`);
         const emailResponse = await this.sendEmailAlert(emailConfig.recipient, emailConfig.subject, emailConfig.body);
     };
 
