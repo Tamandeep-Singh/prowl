@@ -126,9 +126,10 @@ const Files = () => {
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]} />
    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
-      <DialogTitle>Endpoint Files Page Guide</DialogTitle>
+      <DialogTitle>Endpoint Files: Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p style={{ marginTop: -3, marginBottom: 0 }}>Hello World</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>This page lists all Endpoint telemetry gathered by the agent scripts for file activity. The agent scripts only collect file data for critical directories as collecting telemetry for the entire disk multiple times would significantly consume resources. As with all of the tables, you are able to filter each column to perform <strong>queries</strong> like finding all files on a Windows Host or filtering malicious files with a SHA-1 Hash.</p>
+         <p>To view all files on an Endpoint or to examine further file data, please go to the <a href="/endpoint-rtc">Endpoint RTC Dashboard</a> to issue commands.</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

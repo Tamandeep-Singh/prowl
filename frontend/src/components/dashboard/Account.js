@@ -68,7 +68,7 @@ const Account = () => {
                     <Divider sx= {{ marginTop: 1, marginBottom: 2}}/>
                     <Typography sx={{ marginBottom: 2, textAlign: "center", fontSize: 20}}>Actions</Typography>
                     {status === true ? 
-                    <Button sx = {{display: "block", marginX: "auto" }} onClick={() => setShowChangePasswordPopup(true)} variant="contained" color="primary">Change Password</Button> :  <span style={{ display: "flex", justifyContent: "center", marginTop: -8}} id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Unable to connect to the API to change Account Details</span>}
+                    <Button sx = {{display: "block", marginX: "auto" }} onClick={() => setShowChangePasswordPopup(true)} variant="contained" color="primary">Change Password</Button> :  <span style={{ display: "flex", justifyContent: "center", marginTop: -2, fontFamily: "Arial"}} id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Unable to connect to the API to change Account Details</span>}
                 </CardContent>
              </Card>
              <Dialog open={showChangePasswordPopup} onClose={() => setShowChangePasswordPopup(false)}>

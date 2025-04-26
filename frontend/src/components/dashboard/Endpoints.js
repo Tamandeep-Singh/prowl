@@ -73,9 +73,11 @@ const Endpoints = () => {
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]}/>
    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
-      <DialogTitle>Linked Endpoints Page Guide</DialogTitle>
+      <DialogTitle>Linked Endpoints: Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p style={{ marginTop: -3, marginBottom: 0 }}>This page details all Endpoints that are linked to Prowl. In particular, the Host ID, Host Name and Host IP are the most crucial identifiers that are repeatedly linked to other artifact collections uch as Endpoint processes, files and network connections. You are able to filter each applicable column for specific properties such as all Endpoints that run on "MacOS" or all Endpoints that share a common prefix or suffix in their Host Name.</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>This page lists all Endpoints that are linked to Prowl. The Host ID, Host Name and Host IP are crucial identifiers, which are linked to other artifact collections such as processes, files and network connections.</p>
+         <p>You can filter each applicable column for specific fields to perform <strong>queries</strong> such as finding all Endpoints that run on "MacOS" or all Endpoints that share a common prefix or suffix in their Host Name.</p>
+         <p><strong>Note: </strong>You can connect to any Linked Endpoint via the <a href="/endpoint-rtc">Endpoint RTC Dashboard</a> through SSH.</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

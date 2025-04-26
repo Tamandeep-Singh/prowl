@@ -25,9 +25,10 @@ const EducationHub = ({ slug  }) => {
       return <div>
       <p id="title">Education Hub <IconButton onClick={onShowInformationPopup} sx={{ marginBottom: 0.1}}><InfoIcon sx={{ color: "white"}}/></IconButton></p>
       <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
-          <DialogTitle>Education Hub Page Guide</DialogTitle>
+          <DialogTitle>Education Hub: Page Guide</DialogTitle>
           <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-              <p style={{ marginTop: -3, marginBottom: 0 }}>Hello World</p>
+              <p style={{ marginTop: -3, marginBottom: 0 }}>The Education Hub provides detailed articles to educate users about Cybersecurity, varying from all ranges of attacks and their potential impact. All articles are <strong>static</strong> meaning that even if the API is experiencing problems, articles can be added and also read with no interference.</p>
+              <p>Any information obtained from the articles should provide a <strong>fundamental understanding</strong> of the vulnerability explored and hence help when investigating alerts <strong>independently</strong> and level up your Cybersecurity knowledge.</p>
           </DialogContent>
           <DialogActions>
               <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

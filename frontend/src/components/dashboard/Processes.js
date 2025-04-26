@@ -99,9 +99,10 @@ const Processes = () => {
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]} />
    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
-      <DialogTitle>Endpoint Processes Page Guide</DialogTitle>
+      <DialogTitle>Endpoint Processes: Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p style={{ marginTop: -3, marginBottom: 0 }}>Hello World</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>This page lists all Endpoint telemetry gathered by the agent scripts for process activity. For persistent processes, you can copy the <strong>Process ID</strong> and go to the <a href="/endpoint-rtc">Endpoint RTC Dashboard</a> to directly interact with the process.</p>
+         <p>As for the table, you can filter for <strong>Parent Process IDs</strong> to view the hierarchy of processes alongside filtering by the <strong>Start Time</strong> to view the newest processes executed on the Endpoint(s) or perform additional analysis.</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

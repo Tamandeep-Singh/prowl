@@ -94,9 +94,10 @@ const NetworkConnections = () => {
   onPaginationModelChange={setPaginationModel}
   pageSizeOptions={[5, 10]} />
    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
-      <DialogTitle>Endpoint Network Connections Page Guide</DialogTitle>
+      <DialogTitle>Endpoint Network Connections: Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p style={{ marginTop: -3, marginBottom: 0 }}>Hello World</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>This page lists all Endpoint telemetry gathered by the agent scripts for network connection activity. <strong>Common queries</strong> would involve filtering by the Host Name to view all connections on a specific Endpoint or correlating the Process ID in the <a href="/dashboard/endpoints/processes">Processes Dashboard</a> to find the executable responsible for creating that network connection.</p>
+         <p>To view further network activity on any Endpoint, please go to the <a href="/endpoint-rtc">Endpoint RTC Dashboard</a> to issue commands.</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

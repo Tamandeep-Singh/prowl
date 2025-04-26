@@ -127,9 +127,10 @@ const EndpointRTC = () => {
     </div>
     <textarea id="command-input" value={command} placeholder="Enter your command here" onChange={handleCommandInputChange} onKeyDown={handleCommandKeyEvent}></textarea>
   <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
-    <DialogTitle>Endpoint Real Time Console (RTC) Page Guide</DialogTitle>
+    <DialogTitle>Endpoint Real Time Console (RTC): Page Guide</DialogTitle>
     <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-       <p style={{ marginTop: -3, marginBottom: 0 }}>Hello World</p>
+       <p style={{ marginTop: -3, marginBottom: 0 }}>This interactive console allows you to select a specific Endpoint to connect to via <strong>SSH</strong> with the Host's username and password. Any SSH command can be entered with the results piped to the terminal screen. To exit the SSH connection use <strong>"exit"</strong> or <strong>"logout"</strong> commands and to clear the terminal screen, issue the <strong>"clear"</strong> command. This console will greatly benefit you during investigations on specific alerts since it allows a direct connection to any Endpoint straight from the Hub.</p>
+      <p><strong>Note: </strong>Additional setup may be required to allow <strong>SSH connections</strong> on the selected Endpoint beforehand.</p>
     </DialogContent>
     <DialogActions>
       <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

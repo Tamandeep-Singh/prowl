@@ -127,9 +127,10 @@ const ProwlUsers = () => {
         {editError === false ?  <Alert severity="success" sx={{ width: "100%" }}>Changes were successfully made!</Alert> : <Alert severity="error" sx={{ width: "100%" }}>An error occured, changes were not made!</Alert>}
     </Snackbar>
     <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
-      <DialogTitle>Prowl Users Page Guide</DialogTitle>
+      <DialogTitle>Admin Panel - Prowl Users: Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p style={{ marginTop: -3, marginBottom: 0 }}>Hello World</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>As an <strong>administrator</strong>, you are able to view all users registered on Prowl and modify their details through the use of the <strong>"Edit User"</strong> button underneath "Actions".</p>
+         <p>For any user, you can change their <strong>role</strong> and <strong>email</strong>.</p>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseShowInformationPopup}color="primary">Close</Button>

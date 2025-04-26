@@ -22,7 +22,7 @@ const CentralDashboard = () => {
             <Grid item>
                 <Card sx={{ width: 380, height: 90, borderRadius: 2}}>
                     <CardContent>
-                        <Typography sx={{ fontSize: 18}}>{status === true ? <CheckCircleIcon sx={{ color: "green", fontSize: 22, marginRight: 0.5, marginBottom: -0.6, marginLeft: -0.5}}/> : <ErrorIcon sx={{ color: "red", fontSize: 22, marginRight: 0.5, marginBottom: -0.6, marginLeft: -0.5}}/>}API Status: ({ApiService.endpoint})</Typography>
+                        <Typography sx={{ fontSize: 18}}>{status === true ? <CheckCircleIcon sx={{ color: "green", fontSize: 22, marginRight: 0.5, marginBottom: -0.45, marginLeft: -0.5}}/> : <ErrorIcon sx={{ color: "red", fontSize: 22, marginRight: 0.5, marginBottom: -0.45, marginLeft: -0.5}}/>}API Status: ({ApiService.endpoint})</Typography>
                         <Typography sx={{ fontSize: 14, marginTop: 0.5}} color="text.secondary">{status === true ? "All systems are operational" : "The API is down, please debug or restart the backend"}</Typography>
                     </CardContent>
                 </Card>
