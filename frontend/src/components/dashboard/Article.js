@@ -7,7 +7,7 @@ const Article = ({ article, slug, renderEntirePage = false}) => {
 
     const renderArticle = () => {
         return <Card sx = {{ height: 350, width: 300}} onClick={() => navigate(`/dashboard/education/articles/${slug}`)}>
-            <CardMedia height="180" component="img" image={article.image}/>
+            <CardMedia height="150" component="img" image={article.image}/>
             <CardContent>
                 <Typography variant="h6">{article.title}</Typography>
                 <Typography sx={{ fontSize: 16, marginTop: 0.5}} color="text.secondary">{article.date_created}</Typography>
