@@ -18,7 +18,7 @@ const Article = ({ article, slug, renderEntirePage = false}) => {
 
     const renderEntireArticle = () => {
        return <div style={{ width: "80vw", display: "flex", justifyContent: "center"}}>
-        <Card sx = {{ marginTop: 3, height: 750, width: 1200}} onClick={() => navigate(`/dashboard/education/articles/${slug}`)}>
+        <Card sx = {{ marginTop: 2, height: 750, width: 1200}} onClick={() => navigate(`/dashboard/education/articles/${slug}`)}>
                 <CardMedia sx={{objectFit: "cover", width: "100%", height: 180, marginBottom: -1}} component="img" image={article.image}/>
                 <CardContent>
                     <Typography variant="h5" sx= {{ marginBottom: 1}}>{article.title}</Typography>
