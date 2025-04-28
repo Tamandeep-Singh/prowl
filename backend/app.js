@@ -10,6 +10,10 @@ const PORT = process.env.PROWL_BACKEND_PORT || 9728;
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
+app.get("/", async (req, res) => {
+    return res.status(200).json({ result: { success: true, message: `Prowl API is active on port: ${PORT} in Node ENV: ${process.env.NODE_ENV}`}});
+});
+
 // To simply test if the API is active and operational
 app.get("/ping", async (req, res) => {
     return res.status(200).json({result: { success: true, message: "pong!" }});
@@ -22,11 +26,12 @@ app.use("/api/files", require("./routes/file.route"));
 app.use("/api/network_connections", require("./routes/network.route"));
 app.use("/api/alerts", require("./routes/alert.route"));
 app.use("/api/reports", require("./routes/report.route"));
+app.use("/api/events", require("./routes/events.route"));
 app.use("/api/console", authMiddleware.checkAccessToken, require("./routes/console.route"));
 
 const setupServer = async () => {
     await connectToMongoDB();
-    app.listen(PORT, () => console.log(`[Prowl-API]: Started on port ${PORT}`));
+    app.listen(PORT, () => console.log(`[Prowl-API]: Server has started on port ${PORT}`));
 };
 
 setupServer();

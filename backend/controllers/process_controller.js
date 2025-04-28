@@ -48,11 +48,6 @@ class ProcessController {
         const result = await MongoUtilities.getDocumentsByField(Process, fields);
         return result;
     };
-
-    static getProcessesCount = async () => {
-        const result = await MongoUtilities.countDocumentsInCollection(Process);
-        return result;
-    };
 };
 
 module.exports = ProcessController;

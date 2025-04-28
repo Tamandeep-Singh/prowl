@@ -18,9 +18,4 @@ reportRouter.get("/:id", async (req, res) => {
     return res.status(200).json({result});
 });
 
-reportRouter.get("/count", async (req, res) => {
-    const result = await reportController.getReportsCount();
-    return res.status(200).json({result});
-});
-
 module.exports = reportRouter;

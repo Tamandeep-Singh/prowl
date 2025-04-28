@@ -16,11 +16,6 @@ class ReportController {
         const result = await MongoUtilities.getDocumentByField(Report, { alert_id: alertId });
         return result;
     };
-
-    static getReportsCount = async () => {
-        const result = await MongoUtilities.countDocumentsInCollection(Report);
-        return result;
-    };
 };
 
 module.exports = ReportController;

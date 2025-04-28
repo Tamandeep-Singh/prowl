@@ -7,10 +7,4 @@ processRouter.get("/list", async (req, res) => {
     return res.status(200).json({result: processes});
 });
 
-processRouter.get("/count", async (req, res) => {
-    const result = await processController.getProcessesCount();
-    return res.status(200).json({result});
-});
-
-
 module.exports = processRouter;

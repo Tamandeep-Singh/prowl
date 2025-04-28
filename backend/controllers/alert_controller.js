@@ -54,11 +54,6 @@ class AlertController {
         const result = await MongoUtilities.getDocumentsByField(Alert, fields);
         return result;
     };
-
-    static getAlertsCount = async () => {
-        const result = await MongoUtilities.countDocumentsInCollection(Alert);
-        return result;
-    };
 };
 
 module.exports = AlertController;

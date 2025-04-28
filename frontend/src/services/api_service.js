@@ -2,7 +2,7 @@ import axios from "axios";
 import AppUtils from "../utils";
 
 export default class ApiService {
-    static endpoint = "http://localhost:4500";
+    static endpoint = "http://192.168.1.79:4500";
 
     static refreshToken = async () => {
         try {

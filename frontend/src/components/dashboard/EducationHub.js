@@ -51,7 +51,7 @@ const EducationHub = ({ slug  }) => {
           }} key={tag} label={tag} size="medium" clickable onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}/>
       ))}
       </div>
-      <Container sx={{ py: 4 }}>
+      <Container sx={{ paddingY: 4 }}>
           <Grid sx={{ width: "80vw"}} container spacing={3}>
           {query ? ArticleData.articles.filter(article => article.title.toLowerCase().includes(query.toLowerCase())).map(article => (
             <Grid item key={article.slug}>

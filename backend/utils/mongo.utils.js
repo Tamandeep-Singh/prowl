@@ -15,14 +15,6 @@ class MongoUtilities  {
         catch (error) { return null; };
     };
 
-    static countDocumentsInCollection = async (model) => {
-        try {
-            const count = await model.countDocuments({});
-            return { success: true, count, model};
-        }
-        catch (error) { return { success: false, error }; };
-    };
-
     static insertManyDocuments = async (model, documents) => {
         try {
             const result = await model.insertMany(documents);

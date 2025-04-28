@@ -47,11 +47,6 @@ class FileController {
         const result = await MongoUtilities.getDocumentsByField(File, fields);
         return result;
     };
-
-    static getFilesCount = async () => {
-        const result = await MongoUtilities.countDocumentsInCollection(File);
-        return result;
-    };
 };
 
 module.exports = FileController;

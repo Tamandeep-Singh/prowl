@@ -17,10 +17,10 @@ const connectToMongoDB = async () => {
     };
     try {
         await mongoose.connect(MONGO_URI);
-        console.log("[MongoDB]: Successfully connected to MongoDB Instance!");
-        console.log(`[MongoDB]: Database Environment is ${APP_ENV}`);
+        console.log("[MongoDB]: Successfully connected to the MongoDB Instance!");
+        console.log(`[MongoDB]: Loaded Database Environment as ${APP_ENV}`);
     }
-    catch(error) { console.log(`[Prowl-API]: Unable to connect to MongoDB Instance. Error: ${error}`); };
+    catch(error) { console.log(`[Prowl-API]: Unable to connect to the MongoDB Instance. Error: ${error}`); };
 };
 
 module.exports = connectToMongoDB;

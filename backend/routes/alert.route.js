@@ -7,10 +7,4 @@ alertRouter.get("/list", async (req, res) => {
     return res.status(200).json({result: alerts});
 });
 
-alertRouter.get("/count", async (req, res) => {
-    const result = await alertController.getAlertsCount();
-    return res.status(200).json({result});
-});
-
-
 module.exports = alertRouter;

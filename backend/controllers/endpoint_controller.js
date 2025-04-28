@@ -29,11 +29,6 @@ class EndpointController {
         };
         return result;
     };
-
-    static getEndpointsCount = async () => {
-        const result = await MongoUtilities.countDocumentsInCollection(Endpoint);
-        return result;
-    };
 };
 
 module.exports = EndpointController;
