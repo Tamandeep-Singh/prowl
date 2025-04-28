@@ -16,7 +16,7 @@ class EventsController {
                 Process.countDocuments(),
                 Report.countDocuments()
             ]);
-            return { success: true, counts: [{alerts: alertCount, endpoints: endpointCount, files: fileCount, networkConnections: networkConnectionCount, processes: processCount, reports: reportCount}]};
+            return { success: true, counts: {alerts: alertCount, endpoints: endpointCount, files: fileCount, networkConnections: networkConnectionCount, processes: processCount, reports: reportCount}};
         }
         catch (error) {
             console.log(`An error occurred when determining document count for numerous collections! Debug: `);
