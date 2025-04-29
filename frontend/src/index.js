@@ -1,6 +1,6 @@
+import "./css/index.css";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './css/index.css';
 import App from './App';
 import { ProSidebarProvider } from 'react-pro-sidebar';
 

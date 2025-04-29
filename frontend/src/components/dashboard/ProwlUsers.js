@@ -21,6 +21,9 @@ const ProwlUsers = () => {
         pageSize: 5,
         page: 0,
     });
+    const [sortModel, setSortModel] = useState([
+      { field: "date_added", sort: "desc"},
+    ]);
 
 
     const onShowInformationPopup = () => {
@@ -111,7 +114,7 @@ const ProwlUsers = () => {
       {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}
       <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
-  pageSizeOptions={[5, 10]}/>
+  pageSizeOptions={[5, 10]} sortModel={sortModel} onSortModelChange={setSortModel}/>
    <Dialog open={showPopup} onClose={() => setShowPopup(false)}>
         <DialogTitle>Edit User</DialogTitle>
         <DialogContent>

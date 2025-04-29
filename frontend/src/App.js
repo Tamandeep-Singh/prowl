@@ -1,4 +1,3 @@
-import './css/App.css';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import AuthenticatedRoute from './components/AuthenticatedRoute';
 import Dashboard from "./components/Dashboard";

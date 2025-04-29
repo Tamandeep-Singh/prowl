@@ -17,6 +17,10 @@ const Endpoints = () => {
         pageSize: 5,
         page: 0,
     });
+    const [sortModel, setSortModel] = useState([
+      { field: "host_link_date", sort: "desc"},
+    ]);
+
     const columns = [
         {field: "host_id", headerName: "Host ID", width: 220},
         {field: "host_name", headerName: "Host Name", width: 200},
@@ -71,7 +75,7 @@ const Endpoints = () => {
       {error && <span id="api-error">{<ErrorIcon sx={{ color: "red", fontSize: 25, marginRight: 0.5 }} />} Error: {error}</span>}
       <DataGrid rows={rows} columns={columns} pageSize={5} autoHeight pagination paginationModel={paginationModel}
   onPaginationModelChange={setPaginationModel}
-  pageSizeOptions={[5, 10]}/>
+  pageSizeOptions={[5, 10]} sortModel={sortModel} onSortModelChange={setSortModel}/>
    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
       <DialogTitle>Linked Endpoints: Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
