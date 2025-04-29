@@ -104,7 +104,7 @@ const CentralDashboard = () => {
             const response = await EndpointService.fetchEndpoints();
             if (!response.result.error) {
                 setEndpoints(response.result);
-                setEndpoint(response.result[0].host_name);
+                setEndpoint(response.result[0]?.host_name);
             };
         };
         fetchEndpoints();
