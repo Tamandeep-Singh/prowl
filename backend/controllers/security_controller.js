@@ -5,11 +5,7 @@ class SecurityController {
     static raiseAlert = async (alert) => {
         await AlertController.insertAlert(alert);
         if (alert.severity === "High") {
-            await AlertController.sendAlert(alert, {
-                recipient: "<Insert Email Address Here>",
-                subject: `[${alert.host_name}]: Critical Alert at ${new Date(Date.now()).toLocaleString("en-GB")}`,
-                body: `Automated Alert: Severity: ${alert.severity}, Score: ${alert.score}, Category: ${alert.artifact_collection}, Trigger: ${alert.trigger}, Host: ${alert.host_name}, Detection Message: ${alert.message}`
-            });
+            await AlertController.sendAlert(alert, rules.notification_emails);
         };
     };
 

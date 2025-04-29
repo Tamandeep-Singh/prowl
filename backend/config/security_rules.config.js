@@ -24,7 +24,8 @@ const rules = {
         users: [],
         processes: [],
         files: [],
-    }
+    },
+    notification_emails: ["prowl.test.fake@gmail.com"]
 }
 
 module.exports = rules;
