@@ -8,6 +8,7 @@ import NetworkWifiIcon from '@mui/icons-material/NetworkWifi';
 import DescriptionIcon from '@mui/icons-material/Description';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import AssessmentIcon from '@mui/icons-material/Assessment';
+import LaptopIcon from '@mui/icons-material/Laptop';
 import EventsService from "../../services/events_service";
 import EndpointService from "../../services/endpoint_service";
 import AlertService from "../../services/alert_service";
@@ -33,7 +34,57 @@ const CentralDashboard = () => {
         return count[new Date(date).toLocaleDateString()];
     };
 
-    
+    const fetchAlertsByRange = (alerts, range) => {
+        const now = dayjs();
+
+        const lastWeek = now.subtract(7, "days");
+        const lastMonth = now.subtract(1, "month");
+        const lastYear = now.subtract(1, "year");
+
+        const endpointAlerts = alerts.filter(alert => alert.host_name === endpoint);
+
+        switch (range) {
+            case "7-days":
+                let lastWeekArray = [];
+                let lastWeekKeys = {};
+                const lastWeekFilter = endpointAlerts.filter(alert => dayjs(alert.createdAt).isAfter(lastWeek));
+                lastWeekFilter?.forEach(alert => {
+                    const date = new Date(alert.createdAt).toLocaleDateString();
+                    if (!lastWeekKeys[date]) {
+                        lastWeekArray.push({ date: new Date(alert.createdAt).toLocaleDateString(), [alert.host_name]: getDateCount(alert.createdAt, lastWeekFilter) });
+                        lastWeekKeys[date] = true;
+                    };
+                });
+                return lastWeekArray;
+            case "1-month":
+                let lastMonthArray = [];
+                let lastMonthKeys = {};
+                const lastMonthFilter = endpointAlerts.filter(alert => dayjs(alert.createdAt).isAfter(lastMonth));
+                lastMonthFilter?.forEach(alert => {
+                    const date = new Date(alert.createdAt).toLocaleDateString();
+                    if (!lastMonthKeys[date]) {
+                        lastMonthArray.push({ date: new Date(alert.createdAt).toLocaleDateString(), [alert.host_name]: getDateCount(alert.createdAt, lastMonthFilter) });
+                        lastMonthKeys[date] = true;
+                    };
+                });
+                return lastMonthArray;
+            case "1-year":
+                let lastYearArray = [];
+                let lastYearKeys = {};
+                const lastYearFilter = endpointAlerts.filter(alert => dayjs(alert.createdAt).isAfter(lastYear));
+                lastYearFilter?.forEach(alert => {
+                    const date = new Date(alert.createdAt).toLocaleDateString();
+                    if (!lastYearKeys[date]) {
+                        lastYearArray.push({ date: new Date(alert.createdAt).toLocaleDateString(), [alert.host_name]: getDateCount(alert.createdAt, lastYearFilter) });
+                        lastYearKeys[date] = true;
+                    };
+                });
+                return lastYearArray;
+            default:
+                return [];
+        };
+    };
+
     useEffect(() => {
         const pingAPI = async () => {
             const response = await ApiService.ping();
@@ -53,6 +104,7 @@ const CentralDashboard = () => {
             const response = await EndpointService.fetchEndpoints();
             if (!response.result.error) {
                 setEndpoints(response.result);
+                setEndpoint(response.result[0].host_name);
             };
         };
         fetchEndpoints();
@@ -64,61 +116,12 @@ const CentralDashboard = () => {
             };
         };
         fetchAlerts();
+    }, []);
 
-        const fetchAlertsByRange = (range) => {
-            const now = dayjs();
-    
-            const lastWeek = now.subtract(7, "days");
-            const lastMonth = now.subtract(1, "month");
-            const lastYear = now.subtract(1, "year");
-    
-            const endpointAlerts = alerts.filter(alert => alert.host_name === endpoint);
-    
-            switch (range) {
-                case "7-days":
-                    let lastWeekArray = [];
-                    let lastWeekKeys = {};
-                    const lastWeekFilter = endpointAlerts.filter(alert => dayjs(alert.createdAt).isAfter(lastWeek));
-                    lastWeekFilter?.forEach(alert => {
-                        const date = new Date(alert.createdAt).toLocaleDateString();
-                        if (!lastWeekKeys[date]) {
-                            lastWeekArray.push({ date: new Date(alert.createdAt).toLocaleDateString(), [alert.host_name]: getDateCount(alert.createdAt, lastWeekFilter) });
-                            lastWeekKeys[date] = true;
-                        };
-                    });
-                    return lastWeekArray;
-                case "1-month":
-                    let lastMonthArray = [];
-                    let lastMonthKeys = {};
-                    const lastMonthFilter = endpointAlerts.filter(alert => dayjs(alert.createdAt).isAfter(lastMonth));
-                    lastMonthFilter?.forEach(alert => {
-                        const date = new Date(alert.createdAt).toLocaleDateString();
-                        if (!lastMonthKeys[date]) {
-                            lastMonthArray.push({ date: new Date(alert.createdAt).toLocaleDateString(), [alert.host_name]: getDateCount(alert.createdAt, lastMonthFilter) });
-                            lastMonthKeys[date] = true;
-                        };
-                    });
-                    return lastMonthArray;
-                case "1-year":
-                    let lastYearArray = [];
-                    let lastYearKeys = {};
-                    const lastYearFilter = endpointAlerts.filter(alert => dayjs(alert.createdAt).isAfter(lastYear));
-                    lastYearFilter?.forEach(alert => {
-                        const date = new Date(alert.createdAt).toLocaleDateString();
-                        if (!lastYearKeys[date]) {
-                            lastYearArray.push({ date: new Date(alert.createdAt).toLocaleDateString(), [alert.host_name]: getDateCount(alert.createdAt, lastYearFilter) });
-                            lastYearKeys[date] = true;
-                        };
-                    });
-                    return lastYearArray;
-                default:
-                    return [];
-            };
-        };
+    useEffect(() => {
+        setData(fetchAlertsByRange(alerts, range));
 
-        setData(fetchAlertsByRange(range));
-
-    }, [alerts, endpoint, range]);
+    }, [endpoint, range]);
 
     return <div>
         <p id="title">Central Dashboard</p>
@@ -135,6 +138,7 @@ const CentralDashboard = () => {
                     <CardContent>
                         <Typography sx={{ fontSize: 18 }} variant="h5">Processed Events (All Endpoints)</Typography>
                         <Divider sx={{ marginBottom: 1.5, marginTop: 0.9}}/>
+                        <Typography sx={{ marginBottom: 1.8}}><span>{<LaptopIcon sx={{ marginBottom: -0.8, marginRight: 0.8, marginLeft: -0.6, color: "#1976d2"}}/>}Linked Endpoints: {counts ? counts.endpoints : 0}</span></Typography>
                         <Typography sx={{ marginBottom: 1.8}}><span>{<MemoryIcon sx={{ marginBottom: -0.8, marginRight: 0.8, marginLeft: -0.6, color: "#1976d2"}}/>}Processes: {counts ? counts.processes : 0}</span></Typography>
                         <Typography sx={{ marginBottom: 1.8}}><span>{<NetworkWifiIcon sx={{ marginBottom: -0.8, marginRight: 0.8, marginLeft: -0.6, color: "#1976d2"}}/>}Network Connections: {counts ? counts.networkConnections : 0}</span></Typography>
                         <Typography sx={{ marginBottom: 1.8}}><span>{<DescriptionIcon sx={{ marginBottom: -0.8, marginRight: 0.8, marginLeft: -0.6, color: "#1976d2"}}/>}Files: {counts ? counts.files : 0}</span></Typography>
