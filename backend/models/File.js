@@ -18,9 +18,9 @@ const FileSchema = mongoose.Schema({
         type: String,
         required: [true, "File Path for the file must be provided"]
     },
-    sha1_hash: {
+    sha256_hash: {
         type: String,
-        required: [true, "SHA-1 Hash for the file must be provided"]
+        required: [true, "SHA-256 Hash for the file must be provided"]
     },
     creation_ts: {
         type: mongoose.Schema.Types.Date,

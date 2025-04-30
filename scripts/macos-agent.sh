@@ -2,7 +2,7 @@
 
 echo -e "[Prowl-MacOS-Agent]: Script started... \n"
 
-PROWL_API_ENDPOINT="http://localhost:4500/api/endpoints/"
+PROWL_API_ENDPOINT="http://192.168.1.79:4500/api/endpoints/"
 DEVICE_UUID=$(ioreg -rd1 -c IOPlatformExpertDevice | awk -F'"' '/IOPlatformUUID/{print $4}')
 DEVICE_NAME=$(scutil --get ComputerName)
 
@@ -68,14 +68,14 @@ function get_filesystem_data() {
     
     files_json_array=""
     find "$tmp_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" "$recycle_bin_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.tar.gz" -o -perm +111 \)| while read file; do 
-        sha1_hash=$(sha1sum "$file" | awk '{print $1}')
+        sha256_hash=$(sha256sum "$file" | awk '{print $1}')
         creation_timestamp=$(stat -f "%B" "$file")
         last_mod_timestamp=$(stat -f "%m" "$file")
         file_size=$(stat -f "%z" "$file")
         file_name=$(basename "$file")
         file_description=$(file "$file" | awk -F ":" '{print $2}' | xargs) 
 
-        files_json_array+="{\"file_path\":\""$file"\",\"creation_ts\":"$creation_timestamp",\"last_mod_ts\":"$last_mod_timestamp",\"file_size\":"$file_size",\"sha1_hash\":\""$sha1_hash"\",\"file_name\":\""$file_name"\",\"file_description\":\""$file_description"\"} "
+        files_json_array+="{\"file_path\":\""$file"\",\"creation_ts\":"$creation_timestamp",\"last_mod_ts\":"$last_mod_timestamp",\"file_size\":"$file_size",\"sha256_hash\":\""$sha256_hash"\",\"file_name\":\""$file_name"\",\"file_description\":\""$file_description"\"}"
     done
 
     files_json_array=$(echo "$files_json_array" | jq -s '.')
@@ -135,7 +135,7 @@ case "$1" in
     link_endpoint
     ;;
   *)
-    get_process_data
+    get_filesystem_data
     ;;
 esac
 

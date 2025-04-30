@@ -55,7 +55,7 @@ const Files = () => {
               </span>
             </Tooltip>
         )},
-        {field: "hash", headerName: "File Hash (SHA-1)", width: 200, renderCell: (params) => (
+        {field: "hash", headerName: "File Hash (SHA-256)", width: 200, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
                 overflow: "hidden",
@@ -107,7 +107,7 @@ const Files = () => {
                     host_name: file.host_name || "null",
                     file_name: file.file_name,
                     file_path: file.file_path,
-                    hash: file.sha1_hash,
+                    hash: file.sha256_hash || "",
                     file_creation: new Date(file.creation_ts).toLocaleString("en-GB"),
                     file_modified: new Date(file.last_mod_ts).toLocaleString("en-GB"),
                     file_size: file.file_size,
@@ -128,7 +128,7 @@ const Files = () => {
    <Dialog open={showInformationPopup} onClose={onCloseShowInformationPopup} fullWidth maxWidth="sm">
       <DialogTitle>Endpoint Files: Page Guide</DialogTitle>
       <DialogContent sx={{ whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "hidden", overflowY: "auto", maxHeight: "70vh"}}>
-         <p style={{ marginTop: -3, marginBottom: 0 }}>This page lists all Endpoint telemetry gathered by the agent scripts for file activity. The agent scripts only collect file data for critical directories as collecting telemetry for the entire disk multiple times would significantly consume resources. As with all of the tables, you are able to filter each column to perform <strong>queries</strong> like finding all files on a Windows Host or filtering malicious files with a SHA-1 Hash.</p>
+         <p style={{ marginTop: -3, marginBottom: 0 }}>This page lists all Endpoint telemetry gathered by the agent scripts for file activity. The agent scripts only collect file data for critical directories as collecting telemetry for the entire disk multiple times would significantly consume resources. As with all of the tables, you are able to filter each column to perform <strong>queries</strong> like finding all files on a Windows Host or filtering malicious files with a SHA-256 Hash.</p>
          <p>To view all files on an Endpoint or to examine further file data, please go to the <a href="/endpoint-rtc">Endpoint RTC Dashboard</a> to issue commands.</p>
       </DialogContent>
       <DialogActions>
