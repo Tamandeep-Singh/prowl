@@ -31,6 +31,7 @@ import { useParams } from "react-router-dom";
 import Account from "./dashboard/Account";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
+import GoogleIcon from '@mui/icons-material/Google';
 
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
@@ -76,6 +77,7 @@ const Dashboard = ({ screen }) => {
             <MenuItem onClick={() => navigate("/dashboard/education/articles")} icon={<SchoolIcon/>}>Education Hub</MenuItem>
             <SubMenu label="Integrations" icon={<DeviceHubIcon/>}>
                 <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
+                <MenuItem icon={<GoogleIcon/>}>Google Cloud</MenuItem>
             </SubMenu>
             <MenuItem onClick={() => navigate("/account")} icon={<AccountCircleIcon/>}>Account</MenuItem>
             {AppUtils.isUserAdmin() && <SubMenu label="Admin" icon={<AdminPanelSettingsIcon/>}>

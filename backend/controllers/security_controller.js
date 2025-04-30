@@ -1,11 +1,33 @@
 const AlertController = require("./alert_controller");
 const rules = require("../config/security_rules.config");
+const { LRUCache } = require("lru-cache");
+const crypto = require("crypto");
+
+const buffer = new LRUCache({
+    max: 10000,
+    ttl: 1000 * 15
+});
+
+setInterval(() => {
+    buffer.purgeStale();
+}, 20000);
+
 
 class SecurityController {
+    static createAlertHash = (alert) => {
+        const hash = crypto.createHash("sha1").update(alert.artifact_id).update(alert.trigger).digest("hex");
+        return hash;
+    };
+
     static raiseAlert = async (alert) => {
-        await AlertController.insertAlert(alert);
-        if (alert.severity === "High") {
-            await AlertController.sendAlert(alert, rules.notification_emails);
+        // only insert the alert and send notifications if the alert is "fresh"
+        const hash = this.createAlertHash(alert);
+        if (!buffer.has(hash)) {
+            buffer.set(hash, null);
+            await AlertController.insertAlert(alert);
+            if (alert.severity === "High") {
+                await AlertController.sendAlert(alert, rules.notification_emails);
+            };
         };
     };
 
@@ -25,22 +47,22 @@ class SecurityController {
                 const blacklist = rules.blacklist.processes.map(filter => new RegExp(filter, "i"));
                 const isProcessBlacklisted = blacklist.some(filter => filter.test(process.command));
                 if (isProcessBlacklisted || rules.blacklist.users.includes(process.user)) {
-                    score = 10;
+                    score = 10; // significant threat score due to the user or process being blacklisted
                     return;
                 };
 
                 // Check Whitelist 
                 const whitelist = rules.whitelist.processes.map(filter => new RegExp(filter, "i"));
                 const isProcessWhitelisted = whitelist.some(filter => filter.test(process.command));
-                if (isProcessWhitelisted || rules.whitelist.users.includes(process.user)) {
-                    return;
+                if (isProcessWhitelisted) {
+                    return; // since the process is whitelisted, do not analyse or raise an alert
                 };
 
                 const matchedRules = [];
 
                 rules.processes.forEach(rule => {
                     const pattern = new RegExp(rule.filter, "i");
-                    if (pattern.test(process.command)) {
+                    if (pattern.test(process[rule.field])) {
                         score += rule.score;
                         matchedRules.push(rule);
                     };
@@ -73,11 +95,26 @@ class SecurityController {
             for (const file of files) {
                 let score = 0;
 
+                // Check Blacklist first
+                const blacklist = rules.blacklist.files.map(filter => new RegExp(filter, "i"));
+                const isFileBlacklisted = blacklist.some(filter => filter.test(file.file_path));
+                if (isFileBlacklisted) {
+                    score = 10; // significant threat score due to the file being blacklisted
+                    return;
+                };
+
+                // Check Whitelist 
+                const whitelist = rules.whitelist.files.map(filter => new RegExp(filter, "i"));
+                const isFileWhitelisted = whitelist.some(filter => filter.test(file.file_path));
+                if (isFileWhitelisted) {
+                    return; // since the file is whitelisted, do not analyse or raise an alert
+                };
+
                 const matchedRules = [];
 
                 rules.files.forEach(rule => {
                     const pattern = new RegExp(rule.filter, "i");
-                    if (pattern.test(file.command)) {
+                    if (pattern.test(file[rule.field])) {
                         score += rule.score;
                         matchedRules.push(rule);
                     };
@@ -97,7 +134,7 @@ class SecurityController {
                         severity: await this.getSeverity(score),
                         message
                     });
-                };
+                }
             };
         }
         catch (error) {
@@ -109,6 +146,47 @@ class SecurityController {
         try {
             for (const connection of connections) {
                 let score = 0;
+
+                // Check Blacklist first
+                const blacklist = rules.blacklist.network_connections.map(filter => new RegExp(filter, "i"));
+                const isConnectionBlacklisted = blacklist.some(filter => filter.test(connection.remote_address_ip));
+                if (isConnectionBlacklisted) {
+                    score = 10; // significant threat score due to the network connection being blacklisted
+                    return;
+                };
+
+                // Check Whitelist 
+                const whitelist = rules.whitelist.network_connections.map(filter => new RegExp(filter, "i"));
+                const isConnectionWhitelisted = whitelist.some(filter => filter.test(connection.remote_address_ip));
+                if (isConnectionWhitelisted) {
+                    return; // since the network connection is whitelisted, do not analyse or raise an alert
+                };
+
+                const matchedRules = [];
+
+                rules.network_connections.forEach(rule => {
+                    const pattern = new RegExp(rule.filter, "i");
+                    if (pattern.test(connection[rule.field])) {
+                        score += rule.score;
+                        matchedRules.push(rule);
+                    };
+                });
+
+                if (matchedRules.length !== 0) {
+                    const message = matchedRules.map(rule => rule.message).join(" ");
+                    const detection = matchedRules.map(rule => rule.detection).join(", ");
+                    await this.raiseAlert({
+                        endpoint_id: connection.endpoint_id,
+                        artifact_id: connection._id,
+                        artifact_collection: "network_connections",
+                        detection,
+                        host_name: connection.host_name,
+                        trigger: `${connection.remote_address_ip}:${connection.remote_address_port}`,
+                        score,
+                        severity: await this.getSeverity(score),
+                        message
+                    });
+                }
                 
             };
         }
