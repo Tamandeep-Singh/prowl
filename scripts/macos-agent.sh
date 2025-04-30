@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-echo "[Prowl-MacOS-Agent]: Script started... \n"
+echo -e "[Prowl-MacOS-Agent]: Script started... \n"
 
 PROWL_API_ENDPOINT="http://localhost:4500/api/endpoints/"
 DEVICE_UUID=$(ioreg -rd1 -c IOPlatformExpertDevice | awk -F'"' '/IOPlatformUUID/{print $4}')
@@ -84,7 +84,7 @@ function get_filesystem_data() {
 }
 
 function get_network_data() {
-    network_json_array=$(sudo python3 /Users/tam/qmul/prowl/scripts/macos-network.py)
+    network_json_array=$(sudo python3 /Users/tam/qmul/prowl/scripts/network.py)
     network_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"host_name\":\""$DEVICE_NAME"\",\"ingest_type\":\"network\", \"network_connections\":"$network_json_array"}"
     ingest_request_handler "$network_json_body"
 }
@@ -98,7 +98,7 @@ function link_endpoint() {
 
 
 function main() {
-    echo "[Prowl-MacOS-Agent]: Starting Endpoint Telemetry Collection \n"
+    echo -e "[Prowl-MacOS-Agent]: Starting Endpoint Telemetry Collection \n"
 
     TUNING_PROCESS_DATA_DELAY=5
     TUNING_FILESYSTEM_DATA_DELAY=60

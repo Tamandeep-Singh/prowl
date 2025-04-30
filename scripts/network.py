@@ -30,7 +30,6 @@ def get_network_connections():
                         raddr = RemoteAddress("127.0.0.1", laddr.port)
                     network_body = {"command":command, "pid":pid, "local_address_ip":laddr.ip, "local_address_port":laddr.port, "remote_address_ip":raddr.ip, "remote_address_port":raddr.port, "connection_status":status}
                     network_json_array.append(network_body)
-
         except psutil.NoSuchProcess:
             continue
         except psutil.AccessDenied:
