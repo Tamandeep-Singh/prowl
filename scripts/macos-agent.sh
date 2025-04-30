@@ -135,7 +135,7 @@ case "$1" in
     link_endpoint
     ;;
   *)
-    get_filesystem_data
+    get_process_data
     ;;
 esac
 

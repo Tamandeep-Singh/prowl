@@ -48,6 +48,7 @@ const Processes = () => {
               </span>
             </Tooltip>
         )},
+        {field: "state", headerName: "State", width: 80},
         {field: "command", headerName: "Command", width: 550, renderCell: (params) => (
             <Tooltip title={params.value}>
               <span style={{
@@ -60,7 +61,7 @@ const Processes = () => {
              </span>
             </Tooltip>
           )},
-        {field: "start_time", headerName: "Start Time", width: 300}
+        {field: "start_time", headerName: "Start Time", width: 250}
     ];
 
      useEffect(() => {
@@ -86,6 +87,7 @@ const Processes = () => {
                     pid: process.pid,
                     ppid: process.ppid,
                     user: process.user,
+                    state: process.state || "",
                     command: process.command,
                     start_time: new Date(process.start_time).toLocaleString("en-GB")
                 });

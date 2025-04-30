@@ -22,6 +22,10 @@ const ProcessSchema = mongoose.Schema({
         type: String,
         required: [true, "User for the process must be provided"],
     },
+    state: {
+        type: String,
+        required: [true, "State for the process must be provided"],
+    },
     command: {
         type: String,
         required: [true, "Command for the process must be provided"],

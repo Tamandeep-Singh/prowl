@@ -28,13 +28,13 @@ class ProcessController {
         }));
         const filteredProcesses = [];
         processes.map(process => {
-            const hash = this.createProcessHash(process);
-            if (!buffer.has(hash)) {
-                buffer.set(hash, null);
-                if (process.pid !== agent_pid && process.ppid !== agent_pid) {
-                    filteredProcesses.push(process);
+            if (process.pid !== agent_pid && process.ppid !== agent_pid) {
+                const hash = this.createProcessHash(process);
+                if (!buffer.has(hash)) {
+                    buffer.set(hash, null);
+                    filteredProcesses.push(process);  
                 };
-            };
+            }
         });
         if (filteredProcesses.length === 0) {
             return { success: true, message: "No new processes were inserted, all duplicates were found."};
