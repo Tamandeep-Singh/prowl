@@ -16,7 +16,7 @@ const rules = {
     files: [
         { detection: "Executable", filter: "executable", score: 3, message:"Executable binary, potentially malicious.", field: "file_description"},
         { detection: "Compressed Archive", filter: "\.(zip|rar|tar|gz|7z)$", score: 2, message:"Compressed file, potentially used for data staging.", field: "file_name"},
-        { detection: "Compressed Archive (File Description)", filter: "", score: 2, message:"Compressed archive, could indicate data staging or a malicious payload", field: "file_description"}, 
+        { detection: "Compressed Archive (File Description)", filter: "", score: 2, message:"Compressed archive, could indicate data staging or a malicious payload.", field: "file_description"}, 
         { detection: "No File Extension", filter: "^[^\.]+$", score: 3, message:"No file extension which could indicate it contains a malicious payload.", field: "file_name"}
     ],
     network_connections: [

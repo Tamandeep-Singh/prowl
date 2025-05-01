@@ -36,8 +36,8 @@ class NetworkConnectionController {
         if (filteredConnections.length === 0) {
             return { success: true, message: "No new network connections were inserted, all duplicates were found." };
         };
-        await SecurityController.analyseNetworkConnections(filteredConnections);
         const result = await MongoUtilities.insertManyDocuments(NetworkConnection, connections);
+        await SecurityController.analyseNetworkConnections(filteredConnections);
         return result;
     };
 

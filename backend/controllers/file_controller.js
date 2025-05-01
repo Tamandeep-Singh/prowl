@@ -38,8 +38,8 @@ class FileController {
         if (filteredFiles.length === 0) {
             return { success: true, message: "No new files were inserted, all duplicates were found."};
         };
-        await SecurityController.analyseFiles(filteredFiles);
         const result = await MongoUtilities.insertManyDocuments(File, files);
+        await SecurityController.analyseFiles(result);
         return result;
     };
 
