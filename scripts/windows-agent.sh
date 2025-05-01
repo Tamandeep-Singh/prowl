@@ -40,33 +40,44 @@ function link_endpoint_request_handler() {
 
 
 function get_process_data() {
-    exit 1 # still need to port
-    #Fields $5 to $9 = lstart, field $10 = etime, field $11 = command (binary being executed), fields onwards are command arguments 
+    processes=$(powershell -Command "
+        Get-WmiObject Win32_Process | ForEach-Object {
+            \$owner = \$_.GetOwner()
+            \$domain = if (\$owner.Domain) { \$owner.Domain } else { '' }
+            \$user = if (\$owner.User) { \$owner.User } else { '' }
 
-    process_json_array=$(echo "$process_output" | awk 'NR > 1 {
-    start = 11; 
-    args = "";
-
-    for (i = start; $i != ""; i++) { 
-        gsub(/"/, "\\\"", $i);  
-       
-        args = args (args == "" ? "" : " ") $i;
-    }
-
-    {print "{\"ppid\": "$1",\"pid\": "$2",\"user\": \""$3"\",\"state\": \""$4"\",\"start_time\": \""$5,$6,$7,$8,$9"\",\"elapsed_time\": \""$10"\",\"command\": \""args"\"}"  } }' | jq -s '.') 
-
+            \$startTime = \$_.CreationDate
+            if (\$startTime) {
+                \$startDate = [System.Management.ManagementDateTimeConverter]::ToDateTime(\$startTime)
+                \$epochDate = [int][double]::Parse((New-TimeSpan -Start (Get-Date "1970-01-01T00:00:00Z") -End \$startDate).TotalSeconds)
+                \$elapsed = (Get-Date) - \$startDate
+                \$elapsedFormatted = \$elapsed.ToString('hh\\:mm\\:ss')
+            } else {
+                \$epochDate = [int][double]::Parse((New-TimeSpan -Start (Get-Date "1970-01-01T00:00:00Z") -End (Get-Date)).TotalSeconds)
+                \$elapsedFormatted = 'N/A'
+            }
+            [PSCustomObject]@{
+                ppid = \$_.ParentProcessId
+                pid =  \$_.ProcessId
+                user = \"\$domain\\\$user\" -replace '\\\\', '\\'
+                state = 'N/A'
+                start_time = \$epochDate
+                elapsed_time = \$elapsedFormatted
+                command = \$_.ExecutablePath -replace '\\\\', '\\'
+            }
+        } | ConvertTo-Json")
+    process_json_array=$(echo "$processes" | jq 'map(select(.command != ""))')
     process_json_body="{\"host_uuid\":\""$DEVICE_UUID"\",\"host_name\":\""$DEVICE_NAME"\",\"agent_pid\":"$$",\"ingest_type\":\"processes\", \"processes\":"$process_json_array"}"
-    echo "$process_json_body"
+    ingest_request_handler "$process_json_body"
 }
 
 function get_filesystem_data() { 
     tmp_dir="$HOME/AppData/Local/Temp"
     desktop_dir="$HOME/Desktop"
-    documents_dir="$HOME/Documents"
     downloads_dir="$HOME/Downloads"
     
     files_json_array=""
-    files=$(find "$tmp_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.tar.gz" \))
+    files=$(find "$tmp_dir" "$desktop_dir" "$downloads_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.tar.gz" \) 2>/dev/null)
 
     while read file; do 
         sha256_hash=$(sha256sum "$file" | awk '{print $1}')
@@ -101,7 +112,7 @@ function link_endpoint() {
 function main() {
     echo -e "[Prowl-Windows-Agent]: Starting Endpoint Telemetry Collection \n"
 
-    TUNING_PROCESS_DATA_DELAY=5
+    TUNING_PROCESS_DATA_DELAY=15
     TUNING_FILESYSTEM_DATA_DELAY=60
     TUNING_NETWORK_DATA_DELAY=40
 
@@ -137,6 +148,6 @@ case "$1" in
     link_endpoint
     ;;
   *)
-    get_process_data
+    main
     ;;
 esac
