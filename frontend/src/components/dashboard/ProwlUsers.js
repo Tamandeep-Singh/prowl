@@ -69,8 +69,8 @@ const ProwlUsers = () => {
         {field: "username", headerName: "Username", width: 180},
         {field: "email", headerName: "Email", width: 260},
         {field: "role", headerName: "User Role", width: 120},
-        {field: "date_added", headerName: "Added On", width: 180},
-        {field: "date_updated", headerName: "Modified On", width: 180},
+        {field: "date_added", headerName: "Added On", type: "dateTime", width: 180},
+        {field: "date_updated", headerName: "Modified On", type: "dateTime", width: 180},
         {field: "edit_user", headerName: "Actions", width: 190, sortable: false, filterable: false, renderCell: (params) => (
             <Button variant="contained" size="small" onClick={() => onUserEditPopupClick(params.row)}>Edit User</Button>),
         }
@@ -100,8 +100,8 @@ const ProwlUsers = () => {
                 username: user.username,
                 email: user.email,
                 role: user.role, 
-                date_added: new Date(user.createdAt).toLocaleString("en-GB"),
-                date_updated: new Date(user.updatedAt).toLocaleString("en-GB")
+                date_added: new Date(user.createdAt),
+                date_updated: new Date(user.updatedAt)
             });
           });
           setRows(users);

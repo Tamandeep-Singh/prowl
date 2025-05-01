@@ -14,7 +14,7 @@ setInterval(() => {
 
 class SecurityController {
     static createAlertHash = (alert) => {
-        const hash = crypto.createHash("sha1").update(alert.artifact_id).update(alert.trigger).digest("hex");
+        const hash = crypto.createHash("sha1").update(String(alert.artifact_id)).update(alert.trigger).digest("hex");
         return hash;
     };
 
@@ -42,20 +42,48 @@ class SecurityController {
             for (const process of processes) {
                 let score = 0;
 
-                // Check Blacklist first
-                const blacklist = rules.blacklist.processes.map(filter => new RegExp(filter, "i"));
-                const isProcessBlacklisted = blacklist.some(filter => filter.test(process.command));
-                if (isProcessBlacklisted || rules.blacklist.users.includes(process.user)) {
-                    score = 10; // significant threat score due to the user or process being blacklisted
-                    return;
-                };
-
-                // Check Whitelist 
-                const whitelist = rules.whitelist.processes.map(filter => new RegExp(filter, "i"));
-                const isProcessWhitelisted = whitelist.some(filter => filter.test(process.command));
+                // Check Whitelist first
+                const isProcessWhitelisted = rules.whitelist.processes.some(rule => new RegExp(rule.filter, "i").test(process[rule.field]));
                 if (isProcessWhitelisted) {
                     return; // since the process is whitelisted, do not analyse or raise an alert
                 };
+
+                // Check for Blacklisted Users
+                if (rules.blacklist.users.includes(`${process.host_name}:${process.user}`)) {
+                    score = 10;
+                    await this.raiseAlert({
+                        endpoint_id: process.endpoint_id,
+                        artifact_id: process._id,
+                        artifact_collection: "processes",
+                        detection: "Blacklisted User detected",
+                        host_name: process.host_name,
+                        trigger: process.command,
+                        score,
+                        severity: await this.getSeverity(score),
+                        message: `User: ${process.user} is in the blacklist!`
+                    });
+                    return;
+                };
+
+                // Check Blacklist
+                rules.blacklist.processes.forEach(async rule => {
+                    const pattern = new RegExp(rule.filter, "i");
+                    if (pattern.test(process[rule.field])) {
+                        score = 10; // significant threat score due to the user or process being blacklisted
+                        await this.raiseAlert({
+                            endpoint_id: process.endpoint_id,
+                            artifact_id: process._id,
+                            artifact_collection: "processes",
+                            detection: rule.detection,
+                            host_name: process.host_name,
+                            trigger: process.command,
+                            score,
+                            severity: await this.getSeverity(score),
+                            message: rule.message
+                        });
+                        return;
+                    };
+                });
 
                 const matchedRules = [];
 
@@ -94,20 +122,32 @@ class SecurityController {
             for (const file of files) {
                 let score = 0;
 
-                // Check Blacklist first
-                const blacklist = rules.blacklist.files.map(filter => new RegExp(filter, "i"));
-                const isFileBlacklisted = blacklist.some(filter => filter.test(file.file_path));
-                if (isFileBlacklisted) {
-                    score = 10; // significant threat score due to the file being blacklisted
-                    return;
-                };
-
-                // Check Whitelist 
-                const whitelist = rules.whitelist.files.map(filter => new RegExp(filter, "i"));
-                const isFileWhitelisted = whitelist.some(filter => filter.test(file.file_path));
+                // Check Whitelist first
+                const isFileWhitelisted = rules.whitelist.files.some(rule => new RegExp(rule.filter, "i").test(file[rule.field]));
                 if (isFileWhitelisted) {
                     return; // since the file is whitelisted, do not analyse or raise an alert
                 };
+
+                // Check Blacklist 
+                rules.blacklist.files.forEach(async rule => {
+                    const pattern = new RegExp(rule.filter, "i");
+                    if (pattern.test(file[rule.field])) {
+                        score = 10; // significant threat score due to the file being blacklisted
+                        await this.raiseAlert({
+                            endpoint_id: file.endpoint_id,
+                            artifact_id: file._id,
+                            artifact_collection: "files",
+                            detection: rule.detection,
+                            host_name: file.host_name,
+                            trigger: file.file_path,
+                            score,
+                            severity: await this.getSeverity(score),
+                            message: rule.message
+                        });
+                        return;
+                    };
+                });
+
 
                 const matchedRules = [];
 
@@ -133,7 +173,7 @@ class SecurityController {
                         severity: await this.getSeverity(score),
                         message
                     });
-                }
+                };
             };
         }
         catch (error) {
@@ -146,20 +186,31 @@ class SecurityController {
             for (const connection of connections) {
                 let score = 0;
 
-                // Check Blacklist first
-                const blacklist = rules.blacklist.network_connections.map(filter => new RegExp(filter, "i"));
-                const isConnectionBlacklisted = blacklist.some(filter => filter.test(connection.remote_address_ip));
-                if (isConnectionBlacklisted) {
-                    score = 10; // significant threat score due to the network connection being blacklisted
-                    return;
-                };
-
-                // Check Whitelist 
-                const whitelist = rules.whitelist.network_connections.map(filter => new RegExp(filter, "i"));
-                const isConnectionWhitelisted = whitelist.some(filter => filter.test(connection.remote_address_ip));
+                 // Check Whitelist first
+                const isConnectionWhitelisted = rules.whitelist.network_connections.some(rule => new RegExp(rule.filter, "i").test(connection[rule.field]));
                 if (isConnectionWhitelisted) {
                     return; // since the network connection is whitelisted, do not analyse or raise an alert
-                };
+                }
+ 
+                 // Check Blacklist 
+                rules.blacklist.network_connections.forEach(async rule => {
+                    const pattern = new RegExp(rule.filter, "i");
+                    if (pattern.test(connection[rule.field])) {
+                        score = 10; // significant threat score due to the network connection being blacklisted
+                        await this.raiseAlert({
+                            endpoint_id: connection.endpoint_id,
+                            artifact_id: connection._id,
+                            artifact_collection: "network_connections",
+                            detection: rule.detection,
+                            host_name: connection.host_name,
+                            trigger: `${connection.remote_address_ip}:${connection.remote_address_port}`,
+                            score,
+                            severity: await this.getSeverity(score),
+                            message: rule.message
+                        });
+                        return;
+                    };
+                });
 
                 const matchedRules = [];
 
@@ -185,7 +236,7 @@ class SecurityController {
                         severity: await this.getSeverity(score),
                         message
                     });
-                }
+                };
                 
             };
         }

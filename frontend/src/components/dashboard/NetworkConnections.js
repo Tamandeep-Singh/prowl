@@ -51,7 +51,7 @@ const NetworkConnections = () => {
         {field: "remote_ip", headerName: "Remote Address IP", width: 140},
         {field: "remote_port", headerName: "Remote Port", width: 110},
         {field: "status", headerName: "Connection Status", width: 160},
-        {field: "date_added", headerName: "Added On", width: 220},
+        {field: "date_added", headerName: "Added On", type: "dateTime", width: 220},
         
     ];
 
@@ -82,7 +82,7 @@ const NetworkConnections = () => {
                   remote_ip: connection.remote_address_ip,
                   remote_port: connection.remote_address_port,
                   status: connection.connection_status,
-                  date_added: new Date(connection.createdAt).toLocaleString("en-GB")
+                  date_added: new Date(connection.createdAt)
                 });
               });
               setRows(connections);

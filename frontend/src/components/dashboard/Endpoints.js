@@ -26,8 +26,8 @@ const Endpoints = () => {
         {field: "host_name", headerName: "Host Name", width: 200},
         {field: "host_ip", headerName: "Host IP", width: 160},
         {field: "host_os", headerName: "OS", width: 200},
-        {field: "host_os_version", headerName: "OS Version", width: 200},
-        {field: "host_link_date", headerName: "Added On", width: 240},
+        {field: "host_os_version", headerName: "OS Version", width: 380},
+        {field: "host_link_date", headerName: "Added On", type: "dateTime", width: 200},
     ];
 
     const onShowInformationPopup = () => {
@@ -62,7 +62,7 @@ const Endpoints = () => {
                 host_ip: endpoint.host_ip,
                 host_os: endpoint.host_os,
                 host_os_version: endpoint.host_os_version,
-                host_link_date: new Date(endpoint.createdAt).toLocaleString("en-GB")
+                host_link_date: new Date(endpoint.createdAt)
             });
           });
           setRows(endpoints);

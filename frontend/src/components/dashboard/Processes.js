@@ -61,7 +61,7 @@ const Processes = () => {
              </span>
             </Tooltip>
           )},
-        {field: "start_time", headerName: "Start Time", width: 250}
+        {field: "start_time", headerName: "Start Time", type: "dateTime", width: 250}
     ];
 
      useEffect(() => {
@@ -89,7 +89,7 @@ const Processes = () => {
                     user: process.user,
                     state: process.state || "",
                     command: process.command,
-                    start_time: new Date(process.start_time).toLocaleString("en-GB")
+                    start_time: new Date(process.start_time)
                 });
               });
               setRows(processes);

@@ -21,8 +21,8 @@ const rules = {
         network_connections: []
     },
     blacklist: {
-        users: [],
-        processes: [],
+        users: ["tam-macbook:user2"],
+        processes: [{ detection: "Netcat (Blacklist)", filter: "(?:\/?\w+\/)*ncat.*", message:"Blacklisted Process (netcat) detected", field: "command" }],
         files: [],
         network_connections: []
     },

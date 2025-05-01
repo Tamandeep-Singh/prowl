@@ -68,8 +68,8 @@ const Files = () => {
             </Tooltip>
         )},
         {field: "file_size", headerName: "File Size (Bits)", width: 140},
-        {field: "file_creation", headerName: "Created At", width: 160},
-        {field: "file_modified", headerName: "Modified At", width: 160},
+        {field: "file_creation", headerName: "Created At", type: "dateTime", width: 160},
+        {field: "file_modified", headerName: "Modified At", type: "dateTime", width: 160},
         {field: "file_description", headerName: "File Summary", width: 220, renderCell: (params) => (
           <Tooltip title={params.value}>
             <span style={{
@@ -108,8 +108,8 @@ const Files = () => {
                     file_name: file.file_name,
                     file_path: file.file_path,
                     hash: file.sha256_hash || "",
-                    file_creation: new Date(file.creation_ts).toLocaleString("en-GB"),
-                    file_modified: new Date(file.last_mod_ts).toLocaleString("en-GB"),
+                    file_creation: new Date(file.creation_ts),
+                    file_modified: new Date(file.last_mod_ts),
                     file_size: file.file_size,
                     file_description: file.file_description
                 });

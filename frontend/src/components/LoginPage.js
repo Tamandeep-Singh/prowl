@@ -43,7 +43,7 @@ const LoginPage = () => {
 
     return <div id="login-wrapper">
         <div className="login">
-            <p>Sign in to continue to Prowl Prototype</p>
+            <p>Sign in to continue to the Prowl Hub</p>
             <form>
                 <div className="login__logo">
                         <img id="inner-logo" src={ProwlLogo} alt="Prowl Logo"/>

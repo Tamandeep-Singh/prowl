@@ -70,7 +70,7 @@ const Reports = () => {
             </Tooltip>
         )},
         {field: "summary", headerName: "Report Summary", width: 160},
-        {field: "date_added", headerName: "Added On", width: 200},
+        {field: "date_added", headerName: "Added On", type: "dateTime", width: 200},
         {field: "view_report", headerName: "Actions", width: 240, sortable: false, filterable: false, renderCell: (params) => (
             <Button variant="contained" onClick={() => onShowReportPopup(params.row)} size="small">View Report</Button>),
         } 
@@ -99,7 +99,7 @@ const Reports = () => {
                 host_name: report.host_name,
                 trigger: report.trigger,
                 summary: report.summary,
-                date_added: new Date(report.createdAt).toLocaleString("en-GB")
+                date_added: new Date(report.createdAt)
             });
           });
           setRows(reports);

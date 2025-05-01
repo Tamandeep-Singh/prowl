@@ -48,7 +48,7 @@ class AlertController {
             title: `[${alert.host_name}] Automated Alert on: ${new Date(Date.now()).toLocaleString("en-GB")}`,
             description: `Detection message: **${alert.message}**`,
             color: 0x00b0f4,
-            url: "http://localhost:3000/dashboard/alerts",
+            url: "http://192.168.1.79:3000/dashboard/alerts",
             fields: [{ name: "Severity", value: alert.severity},{ name: "Score", value: alert.score}, { name: "Triggered By", value: alert.trigger}],
             footer: { text: "Sent via Prowl API (Security Controller)" },
             timestamp: new Date().toISOString()}
@@ -72,7 +72,7 @@ class AlertController {
                             </tr>
                         </table>
                         <div style="text-align: center; margin-bottom: 20px; margin-top: 20px;">
-                            <a href="http://localhost:3000/dashboard/alerts" style="padding: 10px; display: inline-block; width: 200px; background-color: rgb(25, 118, 210); color: white; text-decoration:none; border-radius:6px; font-weight:bold;">Go to Alerts</a>
+                            <a href="http://192.168.1.79:3000/dashboard/alerts" style="padding: 10px; display: inline-block; width: 200px; background-color: rgb(25, 118, 210); color: white; text-decoration:none; border-radius:6px; font-weight:bold;">Go to Alerts</a>
                         </div>
                         <p style="margin-top: 30px; font-size: 13px; color: #ccc;">Sent via Prowl API (Security Controller)</p>
                      </div>`
