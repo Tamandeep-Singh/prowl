@@ -67,7 +67,7 @@ const Alerts = () => {
     };
 
     const columns = [
-        {field: "host_name", headerName: "Host Name", width: 130},
+        {field: "host_name", headerName: "Host Name", width: 160},
         {field: "artifact_id", headerName: "Artifact ID", width: 220},
         {field: "artifact_collection", headerName: "Artifact Collection", width: 140},
         {field: "trigger", headerName: "Triggered By", width: 150, renderCell: (params) => (

@@ -87,7 +87,7 @@ const Processes = () => {
                     pid: process.pid,
                     ppid: process.ppid,
                     user: process.user,
-                    state: process.state || "",
+                    state: process.state,
                     command: process.command,
                     start_time: new Date(process.start_time)
                 });

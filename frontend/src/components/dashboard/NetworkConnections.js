@@ -31,7 +31,7 @@ const NetworkConnections = () => {
     };
 
     const columns = [
-        {field: "host_name", headerName: "Host Name", width: 130},
+        {field: "host_name", headerName: "Host Name", width: 160},
         {field: "command", headerName: "Command", width: 180, renderCell: (params) => (
                   <Tooltip title={params.value}>
                     <span style={{
@@ -74,7 +74,7 @@ const NetworkConnections = () => {
               response.result.forEach(connection => {
                 connections.push({
                   id: connection._id,
-                  host_name: connection.host_name || "null",
+                  host_name: connection.host_name,
                   command: connection.command,
                   pid: connection.pid,
                   local_ip: connection.local_address_ip,

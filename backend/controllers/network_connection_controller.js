@@ -6,12 +6,12 @@ const SecurityController = require("../controllers/security_controller");
 
 const buffer = new LRUCache({
     max: 10000,
-    ttl: 1000 * 15
+    ttl: 1000 * 60
 });
 
 setInterval(() => {
     buffer.purgeStale();
-}, 20000);
+}, 50000);
 
 class NetworkConnectionController {
     static createConnectionHash = (connection) => {
@@ -36,7 +36,7 @@ class NetworkConnectionController {
         if (filteredConnections.length === 0) {
             return { success: true, message: "No new network connections were inserted, all duplicates were found." };
         };
-        //await SecurityController.analyseNetworkConnections(filteredConnections);
+        await SecurityController.analyseNetworkConnections(filteredConnections);
         const result = await MongoUtilities.insertManyDocuments(NetworkConnection, connections);
         return result;
     };

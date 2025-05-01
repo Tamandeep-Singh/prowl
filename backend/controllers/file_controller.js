@@ -6,12 +6,12 @@ const SecurityController = require("../controllers/security_controller");
 
 const buffer = new LRUCache({
     max: 10000,
-    ttl: 1000 * 15
+    ttl: 1000 * 60
 });
 
 setInterval(() => {
     buffer.purgeStale();
-}, 20000);
+}, 50000);
 
 class FileController {
     static createFileHash = (file) => {
@@ -38,7 +38,7 @@ class FileController {
         if (filteredFiles.length === 0) {
             return { success: true, message: "No new files were inserted, all duplicates were found."};
         };
-        //await SecurityController.analyseFiles(filteredFiles);
+        await SecurityController.analyseFiles(filteredFiles);
         const result = await MongoUtilities.insertManyDocuments(File, files);
         return result;
     };

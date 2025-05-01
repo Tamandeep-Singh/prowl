@@ -5,12 +5,12 @@ const crypto = require("crypto");
 
 const buffer = new LRUCache({
     max: 10000,
-    ttl: 1000 * 15
+    ttl: 1000 * 60
 });
 
 setInterval(() => {
     buffer.purgeStale();
-}, 20000);
+}, 50000);
 
 class SecurityController {
     static createAlertHash = (alert) => {

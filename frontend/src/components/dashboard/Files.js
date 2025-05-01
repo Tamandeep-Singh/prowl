@@ -28,7 +28,7 @@ const Files = () => {
     };
 
     const columns = [
-        {field: "host_name", headerName: "Host Name", width: 130},
+        {field: "host_name", headerName: "Host Name", width: 160},
         {field: "file_name", headerName: "File Name", width: 150, renderCell: (params) => (
           <Tooltip title={params.value}>
             <span style={{
@@ -104,10 +104,10 @@ const Files = () => {
               response.result.forEach(file => {
                 files.push({
                     id: file._id,
-                    host_name: file.host_name || "null",
+                    host_name: file.host_name,
                     file_name: file.file_name,
                     file_path: file.file_path,
-                    hash: file.sha256_hash || "",
+                    hash: file.sha256_hash,
                     file_creation: new Date(file.creation_ts),
                     file_modified: new Date(file.last_mod_ts),
                     file_size: file.file_size,
