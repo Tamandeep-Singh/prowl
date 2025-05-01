@@ -12,7 +12,6 @@ setInterval(() => {
     buffer.purgeStale();
 }, 20000);
 
-
 class SecurityController {
     static createAlertHash = (alert) => {
         const hash = crypto.createHash("sha1").update(alert.artifact_id).update(alert.trigger).digest("hex");

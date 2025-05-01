@@ -1,11 +1,11 @@
 const rules = {
     processes: [
-       { detection: "Base64", filter: "base64", score: 1, message:"Base64.", field: "command"},
-       { detection: "Curl", filter: "curl", score: 1, message:"Curl.", field: "command"},
-       { detection: "Wget", filter: "wget", score: 1, message:"Wget.", field: "command"},
-       { detection: "Netcat", filter: "^(nc|ncat|netcat)", score: 13, message:"Netcat was used!", field: "command"},
-       { detection: "Nmap", filter: "nmap", score: 1, message:"Nmap.", field: "command"},
-       { detection: "Bash (Reverse Shell)", filter: "bash", score: 1, message:"Bash.", field: "command"}
+       { detection: "Base64", filter: "(?:\/?\w+\/)*base64.*", score: 1, message:"Base64.", field: "command"},
+       { detection: "Curl", filter: "(?:\/?\w+\/)*curl.*", score: 2, message:"Curl.", field: "command"},
+       { detection: "Wget", filter: "(?:\/?\w+\/)*wget.*", score: 2, message:"Wget.", field: "command"},
+       { detection: "Netcat", filter: "(?:\/?\w+\/)*(nc|ncat|nmap).*", score: 2, message:"Netcat was used, perhaps for a bind or reverse shell and network mapping,", field: "command"},
+       { detection: "Nmap", filter: "(?:\/?\w+\/)*nmap.*", score: 4, message:"Nmap was used, potentially for network discovery, port scanning and reconnaissance", field: "command"},
+       { detection: "Bash (Reverse Shell)", filter: "bash\s+-i\s+>&\s+\/dev\/tcp\/\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d+.*", score: 8, message:"Bash (Reverse Shell) which might be used for remote code execution or firewall evasion", field: "command"}
     ],
     files: [
         { detection: "Tmp file", filter: "/tmp/.*", score: 1, message:"Stored in TMP for potential staging.", field: "file_path"},
