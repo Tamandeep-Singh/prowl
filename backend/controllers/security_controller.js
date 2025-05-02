@@ -2,6 +2,7 @@ const AlertController = require("./alert_controller");
 const rules = require("../config/security_rules.config");
 const { LRUCache } = require("lru-cache");
 const crypto = require("crypto");
+const VirusTotalController = require("./virustotal_controller");
 
 const buffer = new LRUCache({
     max: 10000,
@@ -45,7 +46,7 @@ class SecurityController {
                 // Check Whitelist first
                 const isProcessWhitelisted = rules.whitelist.processes.some(rule => new RegExp(rule.filter, "i").test(process[rule.field]));
                 if (isProcessWhitelisted) {
-                    return; // since the process is whitelisted, do not analyse or raise an alert
+                    continue; // since the process is whitelisted, do not analyse or raise an alert and continue to the next process
                 };
 
                 // Check for Blacklisted Users
@@ -62,14 +63,15 @@ class SecurityController {
                         severity: await this.getSeverity(score),
                         message: `User: ${process.user} is in the blacklist!`
                     });
-                    return;
+                    continue;
                 };
 
                 // Check Blacklist
-                rules.blacklist.processes.forEach(async rule => {
+                let isBlacklisted = false;
+                for (const rule of rules.blacklist.processes) {
                     const pattern = new RegExp(rule.filter, "i");
                     if (pattern.test(process[rule.field])) {
-                        score = 10; // significant threat score due to the user or process being blacklisted
+                        score = 10; // significant threat score due to the process being blacklisted
                         await this.raiseAlert({
                             endpoint_id: process.endpoint_id,
                             artifact_id: process._id,
@@ -81,9 +83,12 @@ class SecurityController {
                             severity: await this.getSeverity(score),
                             message: rule.message
                         });
-                        return;
+                        isBlacklisted = true;
                     };
-                });
+                    if (isBlacklisted) { break; }
+                };
+
+                if (isBlacklisted) { continue; }
 
                 const matchedRules = [];
 
@@ -125,11 +130,12 @@ class SecurityController {
                 // Check Whitelist first
                 const isFileWhitelisted = rules.whitelist.files.some(rule => new RegExp(rule.filter, "i").test(file[rule.field]));
                 if (isFileWhitelisted) {
-                    return; // since the file is whitelisted, do not analyse or raise an alert
+                    continue; // since the file is whitelisted, do not analyse or raise an alert and continue to the next file
                 };
 
-                // Check Blacklist 
-                rules.blacklist.files.forEach(async rule => {
+                // Check Blacklist
+                let isBlacklisted = false;
+                for (const rule of rules.blacklist.files) {
                     const pattern = new RegExp(rule.filter, "i");
                     if (pattern.test(file[rule.field])) {
                         score = 10; // significant threat score due to the file being blacklisted
@@ -142,11 +148,14 @@ class SecurityController {
                             trigger: file.file_path,
                             score,
                             severity: await this.getSeverity(score),
-                            message: rule.message
+                            message: `${rule.message} VirusTotal Report: ${await VirusTotalController.getFileReport(file.sha256_hash)}`
                         });
-                        return;
+                        isBlacklisted = true;
                     };
-                });
+                    if (isBlacklisted) { break; }
+                };
+
+                if (isBlacklisted) { continue; }
 
 
                 const matchedRules = [];
@@ -162,17 +171,33 @@ class SecurityController {
                 if (matchedRules.length !== 0) {
                     const message = matchedRules.map(rule => rule.message).join(" ");
                     const detection = matchedRules.map(rule => rule.detection).join(", ");
-                    await this.raiseAlert({
-                        endpoint_id: file.endpoint_id,
-                        artifact_id: file._id,
-                        artifact_collection: "files",
-                        detection,
-                        host_name: file.host_name,
-                        trigger: file.file_path,
-                        score,
-                        severity: await this.getSeverity(score),
-                        message
-                    });
+                    const severity = await this.getSeverity(score);
+                    if (severity === "High") {
+                        await this.raiseAlert({
+                            endpoint_id: file.endpoint_id,
+                            artifact_id: file._id,
+                            artifact_collection: "files",
+                            detection,
+                            host_name: file.host_name,
+                            trigger: file.file_path,
+                            score,
+                            severity,
+                            message: `${message} VirusTotal Report: ${await VirusTotalController.getFileReport(file.sha256_hash)}`
+                        });
+                    }
+                    else {
+                        await this.raiseAlert({
+                            endpoint_id: file.endpoint_id,
+                            artifact_id: file._id,
+                            artifact_collection: "files",
+                            detection,
+                            host_name: file.host_name,
+                            trigger: file.file_path,
+                            score,
+                            severity,
+                            message
+                        });
+                    };
                 };
             };
         }
@@ -186,14 +211,15 @@ class SecurityController {
             for (const connection of connections) {
                 let score = 0;
 
-                 // Check Whitelist first
+                // Check Whitelist first
                 const isConnectionWhitelisted = rules.whitelist.network_connections.some(rule => new RegExp(rule.filter, "i").test(connection[rule.field]));
                 if (isConnectionWhitelisted) {
-                    return; // since the network connection is whitelisted, do not analyse or raise an alert
+                    continue; // since the network connection is whitelisted, do not analyse or raise an alert and continue to the next network connection
                 }
  
-                 // Check Blacklist 
-                rules.blacklist.network_connections.forEach(async rule => {
+                // Check Blacklist
+                let isBlacklisted = false;
+                for (const rule of rules.blacklist.network_connections) {
                     const pattern = new RegExp(rule.filter, "i");
                     if (pattern.test(connection[rule.field])) {
                         score = 10; // significant threat score due to the network connection being blacklisted
@@ -203,15 +229,19 @@ class SecurityController {
                             artifact_collection: "network_connections",
                             detection: rule.detection,
                             host_name: connection.host_name,
-                            trigger: `${connection.remote_address_ip}:${connection.remote_address_port}`,
+                            trigger: `(${connection.command}): ${connection.remote_address_ip}:${connection.remote_address_port}`,
                             score,
                             severity: await this.getSeverity(score),
                             message: rule.message
                         });
-                        return;
+                        isBlacklisted = true;
                     };
-                });
+                    if (isBlacklisted) { break; }
+                };
 
+                if (isBlacklisted) { continue; }
+               
+            
                 const matchedRules = [];
 
                 rules.network_connections.forEach(rule => {
@@ -231,7 +261,7 @@ class SecurityController {
                         artifact_collection: "network_connections",
                         detection,
                         host_name: connection.host_name,
-                        trigger: `${connection.remote_address_ip}:${connection.remote_address_port}`,
+                        trigger: `(${connection.command}): ${connection.remote_address_ip}:${connection.remote_address_port}`,
                         score,
                         severity: await this.getSeverity(score),
                         message

@@ -77,7 +77,7 @@ function get_filesystem_data() {
     downloads_dir="$HOME/Downloads"
     
     files_json_array=""
-    files=$(find "$tmp_dir" "$desktop_dir" "$downloads_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.tar.gz" \) 2>/dev/null)
+    files=$(find "$tmp_dir" "$desktop_dir" "$downloads_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.txt" -o -name "*.tar.gz" \) 2>/dev/null)
 
     while read file; do 
         sha256_hash=$(sha256sum "$file" | awk '{print $1}')

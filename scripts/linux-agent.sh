@@ -68,7 +68,7 @@ function get_filesystem_data() {
     recycle_bin_dir="$HOME/.local/share/Trash/files"
     
     files_json_array=""
-    files=$(sudo find "$tmp_dir" "$persistent_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" "$recycle_bin_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.tar.gz" \))
+    files=$(sudo find "$tmp_dir" "$persistent_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" "$recycle_bin_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.txt" -o -name "*.tar.gz" \))
 
     while read file; do 
         sha256_hash=$(sha256sum "$file" | awk '{print $1}')

@@ -67,7 +67,7 @@ function get_filesystem_data() {
     recycle_bin_dir="$HOME/.Trash"
     
     files_json_array=""
-    find "$tmp_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" "$recycle_bin_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.tar.gz" -o -perm +111 \)| while read file; do 
+    find "$tmp_dir" "$desktop_dir" "$documents_dir" "$downloads_dir" "$recycle_bin_dir" -type f \( -name "*.py" -o -name "*.sh" -o ! -name "*.*" -o -name "*.zip" -o -name "*.js" -o -name "*.rar" -o -name "*.pkg"  -o -name "*.dmg" -o -name "*.txt" -o -name "*.tar.gz" -o -perm +111 \)| while read file; do 
         sha256_hash=$(sha256sum "$file" | awk '{print $1}')
         creation_timestamp=$(stat -f "%B" "$file")
         last_mod_timestamp=$(stat -f "%m" "$file")
@@ -135,7 +135,7 @@ case "$1" in
     link_endpoint
     ;;
   *)
-    get_filesystem_data
+    get_network_data
     ;;
 esac
 
