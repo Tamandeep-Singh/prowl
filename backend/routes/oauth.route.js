@@ -33,4 +33,13 @@ oauthRouter.get("/github/user", async (req, res) => {
     return res.status(200).json({result});
 });
 
+oauthRouter.post("/github/repo/analyse", async (req, res) => {
+    const token = req.cookies.github_token;
+    if (!token) {
+        return res.status(200).json({result: { success: false, error: "No Github Access Token provided"}});
+    };
+    const result = await githubController.cloneRepo(token, req.body.repo);
+    return res.status(200).json({result});
+});
+
 module.exports = oauthRouter;

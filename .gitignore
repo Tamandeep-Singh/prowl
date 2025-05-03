@@ -4,3 +4,4 @@ tmp/
 frontend/node_modules/
 backend/node_modules/
 backend/.env
+backend/security-analysis/repos/

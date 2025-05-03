@@ -23,6 +23,10 @@ const Github = () => {
     const [sortModel, setSortModel] = useState([
         { field: "created_at", sort: "desc"},
     ]);
+
+    const onAnalyseGithubRepo = async (repo) => {
+        const response = await OauthService.analyseGithubRepo(repo);
+    };
     
     const columns = [
         {field: "id", headerName: "Repo ID", width: 100},
@@ -56,7 +60,7 @@ const Github = () => {
         {field: "created_at", headerName: "Created At", type: "dateTime", width: 200},
         {field: "updated_at", headerName: "Updated At", type: "dateTime", width: 200},
         {field: "analyse_repo", headerName: "Actions", width: 210, sortable: false, filterable: false, renderCell: (params) => (
-            <Button variant="contained" onClick={() => alert(JSON.stringify(params.row))} size="small">Analyse Repo</Button>),
+            <Button variant="contained" onClick={() => onAnalyseGithubRepo(params.row)} size="small">Analyse Repo</Button>),
         } 
     ];
 
@@ -103,6 +107,7 @@ const Github = () => {
                     visibility: repo.visibility, 
                     html_url: repo.html_url, 
                     api_url: repo.url,
+                    owner: repo.owner.login,
                     created_at: new Date(repo.created_at),
                     updated_at: new Date(repo.updated_at)
                 });

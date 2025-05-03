@@ -1,5 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
+const simpleGit = require('simple-git');
+const path = require('path');
 
 class GithubController {
     static getAccessToken = async (code) => {
@@ -46,6 +48,19 @@ class GithubController {
         }
         catch (error) {
             return { success: false, error: "Unable to fetch details for the github user!", debug: error};
+        };
+    };
+
+    static cloneRepo = async (token, repo) => {
+        const cloneUrl = `https://${token}@github.com/${repo.owner}/${repo.name}.git`;
+        const clonePath = path.resolve(process.cwd(), `${process.env.PROWL_GITHUB_CLONE_PATH}/${repo.name}`);
+        const git = simpleGit();
+        try {
+            await git.clone(cloneUrl, clonePath);
+            return { success: true, message: `Cloned ${repo.name} to ${clonePath}`};
+        }
+        catch(error) {
+            return { success: false, error: `failed to clone ${repo.name}`, debug: error};
         };
     };
 };
