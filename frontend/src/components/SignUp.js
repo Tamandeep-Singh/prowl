@@ -1,19 +1,17 @@
+import "../css/SignUp.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import "../css/LoginPage.css";
 import ProwlLogo from "../assets/logo.png";
 import WarningIcon from "../assets/warning.png";
 import LoginService from "../services/login_service";
 import AppUtils from "../utils";
-import { useLocation } from "react-router-dom";
 
-const LoginPage = () => {
+const SignUp = () => {
     const navigate = useNavigate();
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [loginError, setLoginError] = useState("");
-    const location = useLocation();
-    const [externalError, setExternalError] = useState(location.state?.externalError || "");
+    const [signupError, setSignupError] = useState("");
 
     useEffect(() => {
         if (AppUtils.isUserLoggedIn() === true) {
@@ -21,17 +19,16 @@ const LoginPage = () => {
         };
     }, [navigate]);
 
-    const onUserLogin = async (event) => {
+    const onUserSignup = async (event) => {
+        const usernameInput = document.getElementById("username");
         const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
-
-        setExternalError("");
         
-        if (emailInput.checkValidity() && passwordInput.checkValidity()) {
+        if (emailInput.checkValidity() && passwordInput.checkValidity() && usernameInput.checkValidity()) {
             event.preventDefault();
-            const response = await LoginService.performUserLogin(email, password); 
+            const response = await LoginService.performUserSignup(username, email, password); 
             if (response.result.error) {
-                setLoginError(response.result.error);
+                setSignupError(response.result.error);
             }
             else {
                 AppUtils.setAuthToken(response.result.accessToken);
@@ -41,31 +38,26 @@ const LoginPage = () => {
         }; 
     };
 
-    return <div id="login-wrapper">
-        <div className="login">
-            <p>Sign in to continue to the Prowl Hub</p>
+    return <div id="signup-wrapper">
+        <div className="signup">
+            <p>Sign up to continue to the Prowl Hub</p>
             <form>
-                <div className="login__logo">
+                <div className="signup__logo">
                         <img id="inner-logo" src={ProwlLogo} alt="Prowl Logo"/>
                         <span>Prowl</span>
                     </div>
+                    <input type="text" id="username" required placeholder="Username" value={username} onChange={({ target }) => setUsername(target.value)}/>
                     <input type="email" id="email" required placeholder="Email" value={email} onChange={({ target }) => setEmail(target.value)}/>
                     <input type="password" id="password" required placeholder="Password" value={password} onChange={({ target }) => setPassword(target.value)}/>
-                    <input id="login-btn" type="submit" value="Login" onClick={onUserLogin}></input>
-                    <a style={{color: "blue",  marginTop: "10px"}} href="/sign-up">Don't have an Account? Register here</a>
+                    <input id="signup-btn" type="submit" value="Sign Up" onClick={onUserSignup}></input>
                 </form>
-                {loginError && <div className="login__error">
+                {signupError && <div className="signup__error">
                     <img id="warning-icon" src={WarningIcon} alt="Warning Icon"/>
-                    <span>Error: {loginError}</span>
-                </div>
-                }
-                {externalError && <div className="login__error">
-                    <img id="warning-icon" src={WarningIcon} alt="Warning Icon"/>
-                    <span>Error: {externalError}</span>
+                    <span>Error: {signupError}</span>
                 </div>
                 }
         </div>
         </div>
 };
 
-export default LoginPage;
+export default SignUp;

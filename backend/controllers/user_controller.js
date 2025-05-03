@@ -42,7 +42,7 @@ class UserController {
     static createUser = async (user) => {
         const result = await MongoUtilities.insertDocument(User, user);
         if (result.error) { 
-            return result;
+            return { success: false, error: "Unable to Sign Up - please ensure you pick a unique username and email. Passwords need to be 8 characters or longer!", debug: result.error};
         };
         
         const payload = { username: result.username, email: result.email, role: result.role, uid: result._id };

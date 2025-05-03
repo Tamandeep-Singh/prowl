@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Electrolize&display=swap');
 
-#login-wrapper {
+#signup-wrapper {
     position:fixed;
     width: 100vw;
     height: 100vh;
@@ -9,11 +9,11 @@
     font-family: 'Cairo';
 }
 
-.login {
+.signup {
     border:10px solid #F0F0F0;
     border-radius: 20px;
     width:600px;
-    height: 650px;
+    height: 700px;
     padding:20px;
     margin-top:75px;
     display:flex;
@@ -22,12 +22,12 @@
     background-color: #F0F0F0;
 }
 
-.login p {
+.signup p {
     text-align: center;
     font-size: 22px;
 }
 
-.login__logo {
+.signup__logo {
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +39,7 @@
     padding-right:20px;
 }
 
-.login__logo span {
+.signup__logo span {
     font-size: 24px;
     font-family: "Electrolize";
     padding-top: 15px;
@@ -47,13 +47,13 @@
     text-transform:uppercase;
 }
 
-.login form {
+.signup form {
     display:flex;
     flex-direction: column;
     gap:5px;
 }
 
-.login form input {
+.signup form input {
     height:50px;
     font-size: 16px;
     margin-top:10px;
@@ -63,12 +63,12 @@
     padding-left: 20px;
 }
 
-.login form input:focus {
+.signup form input:focus {
     border-color: #007bff; 
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
 }
 
-#login-btn {
+#signup-btn {
     font-family: 'Cairo';
     font-size: 20px;
     margin-top:20px;
@@ -86,14 +86,14 @@
     margin-top:4px;
 }
 
-.login__error {
+.signup__error {
     display:flex;
     justify-content: center;
-    margin-top:40px;
+    margin-top:35px;
 }
 
-.login__error span {
+.signup__error span {
     color:red;
-    font-size: 19px;
+    font-size: 18px;
 }
 
