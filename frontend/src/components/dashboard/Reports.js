@@ -72,7 +72,7 @@ const Reports = () => {
         {field: "summary", headerName: "Report Summary", width: 160},
         {field: "date_added", headerName: "Added On", type: "dateTime", width: 200},
         {field: "view_report", headerName: "Actions", width: 240, sortable: false, filterable: false, renderCell: (params) => (
-            <Button variant="contained" onClick={() => onShowReportPopup(params.row)} size="small">View Report</Button>),
+          <Button variant="contained" onClick={() => onShowReportPopup(params.row)} size="small">View Report</Button>),
         } 
     ];
 

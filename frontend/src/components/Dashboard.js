@@ -31,7 +31,7 @@ import { useParams } from "react-router-dom";
 import Account from "./dashboard/Account";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeviceHubIcon from '@mui/icons-material/DeviceHub';
-import GoogleIcon from '@mui/icons-material/Google';
+import Github from "./dashboard/Github";
 
 
 /* Guide for Sidebar followed from: https://blog.logrocket.com/creating-responsive-sidebar-react-pro-sidebar-mui/ */ 
@@ -76,8 +76,7 @@ const Dashboard = ({ screen }) => {
             <MenuItem onClick={() => navigate("/dashboard/ai-reports")} icon={<AssessmentIcon/>}>AI Reports</MenuItem>
             <MenuItem onClick={() => navigate("/dashboard/education/articles")} icon={<SchoolIcon/>}>Education Hub</MenuItem>
             <SubMenu label="Integrations" icon={<DeviceHubIcon/>}>
-                <MenuItem icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
-                <MenuItem icon={<GoogleIcon/>}>Google Cloud</MenuItem>
+                <MenuItem onClick={() => navigate("/dashboard/integrations/github")} icon={<GitHubIcon/>}>GitHub Repositories</MenuItem>
             </SubMenu>
             <MenuItem onClick={() => navigate("/account")} icon={<AccountCircleIcon/>}>Account</MenuItem>
             {AppUtils.isUserAdmin() && <SubMenu label="Admin" icon={<AdminPanelSettingsIcon/>}>
@@ -96,6 +95,7 @@ const Dashboard = ({ screen }) => {
         {screen === "education_hub" && <EducationHub/>}
         {screen === "account" && <Account/>}
         {screen === "render_article_slug" && <EducationHub slug={slug}/>}
+        {screen === "integrations_github" && <Github/>}
         </div>
     </div>
     

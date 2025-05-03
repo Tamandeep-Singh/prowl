@@ -79,6 +79,36 @@ export default class ApiService {
         };
     };
 
+    static getWithCredentials = async (url) => {
+        try {
+            const response = await axios.get(`${this.endpoint}${url}`, {
+                withCredentials: true,
+                headers: {
+                    "Authorization": `Bearer ${AppUtils.getAuthToken()}`
+                }
+            });
+            if (response.data.result?.error) {
+                if (response.data.result?.invalid) {
+                    const didTokenRefresh = await this.refreshToken();
+                    if (!didTokenRefresh) {
+                        return { result: { success: false, error: "Unable to consume refresh token", invalid: true}}
+                    };
+                    const retry = await axios.get(`${this.endpoint}${url}`, {
+                        withCredentials: true,
+                        headers: {
+                            "Authorization": `Bearer ${AppUtils.getAuthToken()}`
+                        }
+                    });
+                    return retry.data;
+                };
+            };
+            return response.data;
+        }
+        catch (error) {
+            return { result: { success: false,  error: "Unable to connect to the API", debug: error} };
+        };
+    };
+
     static ping = async () => {
         const response = await ApiService.get("/ping");
         return response;

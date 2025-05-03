@@ -21,6 +21,7 @@ function App() {
     /dashboard/admin/prowl-users
     /dashboard/education/articles
     /dashboard/education/articles/:slug
+    /dashboard/integrations/github
     /endpoint-rtc
     /account
     ----------
@@ -39,12 +40,13 @@ function App() {
           <Route exact path="/dashboard/admin/prowl-users" element={<AuthenticatedRoute><Dashboard screen="prowl_users"/></AuthenticatedRoute>}></Route>
           <Route exact path="/dashboard/education/articles" element={<AuthenticatedRoute><Dashboard screen="education_hub"/></AuthenticatedRoute>}></Route>
           <Route path="/dashboard/education/articles/:slug" element={<AuthenticatedRoute><Dashboard screen="render_article_slug"/></AuthenticatedRoute>}></Route>
+          <Route exact path="/dashboard/integrations/github" element={<AuthenticatedRoute><Dashboard screen="integrations_github"/></AuthenticatedRoute>}></Route>
           <Route exact path="/endpoint-rtc" element={<AuthenticatedRoute><EndpointRTC/></AuthenticatedRoute>}></Route>
           <Route exact path="/account" element={<AuthenticatedRoute><Dashboard screen="account"/></AuthenticatedRoute>}></Route>
           <Route path="*" element={<NotFound/>}></Route>
         </Routes>
       </Router>
   );
-}
+};
 
 export default App;
