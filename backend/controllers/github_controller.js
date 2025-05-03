@@ -1,7 +1,8 @@
 require("dotenv").config();
 const axios = require("axios");
-const simpleGit = require('simple-git');
 const path = require('path');
+const fs = require("fs");
+const { execSync } = require("child_process");
 
 class GithubController {
     static getAccessToken = async (code) => {
@@ -37,30 +38,41 @@ class GithubController {
         };
     };
 
-    static getUserDetails = async (token) => {
+    static deleteRepoCloneDirectory = async (path) => {
         try {
-            const response = await axios.get("https://api.github.com/user", {
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-            return { success: true, user: response.data};
+            fs.rmSync(path, { recursive: true, force: true });
         }
         catch (error) {
-            return { success: false, error: "Unable to fetch details for the github user!", debug: error};
+            console.log(`[Github_Controller::deleteRepoCloneDirectory]: Unable to delete ${path}!`);
         };
     };
 
-    static cloneRepo = async (token, repo) => {
+    static analyseRepoWithGitLeaks = (path) => {
+        try {
+            execSync(`gitleaks detect --source ${path} --report-format json --report-path ${path}/gitleaks_report.json`, { stdio: "pipe" });
+            return [{"message": "No sensitive information or leaks found!"}];
+        }
+        catch (error) {
+            if (error.status === 1) {
+                const data = fs.readFileSync(`${path}/gitleaks_report.json`, 'utf-8');
+                const report = JSON.parse(data);
+                return report;
+            };
+            return "Unable to analyse Repo!";
+        };
+    };
+
+    static cloneAndAnalyseRepo = (token, repo) => {
         const cloneUrl = `https://${token}@github.com/${repo.owner}/${repo.name}.git`;
         const clonePath = path.resolve(process.cwd(), `${process.env.PROWL_GITHUB_CLONE_PATH}/${repo.name}`);
-        const git = simpleGit();
         try {
-            await git.clone(cloneUrl, clonePath);
-            return { success: true, message: `Cloned ${repo.name} to ${clonePath}`};
+            execSync(`git clone ${cloneUrl} ${clonePath}`, { stdio: ["ignore", "ignore", "ignore"] });
+            const gitLeaksReport = this.analyseRepoWithGitLeaks(clonePath);
+            this.deleteRepoCloneDirectory(clonePath);
+            return { success: true, repo, report: [{gitLeaksReport}]};
         }
         catch(error) {
-            return { success: false, error: `failed to clone ${repo.name}`, debug: error};
+            return { success: false, error: `failed to clone and analyse ${repo.name}`, debug: error};
         };
     };
 };
