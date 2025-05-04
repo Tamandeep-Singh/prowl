@@ -1,6 +1,6 @@
 # Prowl: Cybersecurity Hub
 
-A lightweight and seamless solution for monitoring endpoint security and cybersecurity related events for SMEs (Small and Medium Enterprises). 
+A lightweight and seamless solution for monitoring endpoint security and cybersecurity related events for SMEs (Small & Medium Enterprises). 
 
 ![](github-assets/prowl_showcase.gif)
 
@@ -210,7 +210,7 @@ Prowl is able to:
 - Connect to every linked endpoint via SSH to run commands directly from the frontend
 - Integrate with Github OAuth to access the user's repos and analyse them for any security issues (e.g sensitive information exposure)
 - Automatically score telemetry events with custom rules and send alerts via Gmail / Discord for critical threats
-- Integrate with OSINT (Open Source Intelligence Tools) like VirusTotal to strengthen the evidence for a potential alert
+- Integrate with OSINT (Open Source Intelligence) tools like VirusTotal to strengthen the evidence for a potential alert
 
 ***
 
