@@ -40,6 +40,9 @@ const setupServer = async () => {
     app.listen(PORT, () => console.log(`[Prowl-API]: Server has started on port ${PORT}`));
 };
 
-setupServer();
+if (process.env.NODE_ENV !== "test") {
+    setupServer();
+};
 
+module.exports = app;
 

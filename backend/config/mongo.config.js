@@ -14,6 +14,9 @@ const connectToMongoDB = async () => {
         case "production":
             MONGO_URI = process.env.MONGO_URI_PROD;
             break;
+        case "test":
+            MONGO_URI = process.env.MONGO_URI_TEST;
+            break;
     };
     try {
         await mongoose.connect(MONGO_URI);
