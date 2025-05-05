@@ -12,7 +12,8 @@ const AlertSchema = mongoose.Schema({
     },
     artifact_collection: {
         type: String,
-        required: [true, "Artifact Collection for the Alert must be provided"]
+        required: [true, "Artifact Collection for the Alert must be provided"],
+        enum: ["files", "processes", "network_connections"]
     },
     detection: {
         type: String,
