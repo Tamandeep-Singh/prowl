@@ -94,6 +94,7 @@ PROWL_BACKEND_PORT=4500 # example port for the server to run on
 MONGO_URI_DEV="mongodb://localhost:27017/prowl_dev"
 MONGO_URI_PROD="mongodb://localhost:27017/prowl_prod"
 MONGO_URI_PROTO="mongodb://localhost:27017/prowl_prototype"
+MONGO_URI_TEST="mongodb://localhost:27017/prowl_test"
 
 # Generate unique strings for the SECRET for JWT Authentication
 JWT_SECRET=""
@@ -139,7 +140,7 @@ PROWL_FRONTEND_HUB="http://192.168.1.79:3000" # add your ReactJS URL so that red
 
    ```bash
    cd /prowl/backend
-   node app.js
+   npm run start:prod
    ```
 
 5. Get your system's LAN IP:
