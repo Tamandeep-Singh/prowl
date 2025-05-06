@@ -6,12 +6,12 @@ const VirusTotalController = require("./virustotal_controller");
 
 const buffer = new LRUCache({
     max: 10000,
-    ttl: 1000 * 60
+    ttl: 1000 * 60 * 3
 });
 
 setInterval(() => {
     buffer.purgeStale();
-}, 50000);
+}, 60000);
 
 class SecurityController {
     static createAlertHash = (alert) => {

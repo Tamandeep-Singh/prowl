@@ -6,12 +6,12 @@ const SecurityController = require("../controllers/security_controller");
 
 const buffer = new LRUCache({
     max: 10000,
-    ttl: 1000 * 60
+    ttl: 1000 * 60 * 5
 });
 
 setInterval(() => {
     buffer.purgeStale();
-}, 50000);
+}, 60000);
 
 class ProcessController {
     static createProcessHash = (process) => {

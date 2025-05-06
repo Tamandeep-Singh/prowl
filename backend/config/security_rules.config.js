@@ -33,7 +33,7 @@ const rules = {
         files: [{ detection: "Demo.txt (Blacklist)", filter: "5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03", message: "Blacklisted File (Demo.txt) detected via matching SHA-256 Hash!", field: "sha256_hash"}],
         network_connections: []
     },
-    notification_emails: ["prowl.test.fake@gmail.com"]
+    notification_emails: ["prowl.example@gmail.com"]
 }
 
 module.exports = rules;

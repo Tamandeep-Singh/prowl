@@ -41,7 +41,7 @@ function link_endpoint_request_handler() {
 
 function get_process_data() {
     process_output=$(ps -axo ppid,pid,user,state,lstart,etime,args)
-    #Fields $5 to $9 = lstart, field $10 = etime, field $11 = command (binary being executed), fields onwards are command arguments 
+    # Fields $5 to $9 = lstart, field $10 = etime, field $11 = command (binary being executed), fields onwards are command arguments 
 
     process_json_array=$(echo "$process_output" | awk 'NR > 1 {
     start = 11; 
