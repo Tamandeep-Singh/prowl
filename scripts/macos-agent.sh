@@ -135,7 +135,7 @@ case "$1" in
     link_endpoint
     ;;
   *)
-    get_network_data
+    main
     ;;
 esac
 

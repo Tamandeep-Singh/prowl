@@ -31,7 +31,7 @@ app.use("/api/files", authMiddleware.checkAccessToken, require("./routes/file.ro
 app.use("/api/network_connections", authMiddleware.checkAccessToken, require("./routes/network.route"));
 app.use("/api/alerts", authMiddleware.checkAccessToken, require("./routes/alert.route"));
 app.use("/api/reports", authMiddleware.checkAccessToken, require("./routes/report.route"));
-app.use("/api/events", authMiddleware.checkAccessToken, require("./routes/events.route"));
+app.use("/api/events",  authMiddleware.checkAccessToken, require("./routes/events.route"));
 app.use("/api/console", authMiddleware.checkAccessToken, require("./routes/console.route"));
 app.use("/api/oauth", require("./routes/oauth.route"));
 
